@@ -19,7 +19,7 @@ void gen_vectors(Vec v){
 	t.initialize(v.dimension+1);
 	t2.initialize(v.dimension+1);
 	
-	t.arr[0] = -1;
+	
 	t2.arr[0] = -1;
 	
 	for(int i=1;i<v.dimension + 1;i++)
@@ -28,22 +28,20 @@ void gen_vectors(Vec v){
 	
 	
 	for(int i=0;i<(1<<v.dimension);i++){
+		t.arr[0] = -1;
 		for(int bit = 1; bit<= v.dimension; bit++)
 		   t.arr[bit] = getbit(i , bit-1); 
-		   
-		 if(t2==t) 
+		 if(!(t2==t)) 
 			t.invertWeights();
-			
-		t.print();
-		cout<<endl;	
+		t.prettyPrint();
 	}	
 }
 
 
 int main(){
 	
-	vec v;
-	V.initialize(7);
+	Vec v;
+	v.initialize(7);
 	
 	for(int i=0;i<10;i++){
 		v.input();
