@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 #define SEGMENTS 7
-#define ZERO 31
+#define ZERO 63
 #define ONE 6 
 #define TWO 91
 #define THREE 79 
@@ -42,6 +42,14 @@ void fillCorrect(vector< vector<int> > &trainData, int num){
 	return;	
 }
 
+void printVect(vector<int> v){
+
+	vector<int > :: iterator it;
+	for(it = v.begin();it!= v.end();it++){
+		printf("%d ",*it);
+	}
+	printf("\n");	
+}	
 Perceptron trainPerceptron(int n){
 	vector< vector <int> > trainData;
 
@@ -49,8 +57,9 @@ Perceptron trainPerceptron(int n){
 	trainData = generateZeros(pow(2,SEGMENTS));	
 	switch(n){
 		case 0:	
-			printf("Filled here\n");
+			//printf("Filled here\n");
 			fillCorrect(trainData,ZERO);
+				
 			break ;	
 		case 1:	
 			fillCorrect(trainData,ONE);
@@ -82,6 +91,12 @@ Perceptron trainPerceptron(int n){
 				
 	}	
 
+	/*printf("Printing1 train data\n ");
+
+	vector< vector <int> > :: iterator it;
+	for(it = trainData.begin();it!= trainData.end();it++){
+		printVect(*it);
+	}*/	
 	Perceptron p(SEGMENTS);
 	p.train(trainData);
 	return p;
@@ -102,7 +117,14 @@ int main(){
 	input.resize(SEGMENTS);
 	while(1){
 		scanf("%d %d %d %d %d %d %d",&input[0] ,&input[1] ,&input[2] ,&input[3] ,&input[4] ,&input[5] ,&input[6] );	
-		printf(" Answer  %d" ,allP[0].check(input));
+		for(int i =0;i<allP.size();i++){
+			bool stat = allP[i].check(input);
+		//	printf(" Answer  %d  %d", i ,stat);
+			if (stat){
+				printf("Haha  %d ",i);	
+				break;
+			}	
+		}
 	}
 
 

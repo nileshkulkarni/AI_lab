@@ -50,14 +50,14 @@ void Perceptron:: train(vector< vector<int> > trainData){
 		truthTable[truthRow].push_back(-1);	
 	}	
 
-*/
-	//printf("Printing train data\n ");
+	printf("Printing train data\n ");
 
-	truthTable = trainData;
 	vector< vector <int> > :: iterator it;
-	/*for(it = truthTable.begin();it!= truthTable.end();it++){
+	for(it = truthTable.begin();it!= truthTable.end();it++){
 		printVect(*it);
-	}*/	
+	}	
+*/
+	truthTable = trainData;
 	PTA();
 }
 
@@ -105,7 +105,7 @@ void Perceptron::PTA(){
 			break;
 		}
 	}
-	//printf(" Weights are %d %d %d %d %d %d %d %d \n",weights[0],weights[1],weights[2],weights[3],weights[4],weights[5],weights[6],weights[7]);
+	printf(" Weights are %d %d %d %d %d %d %d %d \n",weights[0],weights[1],weights[2],weights[3],weights[4],weights[5],weights[6],weights[7]);
 
 }
 
@@ -114,16 +114,11 @@ bool Perceptron::check(vector<int> input){
 	input.push_back(-1);
 	int wS = weights.size();	
 	int rowS = input.size();
-	//printf(" Weights \n");
-	//printVect(weights);
-	
-	//printf(" rows \n ");
-	//printVect(input);
-	//printf("%d w  %d row \n",wS,rowS);
+	printf("%d w  %d row \n",wS,rowS);
 	if(wS != rowS){
 		printf(" Incomptible input for dot product\n");
 	}
-	int sum=0;
+	int sum;
 	for(int i=0;i<wS;i++){
 		sum +=weights[i]*input[i];	
 	}	
