@@ -13,10 +13,19 @@ void NeuralNetwork::_init(){
 }
 
 
-
 NeuralNetwork::NeuralNetwork(int nlayers){
     _init();
     layers.resize(nlayers);
+}
+
+
+NeuralNetwork::NeuralNetwork(int nLayers,int noOfNeurons){
+    _init();
+    noOfLayers = nLayers;
+    for(int i =0;i<nLayers;i++){
+        NetworkLayer lay(noOfNeurons,i);        
+        layers.push_back(lay);
+    }
 } 
 
 void NeuralNetwork::feedForward(Vec in){
