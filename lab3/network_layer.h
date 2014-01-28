@@ -30,7 +30,12 @@ class NetworkLayer{
 	    void updateLayer();	
 	    Vec  getOutput();	
 		void backPropagate(Vec t);
+		
+		
 		void updateWeights();
 		void setLayerId(int id);
+		
+		
+		void print();
 };
 #endif
