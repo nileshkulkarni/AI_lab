@@ -3,6 +3,79 @@
 using namespace std;
 int Neuron::totalNeurons =0;
 
+
+
+
+
+
+
+
+
+float dotProduct(Vec v1 , Vec v2){
+    float ret=0;
+    for(int i=0;i<v1.size();i++)
+      ret += v1[i]*v2[i]; 
+    return ret;
+}
+
+
+bool operator==(Vec &v1 , Vec &v2){
+    bool ret = true;
+    for(int i=0;i<v1.size();i++)
+      ret = ret && (v1[i]==v2[i]); 
+    return ret;
+}
+
+
+
+
+
+void add(Vec &destV , Vec W){
+    for(int i=0;i<W.size();i++)
+      destV[i] += W[i];
+}
+
+void sub(Vec &destV , Vec W){
+    for(int i=0;i<W.size();i++)
+      destV[i] -= W[i];
+
+    
+}
+
+
+
+float mod(Vec v){
+    float ret=0;
+    for(int i=0;i<v.size();i++)
+        ret += v[i]*v[i];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Neuron::Neuron(int N){
     noOfInputs = N;    
     id = totalNeurons;
@@ -21,7 +94,7 @@ void Neuron::addOutputEdge(Edge *e){
 
 }
 void Neuron ::print(){
-    printf("\t\t(Neuron ID , del) %d %f \n" ,id , del);
+    printf("\t\tNeuron ID  %d \n" ,id   );
     printf("\t\tOutput Weights ");
     for(int i =0;i<outputEdges.size();i++){
         printf("%d: %f ",i,outputEdges[i]->getWeight()); 
@@ -67,15 +140,14 @@ void Neuron :: collectInputs(float in) {
 	}
 */ 
 	output = collectedOut;
-    printf("Neuron ID ** %d , %f \n", id, output);	
+   // printf("Neuron ID ** %d , %f \n", id, output);	
 }
 
 void Neuron :: updateDel(float t){
 	
-        
     del = (t - output) * output * (1 - output);
     
-   printf("computing del : %d %f %f %f\n" , id , t , output , del); 
+   //printf("computing del : %d %f %f %f\n" , id , t , output , del); 
  
 }
 
@@ -90,7 +162,7 @@ void Neuron :: updateDel(){
 	for(int i=0;i<outputEdges.size();i++){
 		del +=	outputEdges[i]->getWeight() * (outputEdges[i]->getEnd())->getDel() * output * (1 - output);
         
-        printf("computing del : %f %f %f %f \n" ,outputEdges[i]->getWeight()  , (outputEdges[i]->getEnd())->getDel() , output  , (1 - output)); 
+        //printf("computing del : %f %f %f %f \n" ,outputEdges[i]->getWeight()  , (outputEdges[i]->getEnd())->getDel() , output  , (1 - output)); 
         
 	}
 }

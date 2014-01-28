@@ -14,6 +14,10 @@ float dotProduct(Vec v1 , Vec v2);
 bool operator==(Vec &v1 , Vec &v2);
 void print(Vec &v1);
 void add(Vec &destV , Vec W);
+void sub(Vec &destV , Vec W);
+float mod(Vec v);
+
+
  
 class Edge;
 

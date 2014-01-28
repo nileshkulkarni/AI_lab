@@ -6,7 +6,7 @@
 
 #include "neuron.h"
 #define NEURON_INPUTS 5
-#define NETA 0.5
+#define NETA 0.1
 
 
 class NetworkLayer{
@@ -36,5 +36,7 @@ class NetworkLayer{
 		void setLayerId(int id);
 		
 		void print();
+        
+        
 };
 #endif

@@ -50,4 +50,7 @@ class NeuralNetwork{
         void print();
         void putEdges(int from , int to);
         void generateEdges();
+        
+       
+        
 };

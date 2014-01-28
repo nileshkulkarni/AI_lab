@@ -1,7 +1,7 @@
 #include "edge.h"
 Edge::Edge(){
    weight = (float)(rand() % 1000 )/1000;
-   cout<<"\n : "<<weight<<"\n";
+   //cout<<"\n : "<<weight<<"\n";
 }
 
 float Edge::getWeight(){
