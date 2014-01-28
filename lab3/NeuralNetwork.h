@@ -22,5 +22,5 @@ class NeuralNetwork{
         void addAllTrainData(vector<Vec> input,vector<Vec> output); 
         Vec getOuput(Vec input);
         void backPropagate(int Layer);
-            
+        void feedForward();      
 }

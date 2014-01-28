@@ -18,12 +18,3 @@ class NetworkLayer{
 		
         feedForwardNeurons(NetworkLayer *prevLayer);
 };
-
-
-NetworkLayer :: void backPropagate(){
-	
-		for(int i=0;i<N;i++){
-			Neurons[i].collectInputs();
-			Neurons[i].updateDel();
-		}	
-}
