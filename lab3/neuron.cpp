@@ -7,28 +7,37 @@ Neuron::Neuron(int N){
     noOfInputs = N;    
     id = totalNeurons;
     totalNeurons++;
-    
+    output=0;
 }
 
 vector<Edge*> Neuron :: getInputEdges() {
 	return inputEdges;
 }
+void Neuron::addInputEdge(Edge *e){
+    inputEdges.push_back(e);
+}
+void Neuron::addOutputEdge(Edge *e){
+   outputEdges.push_back(e); 
 
+}
 void Neuron ::print(){
-    printf("\t\tNeuron ID \n" );
-    printf("\t\tOutput Weights");
+    printf("\t\tNeuron ID %d \n" ,id);
+    printf("\t\tOutput Weights ");
     for(int i =0;i<outputEdges.size();i++){
-        printf("%f",outputEdges[i]->getWeight()); 
+        printf("%d: %f ",i,outputEdges[i]->getWeight()); 
     }
 
-    printf("\n\t\tInput Weights");
+    printf("\n\t\tInput Weights ");
     for(int i =0;i<inputEdges.size();i++){
-        printf("%f",inputEdges[i]->getWeight()); 
+        printf("%d: %f ",i,inputEdges[i]->getWeight()); 
     
     }
     printf("\n\t\t Output %f ", output);
     printf("\n");
 
+}
+int Neuron::getID(){
+    return id;
 }
 void Neuron :: collectInputs() {
 	float collectedOut=0;

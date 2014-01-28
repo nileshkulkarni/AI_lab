@@ -5,7 +5,7 @@
 #include <assert.h>
 
 
-
+#include "neuron.h"
 #include "network_layer.h"
 
 
@@ -16,7 +16,6 @@ using namespace std;
 
 class NeuralNetwork{
     private:    
-        vector<NetworkLayer>layers;
         int noOfLayers; 
         void _init();
         Vec inputs;
@@ -24,6 +23,7 @@ class NeuralNetwork{
         int nHiddenLayers;
         
     public:
+        vector<NetworkLayer>layers;
         NeuralNetwork();
         NeuralNetwork(int nlayers);
         NeuralNetwork(int layers,int noOfNeurons);
@@ -47,5 +47,7 @@ class NeuralNetwork{
         void feedForward(Vec in);     
         void feedForward(); 
         
-        void print(); 
+        void print();
+        void putEdges(int from , int to);
+        void generateEdges();
 };

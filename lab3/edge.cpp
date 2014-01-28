@@ -2,7 +2,6 @@
 Edge::Edge(){
    srand(time(NULL));
    weight = (rand() % 1000 )/1000;
-    
 }
 
 float Edge::getWeight(){

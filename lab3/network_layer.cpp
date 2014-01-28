@@ -6,10 +6,11 @@ int NetworkLayer::totalLayers = 0;
 
 
 NetworkLayer :: NetworkLayer (){
-	layerId = totalLayers++;
+	layerId = totalLayers;
+    printf(" Total Layers %d \n",totalLayers);
+    totalLayers++;
 			
 } 
-
 
 NetworkLayer ::  NetworkLayer(int nNeurons){
 			layerId = totalLayers++;
@@ -22,12 +23,18 @@ void NetworkLayer :: init(int nNeurons){
 			N = nNeurons;
 			for(int i =0;i<nNeurons;i++){
                 Neuron neuron(nNeurons);
+                printf("Generating neurons  on layer %d , neuron id is  %d\n", layerId, neuron.getID());
                 Neurons.push_back(neuron); 
+            
             }
+            printf("IMP\n");
+			for(int i =0;i<nNeurons;i++){
+                Neurons[i].print();
+            }
+           // print();
 }
 
 	
-
 
 
 void NetworkLayer :: updateLayer() {
@@ -37,6 +44,11 @@ void NetworkLayer :: updateLayer() {
 }
 
 
+vector<Neuron>* NetworkLayer:: getAllNeuronsPtr(){
+
+    return &Neurons;
+
+}
 Vec  NetworkLayer:: getOutput(){
     Vec output; 
     
@@ -81,10 +93,11 @@ void NetworkLayer ::updateWeights(){   //of input edges
 
 
 void NetworkLayer::print(){
-	
+    printf("\tLayer ID %d \n",layerId);	
+    printf("\tNo of neurons %d \n",Neurons.size());	
 	for(int i=0;i<N;i++){
 		Neurons[i].print();
-		cout<<"   " ;
+		cout<<" \n " ;
 	}
 
 }
