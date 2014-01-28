@@ -12,11 +12,15 @@ class NeuralNetwork{
         vector<NetworkLayer>layers;
         int noOfLayers; 
         void _init();
+        Vec inputs;
+        Vec outputs;
         
     public:
         void NeuralNetwork();
-        void addTrainData(vector<float> input, vector<float> outputs); 
+        void addTrainData(Vec input, Vec outputs); 
         void addHiddenLayer(); 
-        void addAllTrainData(vector< vector <float>> input,vector< vector<float> > output); 
-        vector<float> getOuput(vector<float> input);    
+        void addAllTrainData(vector<Vec> input,vector<Vec> output); 
+        Vec getOuput(Vec input);
+        void backPropagate(int Layer);
+            
 }
