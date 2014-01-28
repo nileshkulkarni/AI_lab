@@ -12,13 +12,11 @@ NetworkLayer ::  NetworkLayer(int nNeurons , int id){
 
 }
 
-<<<<<<< HEAD
 void NetworkLayer :: updateLayer() {
 	for(int i=0; i<Neurons.size(); i++) {
 		Neurons[i].collectInputs();
 	}
 }
-=======
 Vec  NetworkLayer:: getOutput(){
     Vec output; 
     
@@ -26,7 +24,6 @@ Vec  NetworkLayer:: getOutput(){
         output.push_back(Neurons[i].getOutput());       
     }
     return output;
->>>>>>> 492b4b39bbe400aa222723ea7b496125822f8763
 
 void NetworkLayer :: updateLayer(Vec In) {
 	collectInputs(In);
