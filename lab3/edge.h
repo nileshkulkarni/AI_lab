@@ -1,5 +1,12 @@
+#ifndef __EDGE_H__
+#define __EDGE_H__
+
 #include <stdio.h>
 #include "neuron.h"
+#include <ctime>
+#include <stdio.h>
+#include <iostream>
+#include<cstdlib>
 class Edge{
 private: 
     Neuron* start;
@@ -7,15 +14,14 @@ private:
     
     float weight;
 public: 
-    Edge():
-    float getDel(){
-		return end.getDel();
-	}
+    Edge();
     Neuron* getStart();
     Neuron* getEnd();
     void setStart(Neuron*);
-    Neuron* setEnd(Neuron*);
+    void setEnd(Neuron*);
     float getWeight();
     void setWeight(float w);		
 
 };
+
+#endif
