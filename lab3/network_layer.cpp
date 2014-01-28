@@ -2,25 +2,41 @@
 
 
 
+int NetworkLayer::totalLayers = 0;
+
+
 NetworkLayer :: NetworkLayer (){
+	layerId = totalLayers++;
+			
 } 
 
 
-NetworkLayer ::  NetworkLayer(int nNeurons , int id){
-			layerId = id;
+NetworkLayer ::  NetworkLayer(int nNeurons){
+			layerId = totalLayers++;
+			init(nNeurons);
+}
+
+
+	
+void NetworkLayer :: init(int nNeurons){
 			N = nNeurons;
 			for(int i =0;i<nNeurons;i++){
                 Neuron neuron(nNeurons);
                 Neurons.push_back(neuron); 
             }
-
 }
 
+	
+
+
+
 void NetworkLayer :: updateLayer() {
-	for(int i=1; i<Neurons.size(); i++) {
+	for(int i=0; i<Neurons.size(); i++) {
 		Neurons[i].collectInputs();
 	}
 }
+
+
 Vec  NetworkLayer:: getOutput(){
     Vec output; 
     
@@ -29,8 +45,12 @@ Vec  NetworkLayer:: getOutput(){
     }
     return output;
 }
+
 void NetworkLayer :: updateLayer(Vec In) {
-	Neurons[0].collectInputs(In);
+	
+	for(int i=0;i<Neurons.size();i++ ){
+		Neurons[i].collectInputs(In[i]);
+	}
 }
 
 void NetworkLayer ::backPropagate(){
