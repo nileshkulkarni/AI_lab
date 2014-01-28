@@ -7,5 +7,8 @@ private:
     float weight;
 public: 
     Edge():
+    float getDel(){
+		return end.getDel();
+	}
 
 };
