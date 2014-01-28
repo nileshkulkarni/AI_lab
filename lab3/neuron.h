@@ -29,7 +29,7 @@ class Neuron{
         Vec inputs;
         float output;
         float del;
-
+        static int totalNeurons;
     public:
         Neuron(int noOfInputs);
         void setInputs(Vec in);

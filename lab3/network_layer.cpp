@@ -5,7 +5,11 @@
 NetworkLayer ::  NetworkLayer(int nNeurons , int id){
 			layerId = id;
 			N = nNeurons;
-			Neurons.resize(N);
+			for(int i =0i<nNeurons;i++){
+                Neuron neuron();
+                Neurons.push_back(neuron); 
+            }
+
 }
 
 Vec  NetworkLayer:: getOutput(){
