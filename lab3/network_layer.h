@@ -17,6 +17,9 @@ class NetworkLayer{
         
    
     public:
+    
+    
+        NetworkLayer();
         NetworkLayer(int nNeurons , int id);
         
 	    void updateLayer(Vec In);	

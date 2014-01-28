@@ -1,6 +1,11 @@
 #include "network_layer.h"
 
 
+
+NetworkLayer :: NetworkLayer (){
+} 
+
+
 NetworkLayer ::  NetworkLayer(int nNeurons , int id){
 			layerId = id;
 			N = nNeurons;
