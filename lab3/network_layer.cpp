@@ -29,14 +29,14 @@ NetworkLayer :: void backPropagate(Vec t){
 }
 
 
-NetworkLayer :: void updateWeights(){
+NetworkLayer :: void updateWeights(){   //of input edges
 	
 	for(int i=0;i<N;i++){
-			for(int j=0;j<Neurons[i].outputEdges.size();i++)
-			   Neurons[i].outputEdges[j].setWeight(Neurons[i].outputEdges[j].getWeight() +  
+			for(int j=0;j<Neurons[i].inputEdges.size();i++)
+			   Neurons[i].inputEdges[j].setWeight(Neurons[i].inputEdges[j].getWeight() +  
 			                                       (NETA *
-			                                       Neurons[i].getDel() *
-			                                       Neurons[i].outputEdges[j].getEnd().getOutput()));	
+			                                       Neurons[i].inputEdges[j].getStart().getDel() *
+			                                       Neurons[i].getOutput()));	
 		}	
 	
 }

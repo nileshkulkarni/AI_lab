@@ -25,7 +25,11 @@ NeuralNetwork :: backPropagate(){
 		layers[i].backPropagate();
 	}
 	
-	for(int i=noOfLayers-2 ; i>=0 ; i++){
+	
+	
+	
+	
+	for(int i=noOfLayers-1; i>0 ; i++){
 		layers[i].updateWeights();
 	}
 	
