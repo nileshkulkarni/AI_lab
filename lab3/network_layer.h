@@ -24,7 +24,6 @@ class NetworkLayer{
 	    void updateLayer();	
 	    Vec  getOutput();	
 		void backPropagate(Vec t);
-		void backPropagate();
 		void updateWeights();
 };
 #endif
