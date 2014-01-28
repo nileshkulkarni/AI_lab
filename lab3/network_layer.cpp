@@ -13,25 +13,20 @@ NetworkLayer :: NetworkLayer (){
 } 
 
 NetworkLayer ::  NetworkLayer(int nNeurons){
-			layerId = totalLayers++;
-			init(nNeurons);
+        layerId = totalLayers++;
+        init(nNeurons);
 }
 
 
 	
 void NetworkLayer :: init(int nNeurons){
-			N = nNeurons;
-			for(int i =0;i<nNeurons;i++){
-                Neuron neuron(nNeurons);
-                printf("Generating neurons  on layer %d , neuron id is  %d\n", layerId, neuron.getID());
-                Neurons.push_back(neuron); 
-            
-            }
-            printf("IMP\n");
-			for(int i =0;i<nNeurons;i++){
-                Neurons[i].print();
-            }
-           // print();
+        N = nNeurons;
+        for(int i =0;i<nNeurons;i++){
+            Neuron neuron(nNeurons);
+            printf("Generating neurons  on layer %d , neuron id is  %d\n", layerId, neuron.getID());
+            Neurons.push_back(neuron); 
+        
+        }
 }
 
 	
@@ -49,6 +44,8 @@ vector<Neuron>* NetworkLayer:: getAllNeuronsPtr(){
     return &Neurons;
 
 }
+
+
 Vec  NetworkLayer:: getOutput(){
     Vec output; 
     
@@ -66,8 +63,14 @@ void NetworkLayer :: updateLayer(Vec In) {
 }
 
 void NetworkLayer ::backPropagate(){
-		for(int i=0;i<N;i++){
-			Neurons[i].collectInputs();
+		
+        cout<<"Layer Id is : no argument"<<layerId<<endl;
+       
+         
+    	for(int i=0;i<N;i++){
+           // if(layerId!=0){	 
+           //     Neurons[i].collectInputs();
+           // }
 			Neurons[i].updateDel();
 		}	
 }
@@ -75,22 +78,29 @@ void NetworkLayer ::backPropagate(){
 
 
 void NetworkLayer ::backPropagate(Vec t){
-		for(int i=0;i<N;i++){
+		
+        cout<<"Layer Id is :"<<layerId<<endl;
+        
+        for(int i=0;i<N;i++){
 			Neurons[i].collectInputs();
-			Neurons[i].updateDel(t);
+			Neurons[i].updateDel(t[i]);
 		}	
 }
+
+
 
 void NetworkLayer ::updateWeights(){   //of input edges
     for(int i=0;i<N;i++){
-			for(int j=0;j<Neurons[i].inputEdges.size();j++)
-			   (Neurons[i].inputEdges[j])->setWeight(Neurons[i].inputEdges[j]->getWeight() +  
+			for(int j=0;j<Neurons[i].inputEdges.size();j++){
+                cout<<"Here: "<<(Neurons[i].inputEdges[j])->getWeight();
+			    (Neurons[i].inputEdges[j])->setWeight(Neurons[i].inputEdges[j]->getWeight() +  
 			                                       (NETA *
-			                                       Neurons[i].inputEdges[j]->getStart()->getDel() *
-			                                       Neurons[i].getOutput()));	
-		}	
+			                                       Neurons[i].getDel() *
+			                                       (Neurons[i].inputEdges[j]->getStart())->getOutput()));
+                cout<<(Neurons[i].inputEdges[j])->getWeight()<<endl;                                   	
+		  }	
+    }
 }
-
 
 void NetworkLayer::print(){
     printf("\tLayer ID %d \n",layerId);	

@@ -43,7 +43,7 @@ class Neuron{
         void addInputEdge(Edge *e);
         void addOutputEdge(Edge *e);
         void updateDel();
-        void updateDel(Vec t);
+        void updateDel(float t);
         void update();
         int getID(); 
 
