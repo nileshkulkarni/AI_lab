@@ -14,7 +14,22 @@ vector<Edge*> Neuron :: getInputEdges() {
 	return inputEdges;
 }
 
+void Neuron ::print(){
+    printf("\t\tNeuron ID \n" );
+    printf("\t\tOutput Weights");
+    for(int i =0;i<outputEdges.size();i++){
+        printf("%f",outputEdges[i]->getWeight()); 
+    }
 
+    printf("\n\t\tInput Weights");
+    for(int i =0;i<inputEdges.size();i++){
+        printf("%f",inputEdges[i]->getWeight()); 
+    
+    }
+    printf("\n\t\t Output %f ", output);
+    printf("\n");
+
+}
 void Neuron :: collectInputs() {
 	float collectedOut=0;
 	vector<Edge*> input = getInputEdges();

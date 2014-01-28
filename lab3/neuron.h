@@ -33,7 +33,7 @@ class Neuron{
         vector<Edge*> outputEdges;
         
         static int totalNeurons;
-
+        void print();
         Neuron(int noOfInputs);
 	    vector<Edge*> getInputEdges();
         void collectInputs();  //and generate output
