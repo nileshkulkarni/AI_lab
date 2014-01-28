@@ -15,5 +15,7 @@ public:
     Neuron* getEnd();
     void setStart(Neuron*);
     Neuron* setEnd(Neuron*);
+    float getWeight();
+    void setWeight(float w);		
 
 };
