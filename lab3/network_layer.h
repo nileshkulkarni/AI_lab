@@ -3,6 +3,11 @@
 #include <stdio.h>
 #include <vector>
 
+
+
+#define NETA 0.5
+
+
 class NetworkLayer{
     private:    
         vector<Neuron> Neurons;
@@ -17,13 +22,5 @@ class NetworkLayer{
 		void backPropagate();
 		void backPropagate(Vec t);
 		
-        feedForwardNeurons(NetworkLayer *prevLayer);
+		void updateWeights();
 };
-
-
-
-
-
-
-
-
