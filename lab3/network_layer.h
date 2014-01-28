@@ -13,8 +13,8 @@ class NetworkLayer{
     public:
     
         NetworkLayer(int nNeurons , int id);
-        
 		void backPropagate();
-		
+	    void updateLayer();	
+	    Vec  getOutput();	
         feedForwardNeurons(NetworkLayer *prevLayer);
 };
