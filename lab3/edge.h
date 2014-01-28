@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <iostream>
 #include<cstdlib>
+
+class Neuron;
 class Edge{
 private: 
     Neuron* start;

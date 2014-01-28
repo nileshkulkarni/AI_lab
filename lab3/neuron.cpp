@@ -45,7 +45,7 @@ void Neuron :: updateDel(Vec t){
 void Neuron :: updateDel(){
 	del = 0;
 	for(int i=0;i<outputEdges.size();i++){
-		del +=	outputEdges[i] * (outputEdges[i].getEnd())->getDel() * output * (1 - output);
+		del +=	outputEdges[i]->getWeight() * (outputEdges[i]->getEnd())->getDel() * output * (1 - output);
 	}
 }
 
