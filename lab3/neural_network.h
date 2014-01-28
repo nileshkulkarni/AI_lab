@@ -38,10 +38,14 @@ class NeuralNetwork{
         void addTrainData(Vec input, Vec outputs); 
         void addAllTrainData(vector<Vec> input,vector<Vec> output); 
         
+        
+        
+        
         Vec getOutput(Vec in);
         void backPropagate();
         
         void feedForward(Vec in);     
         void feedForward(); 
-         
+        
+        void print(); 
 };

@@ -78,3 +78,13 @@ void NetworkLayer ::updateWeights(){   //of input edges
 			                                       Neurons[i].getOutput()));	
 		}	
 }
+
+
+void NetworkLayer::print(){
+	
+	for(int i=0;i<N;i++){
+		Neurons[i].print();
+		cout<<"   " 
+	}
+
+}
