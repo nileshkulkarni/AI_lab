@@ -84,7 +84,7 @@ void NetworkLayer::print(){
 	
 	for(int i=0;i<N;i++){
 		Neurons[i].print();
-		cout<<"   " 
+		cout<<"   " ;
 	}
 
 }
