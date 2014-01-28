@@ -37,7 +37,10 @@ Vec NeuralNetwork::getOutput(Vec in){
     return layers[size-1].getOutput();
 }
 
+void NeuralNetwork ::addLayer(int n){
+     
 
+}
 void NeuralNetwork :: backPropagate(){
 	
 	layers[noOfLayers-1].backPropagate(outputs);

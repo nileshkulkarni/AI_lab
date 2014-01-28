@@ -2,6 +2,7 @@
 
 using namespace std;
 int Neuron::totalNeurons =0;
+
 Neuron::Neuron(int N){
     noOfInputs = N;    
     id = totalNeurons;
