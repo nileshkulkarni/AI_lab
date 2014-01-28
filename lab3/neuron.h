@@ -27,11 +27,13 @@ class Neuron{
         Vec inputs;
         float output;
         float del;
-        static int totalNeurons;
     public:
+        
         vector<Edge*> inputEdges;
         vector<Edge*> outputEdges;
         
+        static int totalNeurons;
+
         Neuron(int noOfInputs);
 	    vector<Edge*> getInputEdges();
         void collectInputs();  //and generate output
