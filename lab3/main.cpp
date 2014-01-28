@@ -1,10 +1,10 @@
 #include "neural_network.h"
 
 int main(){
-    NeuralNetwork nn(3);
+    NeuralNetwork nn(2);
     
    nn.addInputLayer(2);
-    nn.addHiddenLayer(2);
+   // nn.addHiddenLayer(2);
     nn.addOutputLayer(1);
     
     
@@ -16,7 +16,7 @@ int main(){
     out.push_back(1);
 
 
-    addTrainData(in, out);
+    nn.addTrainData(in, out);
     
     return 1;
 }

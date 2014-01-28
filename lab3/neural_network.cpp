@@ -74,10 +74,6 @@ Vec NeuralNetwork::getOutput(Vec in){
     return layers[size-1].getOutput();
 }
 
-void NeuralNetwork ::addLayer(int n){
-     
-
-}
 void NeuralNetwork :: backPropagate(){
 	
 	layers[noOfLayers-1].backPropagate(outputs);
@@ -92,10 +88,11 @@ void NeuralNetwork :: backPropagate(){
 }	
 
 
-void NeuralNetwork:: addTrainData(Vec in, Vec out){
+void NeuralNetwork::addTrainData(Vec in, Vec out){
 	
 	this->feedForward(in);
-	Vec o = layers[nlayers-1] .getOutput(); 
-
+	Vec o = layers[noOfLayers-1].getOutput(); 
+    cout<< o[0] << endl;
 	
 }
+
