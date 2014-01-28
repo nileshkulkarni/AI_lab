@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "neuron.h"
+#define NEURON_INPUTS 5
 #define NETA 0.5
 
 
@@ -23,6 +24,7 @@ class NetworkLayer{
 	    void updateLayer();	
 	    Vec  getOutput();	
 		void backPropagate(Vec t);
+		void backPropagate();
 		void updateWeights();
 };
 #endif
