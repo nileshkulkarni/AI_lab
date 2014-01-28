@@ -15,9 +15,15 @@ class NetworkLayer{
         int N;  //Neurons
         int layerId;
         
+        static int totalLayers;
+        
    
     public:
-        NetworkLayer(int nNeurons , int id);
+    
+    
+        NetworkLayer();
+        NetworkLayer(int nNeurons);
+        void init(int nNeurons);
         
 	    void updateLayer(Vec In);	
 		void backPropagate();
@@ -25,5 +31,6 @@ class NetworkLayer{
 	    Vec  getOutput();	
 		void backPropagate(Vec t);
 		void updateWeights();
+		void setLayerId(int id);
 };
 #endif
