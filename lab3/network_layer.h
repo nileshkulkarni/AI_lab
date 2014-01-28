@@ -14,7 +14,8 @@ class NetworkLayer{
     
         NetworkLayer(int nNeurons , int id);
         
-		void backPropagate();
-		
+	void backPropagate();
+	void updateLayer();
+	void updateLayer(Vec In);	
         feedForwardNeurons(NetworkLayer *prevLayer);
 };
