@@ -41,6 +41,7 @@ class Neuron{
         float getDel();
         void updateDel();
         void updateDel(Vec t);
+        void update();
 
 };
 
@@ -57,6 +58,5 @@ void Neuron :: updateDel(){
 		del +=	outputweights[i] * outputEdges[i].getDel() * output * (1 - output);
 	}
 }
-
 
 
