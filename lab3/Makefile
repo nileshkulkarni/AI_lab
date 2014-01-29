@@ -1,6 +1,6 @@
 
 CC=g++-4.6
-TARGET=NeuralNetwork2_5
+TARGET=NeuralNetwork
 
 
 
