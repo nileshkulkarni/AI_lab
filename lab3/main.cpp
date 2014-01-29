@@ -2,6 +2,7 @@
 #include <vector>
 
 
+float NETA;
 
 void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto);
 void getTruthTableLsd(int n, vector< Vec > &input, vector< Vec > &output);
@@ -9,9 +10,13 @@ void printTT(vector <Vec> , vector <Vec>);
 
 using namespace std;
 int main(){
-    NeuralNetwork nn(3,1);
+    NETA =0.2;
+    printf("Enter Learning rate \n");
+    scanf("%f",&NETA);
+    NeuralNetwork nn(4,1);
     
     nn.addInputLayer(2);
+    nn.addHiddenLayer(4);
     nn.addHiddenLayer(4);
     nn.addOutputLayer(1);
     
