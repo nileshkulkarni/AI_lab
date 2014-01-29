@@ -17,26 +17,28 @@ int main(){
     NeuralNetwork nn(3,1);
     
     nn.addInputLayer(2);
-   // nn.addHiddenLayer(3);
+    //nn.addHiddenLayer(7);
     nn.addHiddenLayer(2);
     nn.addOutputLayer(1);
     
     nn.generateEdges();
     vector< Vec> ins;
 	vector< Vec > outs;
-   genTT("XOR",ins,outs);
+    genTT("XOR",ins,outs);
     //getTruthTableLsd(1,ins,outs);
     //printTT(ins,outs);
-  nn.addAllTrainData(ins, outs);
+    nn.addAllTrainData(ins, outs);
 	
 	
     Vec in2;
     in2.push_back(1);
     in2.push_back(0);
-    /*in2.push_back(0);
-    in2.push_back(0);
-    in2.push_back(0);
-    */
+  /*  in2.push_back(0);
+    in2.push_back(1);
+    in2.push_back(1);
+    in2.push_back(1);
+    in2.push_back(1);
+   */ 
 	nn.getOutput(in2);
     
     nn.print();
