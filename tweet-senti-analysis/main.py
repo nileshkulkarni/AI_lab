@@ -1,6 +1,10 @@
 from optparse import OptionParser
-import processTweet
+from processTweet import *
 import os
+def clean():
+    filelist = [ f for f in os.listdir("TweetsCorpus") if f.startswith("processed_") ]
+    for f in filelist:
+        os.remove("TweetsCorpus/"+f)
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -13,11 +17,19 @@ if __name__ == '__main__':
         options.preprocess = options.combine = True
 
     if options.preprocess:
-        print "Preprocessing sample tweets\n"
+        print "Preprocessing sample tweets" 
+        clean()
+        print "Processing negative tweets..."
+        processFile("negative")
+        print "Processing positive tweets..."
+        processFile("positive")
+        print "Processing objective tweets..."
+        processFile("objective")
 
     if options.clean:
         print "Cleaning crap..."
-        filelist = [ f for f in os.listdir("TweetsCorpus") if f.startswith("processed_") ]
-        for f in filelist:
-            os.remove("TweetsCorpus/"+f)
+        clean()
         print "....Done cleaning"
+
+
+
