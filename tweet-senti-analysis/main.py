@@ -1,4 +1,6 @@
 from optparse import OptionParser
+import processTweet
+import os
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -14,5 +16,8 @@ if __name__ == '__main__':
         print "Preprocessing sample tweets\n"
 
     if options.clean:
-        print "Cleaning crap\n"
-
+        print "Cleaning crap..."
+        filelist = [ f for f in os.listdir("TweetsCorpus") if f.startswith("processed_") ]
+        for f in filelist:
+            os.remove("TweetsCorpus/"+f)
+        print "....Done cleaning"
