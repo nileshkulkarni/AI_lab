@@ -141,7 +141,7 @@ void Neuron :: collectInputs(float in) {
 	}
 */ 
 	output = collectedOut;
-    updateOutput();
+ //   updateOutput();
    // printf("Neuron ID ** %d , %f \n", id, output);	
 }
 
