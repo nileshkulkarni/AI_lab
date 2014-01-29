@@ -57,7 +57,8 @@ void getTruthTableLsd(int n, vector< Vec > &input, vector< Vec > &output){
 	
 	generateZeros(pow(2,SEGMENTS),input);
     generateZerosOutput(pow(2,SEGMENTS),output);
-	switch(n){
+	printf("Here\n");
+    switch(n){
 		case 0:	
 			//printf("Filled here\n");
 			output[ZERO][0] =1;

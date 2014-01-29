@@ -19,10 +19,10 @@ int main(){
     vector< Vec> ins;
 	vector< Vec > outs;
     
-   // genTT("XOR",ins,outs);
+    genTT("XOR",ins,outs);
     getTruthTableLsd(1,ins,outs);
     printTT(ins,outs);
-  /*nn.addAllTrainData(ins, outs);
+    nn.addAllTrainData(ins, outs);
 	
 	
     Vec in2;
@@ -31,7 +31,7 @@ int main(){
     nn.getOutput(in2);
     
     nn.print();
-   */ 
+    
 
     return 1;
 }
