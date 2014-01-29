@@ -29,11 +29,14 @@ int main(){
     //printTT(ins,outs);
     nn.addAllTrainData(ins, outs);
 	
-	
     Vec in2;
-    in2.push_back(1);
-    in2.push_back(0);
-  /*  in2.push_back(0);
+    in2.resize(2);
+    while(1){
+        printf("Enter inputs \n");
+        scanf("%f %f",&in2[0],&in2[1]);
+    /*    in2.push_back(1);
+        in2.push_back(1);
+     in2.push_back(0);
     in2.push_back(1);
     in2.push_back(1);
     in2.push_back(1);
@@ -42,6 +45,6 @@ int main(){
 	nn.getOutput(in2);
     
     nn.print();
-
+    }
     return 1;
 }
