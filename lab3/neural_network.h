@@ -10,7 +10,7 @@
 
 
 
-
+#define ERROR_THRESHOLD 0.0006
 using namespace std;
 
 

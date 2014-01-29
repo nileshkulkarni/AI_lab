@@ -1,5 +1,10 @@
 #include "neural_network.h"
 #include <vector>
+
+
+
+void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto);
+
 using namespace std;
 int main(){
     NeuralNetwork nn(3,1);
@@ -9,7 +14,7 @@ int main(){
     nn.addOutputLayer(1);
     
     nn.generateEdges();
-    
+   /* 
     Vec in0;
     in0.push_back(0);
     in0.push_back(0);
@@ -28,9 +33,10 @@ int main(){
     Vec in3;
     in3.push_back(1);
     in3.push_back(1);
-    
+    */
     vector< Vec> ins;
-    ins.push_back(in0);
+	vector< Vec > outs;
+   /* ins.push_back(in0);
     ins.push_back(in1);
     ins.push_back(in2);
     ins.push_back(in3);
@@ -45,15 +51,21 @@ int main(){
     out2.push_back(1);
     out3.push_back(0);
     
-    vector< Vec > outs;
+    
     outs.push_back(out0);
     outs.push_back(out1);
     outs.push_back(out2);
     outs.push_back(out3);
     
+    */
     
+    genTT("XOR",ins,outs);
     nn.addAllTrainData(ins, outs);
-    
+	
+	
+    Vec in2;
+    in2.push_back(1);
+    in2.push_back(0);
     nn.getOutput(in2);
     
     nn.print();

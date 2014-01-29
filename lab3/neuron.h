@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <list>
 #include <vector>
+#include <cmath>
 #include "edge.h"
 
 using namespace std;
@@ -40,7 +41,8 @@ class Neuron{
         void print();
         Neuron(int noOfInputs);
 	    vector<Edge*> getInputEdges();
-        void collectInputs();  //and generate output
+        void collectInputs();//and generate output
+        void updateOutput();
         void collectInputs(float in); // to be called for the outermost input layer
         float getOutput();  
         float getDel();
