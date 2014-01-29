@@ -14,17 +14,17 @@ int main(){
     NETA =0.2;
     printf("Enter Learning rate \n");
     scanf("%f",&NETA);
-    NeuralNetwork nn(4,1);
+    NeuralNetwork nn(3,1);
     
-    nn.addInputLayer(5);
-    nn.addHiddenLayer(3);
-    nn.addHiddenLayer(3);
+    nn.addInputLayer(2);
+   // nn.addHiddenLayer(3);
+    nn.addHiddenLayer(2);
     nn.addOutputLayer(1);
     
     nn.generateEdges();
     vector< Vec> ins;
 	vector< Vec > outs;
-   genTT("PALINDROME",ins,outs);
+   genTT("XOR",ins,outs);
     //getTruthTableLsd(1,ins,outs);
     //printTT(ins,outs);
   nn.addAllTrainData(ins, outs);
@@ -33,10 +33,11 @@ int main(){
     Vec in2;
     in2.push_back(1);
     in2.push_back(0);
+    /*in2.push_back(0);
     in2.push_back(0);
     in2.push_back(0);
-    in2.push_back(0);
-    nn.getOutput(in2);
+    */
+	nn.getOutput(in2);
     
     nn.print();
 
