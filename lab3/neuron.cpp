@@ -5,7 +5,7 @@ int Neuron::totalNeurons =0;
 
 
 Neuron::Neuron(int N){
-    noOfInputs = N;    
+    noOfInputs = N+1;    
     id = totalNeurons;
     totalNeurons++;
     output=0;
@@ -18,6 +18,7 @@ Neuron::Neuron(int N){
 vector<Edge*> Neuron :: getInputEdges() {
 	return inputEdges;
 }
+
 void Neuron::addInputEdge(Edge *e){
     inputEdges.push_back(e);
 }
@@ -32,7 +33,7 @@ void Neuron:: setWeightsZero(){
     }
 }
 void Neuron ::print(){
-    printf("\t\tNeuron ID  %d \n" ,id   );
+    printf("\t\tNeuron ID , del (%d ,  %f) \n" ,id , del  );
     printf("\t\tOutput Weights ");
     for(int i =0;i<outputEdges.size();i++){
         printf("%d: %f ",i,outputEdges[i]->getWeight()); 
@@ -48,6 +49,7 @@ void Neuron ::print(){
     printf("\n");
 
 }
+
 
 int Neuron::getID(){
     return id;
@@ -95,16 +97,13 @@ float Neuron:: getDel(){
 
 void Neuron::updateOutput(){
     output = float(1)/(float)(1 + exp(-output));
-
 }
 
 void Neuron :: updateDel(){
 	del = 0;
 	for(int i=0;i<outputEdges.size();i++){
 		del +=	outputEdges[i]->getWeight() * (outputEdges[i]->getEnd())->getDel() * output * (1 - output);
-        
         //printf("computing del : %f %f %f %f \n" ,outputEdges[i]->getWeight()  , (outputEdges[i]->getEnd())->getDel() , output  , (1 - output)); 
-        
 	}
 }
 
