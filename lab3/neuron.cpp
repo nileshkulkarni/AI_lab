@@ -25,6 +25,12 @@ void Neuron::addOutputEdge(Edge *e){
    outputEdges.push_back(e); 
 
 }
+void Neuron:: setWeightsZero(){
+
+    for(int i =0;i<inputEdges.size();i++){
+        inputEdges[i]->setWeight(0); 
+    }
+}
 void Neuron ::print(){
     printf("\t\tNeuron ID  %d \n" ,id   );
     printf("\t\tOutput Weights ");

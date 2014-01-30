@@ -32,7 +32,7 @@ NeuralNetwork::NeuralNetwork(int nLayers,int noOfNeurons){
 
 
 void NeuralNetwork::addInputLayer(int nNeurons){
-	layers[0].init(nNeurons);
+	layers[0].initInput(nNeurons);
 }
 
 
