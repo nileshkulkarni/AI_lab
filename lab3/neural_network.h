@@ -28,7 +28,6 @@ class NeuralNetwork{
         
         
         
-        
         vector<NetworkLayer>layers;
         NeuralNetwork();
         NeuralNetwork(int nlayers);
