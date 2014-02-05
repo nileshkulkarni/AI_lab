@@ -11,8 +11,7 @@ def processTweet(tweet):
     tweet = re.sub('@[^\s]+','AT_USER',tweet)
     #Remove additional white spaces
     tweet = re.sub('[\s]+', ' ', tweet)
-    #Remove hastag '#'
-    tweet = re.sub(r'#([^\s]+)', r'\1', tweet)
+    #Remove hastag '#' tweet = re.sub(r'#([^\s]+)', r'\1', tweet)
     #trim
     tweet = tweet.strip('\'"')
     tweet = re.sub(r"(.)\1{1,}",r'\1\1',tweet)
@@ -83,6 +82,7 @@ def getFeatureVector(tweet,featureVector,stopWords):
 def getAllFeatureWords(filename,featureVector):
     filename = 'TweetsCorpus/processed_'+filename
     stopWords = getStopWordList("TweetsCorpus/stopword.txt")
+    stopWords.extend(getStopWordList("TweetsCorpus/31Kverbs.txt"))
     fp = open(filename,'r')
     line = fp.readline()
     while line:
