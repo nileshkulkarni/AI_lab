@@ -2,8 +2,9 @@
 
 
 Edge::Edge(){
-   weight = (float)(rand() % 1000 )/1000;
-   prevError = weight;
+   //weight = (float)(rand() % 1000 )/1000;
+    weight =  
+   prevError = 0;
    //cout<<"\n : "<<weight<<"\n";
 }
 
