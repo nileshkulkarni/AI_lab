@@ -96,8 +96,9 @@ def getAllFeatureWords(filename,featureVector):
 def printFeature(featureVector):
     fp = open("TweetsCorpus/featureVector.dump",'w')
     for word in featureVector:
-        fp.write(word)
-        fp.write('\n')
+        if(len(word)>=3):
+            fp.write(word)
+            fp.write('\n')
     fp.close()
     return
 #end
