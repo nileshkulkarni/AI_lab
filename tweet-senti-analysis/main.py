@@ -10,11 +10,12 @@ if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option("-a","--all", action="store_true", dest="all", default=None, help="Run the entire script")
     parser.add_option("-p", "--preprocess", action="store_true", dest="preprocess", default=None, help="Process most recent data")
+    parser.add_option("-e", "--extract", action="store_true", dest="extractfeature", default=None, help="Extract Feature Vector")
     parser.add_option("-d", "--clean", action="store_true", dest="clean", default=None, help="Clean previous processed files")
     (options, args) = parser.parse_args()
 
     if options.all:
-        options.preprocess = options.combine = True
+        options.preprocess = options.combine = options.extractfeature = True
 
     if options.preprocess:
         print "Preprocessing sample tweets" 
@@ -25,6 +26,18 @@ if __name__ == '__main__':
         processFile("positive")
         print "Processing objective tweets..."
         processFile("objective")
+    
+    if options.extractfeature:
+        print "Extracting Feature Vector"
+        featureVector = []
+        print "Extracting positive features"
+        getAllFeatureWords("positive",featureVector)
+        print "Extracting negative features" 
+        getAllFeatureWords("negative",featureVector)
+        print "Extracting objective features"
+        getAllFeatureWords("objective",featureVector)
+        print "Extracted feature vector, now writing to file"
+        printFeature(featureVector)
 
     if options.clean:
         print "Cleaning crap..."
