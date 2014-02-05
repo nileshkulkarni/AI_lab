@@ -1,9 +1,5 @@
 #include "neural_network.h"
-
-
-NeuralNetwork::NeuralNetwork(){
-}
-
+NeuralNetwork::NeuralNetwork(){ } 
 
 
 
@@ -36,7 +32,7 @@ NeuralNetwork::NeuralNetwork(int nLayers,int noOfNeurons){
 
 
 void NeuralNetwork::addInputLayer(int nNeurons){
-	layers[0].init(nNeurons);
+	layers[0].initInput(nNeurons);
 }
 
 
@@ -77,12 +73,12 @@ Vec NeuralNetwork::getOutput(Vec in){
 }
 
 
-
+//I wrote a comment in vim. This one. 
 void NeuralNetwork :: backPropagate(){
 	
 	layers[noOfLayers-1].backPropagate(outputs);
 
-	for(int i=noOfLayers-2 ; i>=0 ; i--){
+	for(int i=noOfLayers-2; i>=0 ; i--){
 		layers[i].backPropagate();
 	}
 
@@ -106,9 +102,10 @@ void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
     
     Vec outp;
     int printRate =100;
+	int steps=0;
   while(Error>ERROR_THRESHOLD){ 
 		Error = 0;
-		
+		steps++;
         for(int i =0;i< ins.size();i++){
             addTrainData(ins[i],outs[i]);
             outp = layers[noOfLayers-1].getOutput();
@@ -117,16 +114,18 @@ void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
             //cout<<"here here here here:"<<endl;
         }
         if(!printRate--){
-			printf("Error Value %f\n", Error);
+			printf("%d %f\n",steps, Error);
 			printRate =100;
 		}
 		
     }
     
     printf("Training Done Error %f \n",Error);
-    
-    
+	printf("Total steps : %d\n",steps);	    
+    printf("\n\n"); 
 }
+
+
 
 
 void NeuralNetwork::print(){
@@ -145,7 +144,6 @@ void NeuralNetwork::putEdges(int from , int to){
     //printf("Layer from %d ID from %d ,to %d layer id to %d \n",from,layers[from].layerId,to,layers[to].layerId);
     for (int i =0;i<fromNeuronsPtr->size();i++){
         for (int j =0;j<toNeuronsPtr->size();j++){
-           // printf("here 3\n");
             Edge *E = new Edge; 
             E->setStart(&(*fromNeuronsPtr)[i]);
             (*fromNeuronsPtr)[i].addOutputEdge(E);

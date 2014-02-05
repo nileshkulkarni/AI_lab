@@ -41,6 +41,7 @@ class Neuron{
         void print();
         Neuron(int noOfInputs);
 	    vector<Edge*> getInputEdges();
+        void setWeightsZero();
         void collectInputs();//and generate output
         void updateOutput();
         void collectInputs(float in); // to be called for the outermost input layer
