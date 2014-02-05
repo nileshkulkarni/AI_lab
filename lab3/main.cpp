@@ -62,11 +62,12 @@ int main(){
   //  printf("************\n");
     vector< Vec> ins;
     vector< Vec > outs;
-    if(OP == "LSD")
-        cout<<" "<<endl;
-        cin>>nlayers;		
-
-        getTruthTableLsd(1,ins,outs);
+    if(OP == "LSD"){
+        cout<<"Enter the number to be trained for\n "<<endl;
+        int no;
+        cin>>no;		
+        getTruthTableLsd(no,ins,outs);
+    }
     else    
         genTT(OP,ins,outs);
 
