@@ -18,6 +18,7 @@ int getInputSize(string op) {
 	else if(op.compare("PALINDROME") == 0) return 5;
 	else if(op.compare("Majority") == 0) return 5;
 	else if(op.compare("Parity") == 0) return 6;
+	else if(op.compare("LSD") == 0) return 7;
 	else return -1;
 }
 
@@ -32,7 +33,7 @@ int main(){
     
     cout<<"Give the OPERATOR to train on:"<<endl;
     cin>>OP;
-    cout<<OP<<endl;		
+    //cout<<OP<<endl;		
     	
     Vec in2;
     int vsize = getInputSize(OP);	
@@ -61,8 +62,11 @@ int main(){
   //  printf("************\n");
     vector< Vec> ins;
     vector< Vec > outs;
-    genTT(OP,ins,outs);
-    //getTruthTableLsd(1,ins,outs);
+    if(OP == "LSD")
+        getTruthTableLsd(1,ins,outs);
+    else    
+        genTT(OP,ins,outs);
+
     //printTT(ins,outs);
     nn.addAllTrainData(ins, outs);
     int rem;
