@@ -15,6 +15,7 @@ def processTweet(tweet):
     tweet = re.sub(r'#([^\s]+)', r'\1', tweet)
     #trim
     tweet = tweet.strip('\'"')
+    tweet = re.sub(r"(.)\1{1,}",r'\1\1',tweet)
     return tweet
 
 #process the entire tweetfile
