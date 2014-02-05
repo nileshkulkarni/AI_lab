@@ -9,7 +9,7 @@
 #include "neuron.h"
 
 
-#define MOMENTUM_FACTOR 0.1
+extern float MOMENTUM_FACTOR;
 
 
 class Neuron;

@@ -122,7 +122,7 @@ void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
     
     printf("Training Done Error %f \n",Error);
 	printf("Total steps : %d\n",steps);	    
-    
+    printf("\n\n"); 
 }
 
 
