@@ -63,6 +63,9 @@ int main(){
     vector< Vec> ins;
     vector< Vec > outs;
     if(OP == "LSD")
+        cout<<" "<<endl;
+        cin>>nlayers;		
+
         getTruthTableLsd(1,ins,outs);
     else    
         genTT(OP,ins,outs);
