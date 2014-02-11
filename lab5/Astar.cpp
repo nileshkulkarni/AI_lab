@@ -5,56 +5,98 @@ AStar::AStar(Graph g){
    G.allNodes =g.allNodes; 
 
 }
-
-bool AStat::findInList( list<NodePtr> l,NodePtr n){
+void AStar::setHeuristicFunction(HeuristicF f){
+    H =f; 
+    return;
+}
+NodePtr AStar::getMinimumNode( list<NodePtr> l){
+    if(l.size() == 0){
+        return NULL;
+    }
+    NodePtr n = l.front();
+    int min = n->f_score;
+    list<NodePtr> ::iterator it ;
+    for(it=l.begin();it!=l.end();it++){
+        if( (*it)->f_score < min){
+            n = *it;
+            min = (*it)->f_score;
+        }
+    }
+    return n;
+}
+bool AStar::findInList( list<NodePtr> l,NodePtr n){
     if(n==NULL){
         std::cout<<"Searching for a NULL element in the list\n";
         return false;
     }
     list<NodePtr> ::iterator it ;
-    for(it=l.begin();it<l.end();it++){
+    for(it=l.begin();it!=l.end();it++){
         if( n->id == (*it)->id)
             return true;
     }
     return false;
 }
 
-int Astar::distance(NodePtr from, NodePtr to ){
-
+bool AStar::addNodeToList( list<NodePtr>& l,NodePtr n){
+    
+    if(n==NULL){
+        std::cout<<"Searching for a NULL element in the list\n";
+        return false;
+    }
+    l.push_back(n);
 
 }
-AStar::getShortestPath(int start, int end){
+bool AStar::removeNodeFromList( list<NodePtr>& l,NodePtr n){
+    
+    if(n==NULL){
+        std::cout<<"Searching for a NULL element in the list\n";
+        return false;
+    }
+    list<NodePtr> ::iterator it ;
+    for(it=l.begin();it!=l.end();it++){
+        if( n->id == (*it)->id)
+            l.erase(it);
+    }
+    return false;
 
-  NodePtr goal = G[end]; 
-  NodePtr start = G[start];
+}
+int AStar::distance(NodePtr from, NodePtr to ){
+    return 1;    
+}
+
+
+bool AStar::getShortestPath(int _start, int _end){
+
+  NodePtr goal = G[_end]; 
+  NodePtr start = G[_start];
   if(goal==NULL){
     std::cout<<" Goal Node is set to NULL, cannot find a path\n";
-    return;
+    return false;
   } 
   if(start==NULL){
     std::cout<<" Start Node is set to NULL, cannot find a path\n";
-    return;
+    return false;
   }
-  openList.push_back(start);
+  addNodeToList(openList,start);
   while(!(openList.size() == 0)){
         
      NodePtr current  = getMinimumNode(openList);
-     if(currentNodePtr->id==goal->id){
+     if(current->id==goal->id){
          std::cout<<"Path found\n";
-         reconstructPath(came_from,goal);
+         reconstructPath(goal);
          return true;
      }
 
-     removeNodeFromList(openList,currentNodePtr); 
+     removeNodeFromList(openList,current); 
 
-     addNodeToList(closedList,currentNodePtr);
+     addNodeToList(closedList,current);
       
-     for(int i=0;i<current->neighbours.size();i++){
-        NodePtr nbr = neighbours[i];
-        if(findInList(nbr,closedList)){
+     for(int i=0;i<(current->neighbours).size();i++){
+        NodePtr nbr = current->neighbours[i];
+        if(findInList(closedList,nbr)){
             continue;
         }
-        int tentative_g_score = current->g_score + dist(current,nbr->n);
+        int tentative_g_score = current->g_score + distance(current,nbr);
         
         if(!findInList(openList,nbr) || tentative_g_score < nbr->g_score){
             nbr->came_from = current;
@@ -74,4 +116,14 @@ AStar::getShortestPath(int start, int end){
   return false;
 }
 
-Astar::re
+void AStar::reconstructPath(NodePtr node){
+    NodePtr came_from = node->came_from;
+    if(came_from==NULL){
+        return;
+    }
+    else{
+        std::cout<<came_from->id<<" \n";
+        reconstructPath(came_from);
+        return;
+    }
+}
