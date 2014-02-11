@@ -1,6 +1,7 @@
 #include "neural_network.h"
 #include <vector>
-
+#include <cstdlib>
+#include <fstream>
 string OP;
 float NETA;
 float MOMENTUM_FACTOR;
@@ -35,9 +36,12 @@ int main(){
     cin>>OP;
     //cout<<OP<<endl;		
     	
-    Vec in2;
-    int vsize = getInputSize(OP);	
-    in2.resize(vsize);
+    Vec in2;	
+    int vsize;	
+    if(OP!="Tweet"){
+    	vsize = getInputSize(OP);	
+	in2.resize(vsize);
+	}
     
     int nlayers;
 		
@@ -45,7 +49,9 @@ int main(){
     cin>>nlayers;		
     NeuralNetwork nn(nlayers,1);
     
-    nn.addInputLayer(vsize);
+    if(OP!="Tweet"){
+    	nn.addInputLayer(vsize);
+	}
     //nn.addHiddenLayer(7);
     int hl=1;
     while(hl<=nlayers-2) {	//No. of hidden layers is 2 less than total
@@ -58,17 +64,90 @@ int main(){
 
     nn.addOutputLayer(1);
     
-    nn.generateEdges();
+   // nn.generateEdges();
   //  printf("************\n");
     vector< Vec> ins;
     vector< Vec > outs;
-    if(OP == "LSD")
+    if(OP == "LSD") {
+	nn.generateEdges();
         getTruthTableLsd(1,ins,outs);
-    else    
-        genTT(OP,ins,outs);
+    	nn.addAllTrainData(ins, outs);
+    }
+    else if(OP == "Tweet") {
+	cout<<"In1"<<endl;
+    	//Call to python feature generator
+    	string file = "main.py -a";
+    	string ex = "python ";
+    	ex+=file;
+    	system(ex.c_str());
+    	
+	//Now open the generated training data file
+    	vector< Vec > inputVec;
+    	vector< Vec > outputVec;
+    	string line;
+    	ifstream infile;
+    	infile.open("./TweetsCorpus/extracted-features.dump");
+    	cout<<"Generating input and output vectors for training.."<<endl;
+      	if(infile.is_open()) {
+		int nLines=0;
+     		while(getline(infile,line)) {
+			nLines++;
+    			int count = 0;
+    			int l = line.size();
+    	    		char c = (char)line[count];
+    			Vec outp;
+			int a = atoi(&c);	
+			if(a== -1){
+				outp.push_back(0);	
+				outp.push_back(0);	
+			}
+			else if(a== 0){
+				outp.push_back(0);	
+				outp.push_back(1);	
+			}
+			else if(a== 1){
+				outp.push_back(1);	
+				outp.push_back(1);	
+			}
+			
+			
+			outputVec.push_back(outp);
+			count+=2;
+			Vec inp;
+			while(count<=l) {
+				char c1 = (char)line[count];
+				float in = (float)atoi(&c1);
+				inp.push_back(in);
+				count+=2;
+			}
+			inputVec.push_back(inp);
+
+		}
+		infile.close();	
+		cout<<"Vectors Generated!"<<endl;
+		cout<<"Size of outputVec : "<<outputVec.size()<<endl;
+		cout<<"Size of inputVec : "<<inputVec.size()<<endl;
+       		//genTT(OP,inputVec,outputVec);
+    		nn.addInputLayer(inputVec[0].size());
+		cout<<"Input Layer added!"<<endl;
+		nn.generateEdges();
+		cout<<"Edges Generated!"<<endl;
+    		nn.addAllTrainData(inputVec, outputVec);
+            printf("Training Done!\n");
+	}
+	
+	else {
+		cout<<"Unable to open file!"<<endl;
+	}
+    }		
+    else {
+	nn.generateEdges();   
+       	genTT(OP,ins,outs);
+    	nn.addAllTrainData(ins, outs);
+   }	
 
     //printTT(ins,outs);
-    nn.addAllTrainData(ins, outs);
+//    nn.addAllTrainData(ins, outs);
     int rem;
     while(1){
         printf("Enter inputs \n");
