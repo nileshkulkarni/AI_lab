@@ -36,11 +36,15 @@ if __name__ == '__main__':
         getAllFeatureWords("negative",featureVector)
         print "Extracting objective features"
         getAllFeatureWords("objective",featureVector)
-        print "Extracted word universe, now writing to file"
-        printFeature(featureVector)
+        print "Finding the word frequency"
+        worddict = {}
+        worddict = getFreq(featureVector)
+        print "Processed word universe according to frequency, now writing to file"
+        finallist = []
+        finallist = finalVector(worddict)
         print "Wrote word universe, now extracting feature vector"
-        printFeatureVector(featureVector)
-        print "Done extracting features"
+        printFeatureVector(finallist)
+        print "Done extracting features and writing to file"
         
     if options.clean:
         print "Cleaning crap..."
