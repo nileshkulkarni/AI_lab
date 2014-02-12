@@ -2,8 +2,10 @@
 #define ASTAR_H
 #include <iostream>
 #include<list>
+#include <stdio.h>
 #include "graph.h"
 #include "node.h"
+
 using namespace std;
 typedef int (*HeuristicF)(NodePtr, NodePtr) ;
 class AStar{
