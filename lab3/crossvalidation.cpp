@@ -285,8 +285,8 @@ vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
 
 
 int main() {
-    vector <Vec> in = getTrainingInput(5,2);
-    vector <Vec> out = getTrainingOutput(5,2);
+    vector <Vec> in = getTrainingInput(10,4);
+    vector <Vec> out = getTrainingOutput(10,4);
     /*for(int i=0; i<in.size(); i++) {
         cout<<"Printing vector : "<<i<<" size : "<<in[i].size()<<endl;
         for(int j=0; j<in[i].size(); j++) {
@@ -295,9 +295,9 @@ int main() {
         cout<<"********************************************************************"<<endl;
         cout<<endl;
     }*/
-    vector<Vec> testIn = crossValinput(5,2);
-    vector<Vec> testOut = crossValOutput(5,2);
-    for(int i=0; i<testIn.size(); i++) {
+    vector<Vec> testIn = crossValinput(10,4);
+    vector<Vec> testOut = crossValOutput(10,4);
+    /*for(int i=0; i<testIn.size(); i++) {
         cout<<"Printing vector : "<<i<<" size : "<<testIn[i].size()<<endl;
         for(int j=0; j<testIn[i].size(); j++) {
             cout<<testIn[i][j]<<" ";
@@ -312,7 +312,7 @@ int main() {
         }
         cout<<"********************************************************************"<<endl;
         cout<<endl;
-    }
+    }*/
     cout<<"Size of input vec : "<<testIn.size()<<endl;
     cout<<"Size of output vec : "<<testOut.size()<<endl;
     cout<<"Size of training out vec : "<<out.size()<<endl;
