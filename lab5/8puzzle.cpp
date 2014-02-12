@@ -81,7 +81,7 @@ void printstate(vector<int>& v){
     }
     return;
 }
-
+/*
 int main(){
     vector<int> state;
     state.push_back(1);
@@ -98,3 +98,4 @@ int main(){
     }
 
 }
+*/

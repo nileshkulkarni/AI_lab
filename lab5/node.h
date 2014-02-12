@@ -6,6 +6,7 @@
 #include<list>
 #include "header.h"
 using namespace std;
+struct Data;
 class Node;
 typedef Node* NodePtr;
 typedef vector<NodePtr> nodeVector;
@@ -19,7 +20,7 @@ class Node{
     vector<NodePtr> neighbours;
     int g_score ;
     int f_score ;
-    Data data;
+    struct Data data;
     AdjacentGenerator ag; 
     
     Node(int i);
