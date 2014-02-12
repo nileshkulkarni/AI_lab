@@ -5,11 +5,6 @@
 #include <vector>
 
 #include "neuron.h"
-//#define NEURON_INPUTS 5
-//#define NETA 0.2
-
-//float NEURON_INPUTS= 5;
-//float NETA= 0.2;
 
 class NetworkLayer{
     private:    

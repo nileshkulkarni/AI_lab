@@ -169,8 +169,9 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 	bits=6;
 	while(i<(1<<bits)){
 		int count = 0;
-		for(int bit=0;bit<bits;bit++)
+		for(int bit=0;bit<bits;bit++){
 		  count += (int)(getbit(i , bit) == 1); 
+        }
 		bool result = !(count%2 == 0);  
 		cout<<((!result)?-1:1)<<" ";
 		
@@ -179,6 +180,7 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 		
 		for(int bit=0;bit<bits;bit++){
 		  cout<<((!result)?getbit(i,bit):-getbit(i,bit))<<" "; 
+		  vi.push_back(getbit(i,bit)); 
 	   }
 	   
 	   
