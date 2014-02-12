@@ -46,6 +46,26 @@ int main(){
     Graph graph(l);
    */
     vector< vector <int> > adjecencyMat;
+    vector<int> state;
+    state.push_back(1);
+    state.push_back(0);
+    for(int i = 2; i < 9 ; i++)
+        state.push_back(i);
+    Data d;
+    d._state=state;
+    NodePtr start = new Node(d);
+    
+    vector<int> finals;
+    finals.push_bac(8);
+    finals.push_back(0);
+    for(int i=1;i<8;i++){
+        finals.push_back(i);
+    }
+    Data d2;
+    d2._state=finals;
+    NodePtr stop = new Node(finals);
+
+    
     int noOfNodes = 7;
     adjecencyMat.resize(noOfNodes);
     for(int i =0;i<noOfNodes;i++){
