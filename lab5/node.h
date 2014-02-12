@@ -4,12 +4,11 @@
 #include<iostream>
 #include<vector>
 #include<list>
-
+#include "header.h"
 using namespace std;
 class Node;
 typedef Node* NodePtr;
 typedef vector<NodePtr> nodeVector;
-
 class Node{
     public:
     int id; 
@@ -17,6 +16,7 @@ class Node{
     vector<NodePtr> neighbours;
     int g_score ;
     int f_score ;
+    Data data;
     Node(int i){
         id =i;
         g_score = 0 ;
