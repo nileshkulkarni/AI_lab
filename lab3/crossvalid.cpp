@@ -106,7 +106,7 @@ vector<Vec> crossValinput(int nfold, int partForValidation) {
         int current_part=1;
         if(infile.is_open()) {
             while(current_part <= nfold) {
-                if(current_part==partForValidation) {
+                if(current_part==partForValidation and current_part!=nfold) {
                     int count=0;
                     while(count!=partSize) {
                         getline(infile,line);
@@ -124,15 +124,30 @@ vector<Vec> crossValinput(int nfold, int partForValidation) {
                     }
                     current_part++;
                 }
+                else if(current_part==nfold and current_part!=partForValidation) {
+                    while(getline(infile,line)) {
+                        int l = line.size();
+                        Vec inp;
+                        int index = 2;
+                        while(index<=l) {
+                            char c1 = (char)line[index];
+                            float in = (float)atoi(&c1);
+                            inp.push_back(in);
+                            index+=2;
+                        }
+                        input.push_back(inp);
+                    }
+                }
                 else {
                     cout<<"Skipping current part "<<current_part<<endl;
                     current_part++;
                     int c=0;
-                    while(c!=linesInaPart) {
-                        getline(infile,line);
-                        c++;
+                    if(current_part!=nfold) {
+                        while(c!=linesInaPart) {
+                            getline(infile,line);
+                            c++;
+                        }
                     }
-                    cout<<"Lines skipped : "<<c<<endl;
                 }
             }
         }
@@ -155,7 +170,7 @@ vector<Vec> crossValOutput(int nfold, int partForValidation) {
         int current_part=1;
         if(infile.is_open()) {
             while(current_part<=nfold) {
-                if(current_part==partForValidation) {
+                if(current_part==partForValidation and current_part!=nfold) {
                     int count=0;
                     while(count!=partSize) {
                         getline(infile,line);
@@ -181,12 +196,37 @@ vector<Vec> crossValOutput(int nfold, int partForValidation) {
                     }
                     current_part++;
                 }
+                else if(current_part==nfold and current_part!=partForValidation) {
+                   while(getline(infile,line)) {
+                        Vec outp;
+                        int index=0;
+                        char ch = (char)line[index]; 
+                        int a = atoi(&ch);
+                        if(a==-1) {
+                            outp.push_back(0);
+                            outp.push_back(0);
+                        }
+                        else if(a==0) {
+                            outp.push_back(0);
+                            outp.push_back(1);
+                        }
+                        else if(a==1) {
+                            outp.push_back(1);
+                            outp.push_back(1);
+                        }
+
+                        output.push_back(outp);
+                   }
+                }
                 else {
                     current_part++;
                     int c=0;
-                    while(c!=linesInaPart) {
-                        getline(infile,line);
-                        c++;
+                    if(current_part!=nfold) {
+                        while(c!=linesInaPart) {
+                            getline(infile,line);
+                            c++;
+                        }
+                   
                     }
                 }
             }
