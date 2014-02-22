@@ -6,38 +6,32 @@
 #include<list>
 #include "header.h"
 using namespace std;
+struct Data;
 class Node;
 typedef Node* NodePtr;
 typedef vector<NodePtr> nodeVector;
+typedef vector<NodePtr> (*AdjacentGenerator)(NodePtr) ;
 class Node{
+    
     public:
+    static int totalNodes; 
     int id; 
     NodePtr came_from;
     vector<NodePtr> neighbours;
     int g_score ;
     int f_score ;
-    Data data;
-    Node(int i){
-        id =i;
-        g_score = 0 ;
-        f_score = 0 ;
-        came_from = NULL;
-    }
-    void addNeighbour(NodePtr n){
-        for(int i =0;i<neighbours.size();i++){
-            if(neighbours[i]->id == n->id){
-                return;
-            }
-        }
-        neighbours.push_back(n);
-    }
+    struct Data data;
+    AdjacentGenerator ag; 
+    
+    Node(int i);
+    
+    Node(Data d);
 
-    void print(){
-        printf("** Node  %d\n", id);
-        for(int i=0;i< neighbours.size();i++){
-            printf("\t%d" , neighbours[i]->id);
-        }
-        printf("\n");
-    }
+    void addNeighbour(NodePtr n);
+
+    void setgenerator(AdjacentGenerator _gen);
+
+    void print();
+
 };
 #endif
