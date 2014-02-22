@@ -56,8 +56,10 @@ void NeuralNetwork::feedForward(Vec in){
     
     for(int i =0;i<layers.size();i++){
         if(i==0){
+           // printf("in size is %d \n", in.size());
             layers[i].updateLayer(in);
         }
+
         else{
            layers[i].updateLayer(); 
         }
@@ -90,7 +92,6 @@ void NeuralNetwork :: backPropagate(){
 
 
 void NeuralNetwork::addTrainData(Vec in, Vec out){
-	
 	this->feedForward(in);
     outputs = out;
     this->backPropagate();
@@ -98,12 +99,13 @@ void NeuralNetwork::addTrainData(Vec in, Vec out){
 }
 
 void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
-    float Error = 10 ;
+    float Error = 10;
     
+    //printf("in size is %d \n", ins[0].size());
     Vec outp;
     int printRate =100;
 	int steps=0;
-  while(Error>ERROR_THRESHOLD){ 
+    while(Error>ERROR_THRESHOLD){ 
 		Error = 0;
 		steps++;
         for(int i =0;i< ins.size();i++){

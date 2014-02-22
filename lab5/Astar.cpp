@@ -84,7 +84,7 @@ bool AStar::getShortestPath(int _start, int _end){
   while(!(openList.size() == 0)){
         
      NodePtr current  = getMinimumNode(openList);
-     printf("Expanding Node current %d\n", current->id);
+     printf("Expanding Node current  %d\n", findPos(current->data._state));
      if(current->data==goal->data){
          std::cout<<"Path found\n";
          reconstructPath(goal);

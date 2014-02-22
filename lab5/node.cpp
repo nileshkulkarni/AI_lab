@@ -14,24 +14,23 @@ Node:: Node(Data d){
         totalNodes++;
         data = d;
     }
-
-    void Node:: addNeighbour(NodePtr n){
-        for(int i =0;i<neighbours.size();i++){
-            if(neighbours[i]->id == n->id){
-                return;
-            }
+void Node:: addNeighbour(NodePtr n){
+    for(int i =0;i<neighbours.size();i++){
+        if(neighbours[i]->id == n->id){
+            return;
         }
-        neighbours.push_back(n);
     }
+    neighbours.push_back(n);
+}
 
-    void Node::setgenerator(AdjacentGenerator _gen){
-        ag = _gen;
-    }
+void Node::setgenerator(AdjacentGenerator _gen){
+    ag = _gen;
+}
 
-    void Node::print(){
-        printf("** Node  %d\n", id);
-        for(int i=0;i< neighbours.size();i++){
-            printf("\t%d" , neighbours[i]->id);
-        }
-        printf("\n");
+void Node::print(){
+    printf("** Node  %d\n", id);
+    for(int i=0;i< neighbours.size();i++){
+        printf("\t%d" , neighbours[i]->id);
     }
+    printf("\n");
+}

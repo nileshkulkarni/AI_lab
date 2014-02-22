@@ -6,6 +6,7 @@
 #include "graph.h"
 #include "node.h"
 #include "header.h"
+#include "8puzzle.h"
 using namespace std;
 typedef int (*HeuristicF)(NodePtr, NodePtr) ;
 class AStar{

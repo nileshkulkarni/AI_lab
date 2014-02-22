@@ -141,11 +141,10 @@ int main(){
 	}
     }		
     else {
-	nn.generateEdges();   
+	    nn.generateEdges();   
        	genTT(OP,ins,outs);
     	nn.addAllTrainData(ins, outs);
-   }	
->>>>>>> tsa
+    }	
 
     //printTT(ins,outs);
 //    nn.addAllTrainData(ins, outs);
