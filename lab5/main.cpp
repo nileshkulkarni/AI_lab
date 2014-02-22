@@ -2,7 +2,7 @@
 #include "Astar.h"
 #include "node.h"
 #include "graph.h"
-
+#include <cmath>
 
 
 int heuristic(NodePtr n1, NodePtr n2){
@@ -24,21 +24,29 @@ int heuristic(NodePtr n1, NodePtr n2){
     return 1;
 
 }
-void difference(NodePtr n1,NodePtr n2, int no){
-    int start , final;
+int difference(NodePtr n1,NodePtr n2, int no){
+    int start=-1 , end=-1;
     for(int i =0;i<n1->data._state.size();i++){
         if(n1->data._state[i] ==no){
             start = i;
             break;
         }
     }
+    if(start == -1){
+        printf("Unable to calculate heuristic start is -1\n");
+        exit(0);
+    }
     for(int i =0;i<n2->data._state.size();i++){
         if(n2->data._state[i] ==no){
-            final = i;
+            end = i;
             break;
         }
     }
 
+    if(end == -1){
+        printf("Unable to calculate heuristic end is -1\n");
+        exit(0);
+    }
     int startX = start %3;
     int startY = start /3;
     int endX = end %3;
@@ -48,7 +56,7 @@ void difference(NodePtr n1,NodePtr n2, int no){
 }
 int manhattan(NodePtr n1, NodePtr n2){
     int diff=0; 
-    for(int i=0;i<=9;i++){
+    for(int i=0;i<9;i++){
         diff += difference(n1,n2,i); 
     }
     return diff;
@@ -77,30 +85,39 @@ int main(){
    */
     vector< vector <int> > adjecencyMat;
     vector<int> state;
-    state.push_back(1);
     state.push_back(0);
-    for(int i = 2; i < 9 ; i++)
+    state.push_back(1);
+    for(int i = 2; i < 8 ; i++)
         state.push_back(i);
     Data d;
     d._state=state;
     NodePtr start = new Node(d);
     
     vector<int> finals;
-    finals.push_back(8);
+    finals.push_back(1);
     finals.push_back(0);
-    for(int i=1;i<8;i++){
+    for(int i=2;i<9;i++){
         finals.push_back(i);
     }
     Data d2;
     d2._state=finals;
     NodePtr stop = new Node(d2);
+    Graph graph(start); 
+    AStar a(graph);
+   // graph.print();
+    a.setHeuristicFunction( & manhattan);
+    a.getShortestPath(start,stop);
 
+    /*
+ 
     
     int noOfNodes = 7;
     adjecencyMat.resize(noOfNodes);
     for(int i =0;i<noOfNodes;i++){
         adjecencyMat[i].resize(noOfNodes);
     }
+ */
+    /*
     adjecencyMat[0][1] =1;  
     adjecencyMat[0][2] = 1;
     adjecencyMat[0][5] = 1;
@@ -110,9 +127,20 @@ int main(){
     adjecencyMat[5][6] = 1;
     adjecencyMat[4][6] = 1;
     Graph graph(adjecencyMat); 
+     */
+    /*vector<int> start_state;
+    for(int i =0;i<10;i++){
+        start_state.push_back(i);
+    }
+    Data d;
+    d._state = start_state;
+    Node startNode(d);
+    Graph graph(&startNode); 
+
     AStar a(graph);
-    graph.print();
-    a.setHeuristicFunction( & heuristic);
+   // graph.print();
+    a.setHeuristicFunction( & manhattan);
     a.getShortestPath(0,6);
+    */
     return 1;
 }

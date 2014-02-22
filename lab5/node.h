@@ -15,7 +15,7 @@ class Node{
     
     public:
     static int totalNodes; 
-    int id; 
+    long int id; 
     NodePtr came_from;
     vector<NodePtr> neighbours;
     int g_score ;
@@ -28,7 +28,7 @@ class Node{
     Node(Data d);
 
     void addNeighbour(NodePtr n);
-
+    void printData();
     void setgenerator(AdjacentGenerator _gen);
 
     void print();

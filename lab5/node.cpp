@@ -13,7 +13,9 @@ Node:: Node(Data d){
         id = totalNodes;
         totalNodes++;
         data = d;
-    }
+        string s;      
+        id=d.getHash();
+}
 void Node:: addNeighbour(NodePtr n){
     for(int i =0;i<neighbours.size();i++){
         if(neighbours[i]->id == n->id){
@@ -22,7 +24,9 @@ void Node:: addNeighbour(NodePtr n){
     }
     neighbours.push_back(n);
 }
-
+void Node::printData(){
+    data.print();
+}
 void Node::setgenerator(AdjacentGenerator _gen){
     ag = _gen;
 }

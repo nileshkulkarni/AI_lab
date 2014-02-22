@@ -5,6 +5,9 @@ Graph:: Graph(nodeVector l){
 
 
 }
+Graph:: Graph(NodePtr startNode){
+    allNodes.push_back(startNode);
+}
 Graph:: Graph(vector< vector<int> > adjacencyMat){
 
     int noOfNodes = adjacencyMat.size();
