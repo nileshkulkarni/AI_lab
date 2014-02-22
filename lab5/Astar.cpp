@@ -70,55 +70,7 @@ bool AStar::getShortestPath(int _start, int _end){
 
   NodePtr goal = G.allNodes[_end]; 
   NodePtr start =G.allNodes[_start];
-
-  if(goal==NULL){
-    std::cout<<" Goal Node is set to NULL, cannot find a path\n";
-    return false;
-  } 
-  if(start==NULL){
-    std::cout<<" Start Node is set to NULL, cannot find a path\n";
-    return false;
-  }
-  addNodeToList(openList,start);
-  while(!(openList.size() == 0)){
-        
-     NodePtr current  = getMinimumNode(openList);
-     printf("Expanding Node current  %ld\n", current->id);
-     if(current->data==goal->data){
-         std::cout<<"Path found\n";
-         reconstructPath(goal);
-         return true;
-     }
-
-     removeNodeFromList(openList,current); 
-
-     addNodeToList(closedList,current);
-     printf("Adding node with id %ld to Closed list, no of Nbrs  \n", current->id);
-
-    printf(" printing Nodes here \n");
-    current->print();
-    vector< NodePtr> nodeNbrs = getNeighbours(current);
-     for(int i=0;i<nodeNbrs.size();i++){
-        NodePtr nbr =nodeNbrs[i];
-        if(findInList(closedList,nbr)){
-            continue;
-        }
-        int tentative_g_score = current->g_score + distance(current,nbr);
-        printf("Printing nbrs doubtful about zero nbr , %ld\n",nbr->id);
-        if(!findInList(openList,nbr) || tentative_g_score < nbr->g_score){
-            nbr->came_from = current;
-            nbr->g_score = tentative_g_score;
-            nbr->f_score = tentative_g_score + H(nbr,goal);
-            printf("Setting came_from for the node %ld = %ld\n",nbr->id,current->id);
-            if(!(findInList(openList,nbr))){
-                addNodeToList(openList,nbr);
-                printf("Adding node with id %ld to Open list with f_score %d \n", nbr->id,nbr->f_score);
-            }
-        }
-    }
-  }
-  
-  return false;
+    getShortestPath(start,goal);
 }
 
 bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
@@ -153,13 +105,17 @@ bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
     printf(" printing Nodes here \n");
     current->print();
     vector< NodePtr> nodeNbrs = getNeighbours(current);
-     for(int i=0;i<nodeNbrs.size();i++){
+
+    for(int i=0;i<nodeNbrs.size();i++){
         NodePtr nbr = nodeNbrs[i];
         if(findInList(closedList,nbr)){
             continue;
         }
         int tentative_g_score = current->g_score + distance(current,nbr);
         printf("Printing nbrs doubtful about zero nbr , %ld\n",nbr->id);
+        printf("printing node data\n");
+        nbr->printData();
+        printf("\n");
         if(!findInList(openList,nbr) || tentative_g_score < nbr->g_score){
             nbr->came_from = current;
             nbr->g_score = tentative_g_score;

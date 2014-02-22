@@ -26,15 +26,16 @@ void Node:: addNeighbour(NodePtr n){
 }
 void Node::printData(){
     data.print();
+    printf("\n");
 }
 void Node::setgenerator(AdjacentGenerator _gen){
     ag = _gen;
 }
 
 void Node::print(){
-    printf("** Node  %d\n", id);
+    printf("** Node  %ld\n", id);
     for(int i=0;i< neighbours.size();i++){
-        printf("\t%d" , neighbours[i]->id);
+        printf("\t%ld" , neighbours[i]->id);
     }
     printf("\n");
 }

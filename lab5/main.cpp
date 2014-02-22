@@ -15,8 +15,7 @@ int heuristic(NodePtr n1, NodePtr n2){
         return 10;
     if(n1->id == 2)
         return 6;
-    if(n1->id == 4)
-        return 4;
+    if(n1->id == 4) return 4;
     if(n1->id=0)
         return 10;
     if(n1->id==6)
@@ -87,7 +86,7 @@ int main(){
     vector<int> state;
     state.push_back(0);
     state.push_back(1);
-    for(int i = 2; i < 8 ; i++)
+    for(int i = 2; i < 9 ; i++)
         state.push_back(i);
     Data d;
     d._state=state;
@@ -96,12 +95,17 @@ int main(){
     vector<int> finals;
     finals.push_back(1);
     finals.push_back(0);
-    for(int i=2;i<9;i++){
-        finals.push_back(i);
+    for(int j=2;j<9;j++){
+        finals.push_back(j);
     }
     Data d2;
     d2._state=finals;
     NodePtr stop = new Node(d2);
+    printf("Printing Start ");
+    start->printData();
+    printf("\nPrinting End ");
+    stop->printData();
+    printf(" \n");
     Graph graph(start); 
     AStar a(graph);
    // graph.print();
