@@ -4,6 +4,7 @@
 #include "graph.h"
 
 
+
 int heuristic(NodePtr n1, NodePtr n2){
     
     if(n1->id == 1)
@@ -22,6 +23,35 @@ int heuristic(NodePtr n1, NodePtr n2){
         return 0;
     return 1;
 
+}
+void difference(NodePtr n1,NodePtr n2, int no){
+    int start , final;
+    for(int i =0;i<n1->data._state.size();i++){
+        if(n1->data._state[i] ==no){
+            start = i;
+            break;
+        }
+    }
+    for(int i =0;i<n2->data._state.size();i++){
+        if(n2->data._state[i] ==no){
+            final = i;
+            break;
+        }
+    }
+
+    int startX = start %3;
+    int startY = start /3;
+    int endX = end %3;
+    int endY = end /3;
+   
+    return abs(endX -startX) + abs(endY-startY);
+}
+int manhattan(NodePtr n1, NodePtr n2){
+    int diff=0; 
+    for(int i=0;i<=9;i++){
+        diff += difference(n1,n2,i); 
+    }
+    return diff;
 }
 
 int main(){
