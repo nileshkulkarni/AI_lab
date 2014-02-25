@@ -4,6 +4,7 @@
 using namespace std;
 
 class Node;
+
 struct Data{
    vector<int> _state;
    inline bool operator== (const Data &d) const{
@@ -70,11 +71,10 @@ struct Data{
         for(int i =0;i<9;i++){
             id= id*10 + _state[i];
         }
-        printf("Calculated ID is %lld \n", id);
         return id;
 
    }
 } ;
 
-vector< Node* > getNeighbours(Node* n);
+vector< Node > getNeighbours(Node n);
 #endif

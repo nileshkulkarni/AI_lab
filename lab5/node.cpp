@@ -11,15 +11,18 @@ Node:: Node(int i){
     
 Node:: Node(Data d){
         data.assign(d);
-        printData();
+        //printData();
         id=d.getHash();
         g_score = 0 ;
         f_score = 0 ;
         came_from = NULL;
 }
-void Node:: addNeighbour(NodePtr n){
+bool Node::operator<(const Node &n1)const{
+    return f_score<n1.f_score;
+}
+void Node:: addNeighbour(Node n){
     for(int i =0;i<neighbours.size();i++){
-        if(neighbours[i]->id == n->id){
+        if(neighbours[i].id == n.id){
             return;
         }
     }
@@ -36,7 +39,7 @@ void Node::setgenerator(AdjacentGenerator _gen){
 void Node::print(){
     printf("Node:print->  %lld\n", id);
     for(int i=0;i< neighbours.size();i++){
-        printf("\t%lld" , neighbours[i]->id);
+        printf("\t%lld" , neighbours[i].id);
     }
     printf("\n");
 }

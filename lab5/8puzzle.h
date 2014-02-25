@@ -18,6 +18,6 @@ int findpos(vector<int>&);
 void printstate(vector<int>&);
 
 //returns a vector of neighbours
-vector< NodePtr > getNeighbours(NodePtr);
+vector< Node > getNeighbours(Node);
 
 #endif
