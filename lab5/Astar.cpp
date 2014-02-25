@@ -1,5 +1,13 @@
 #include "Astar.h"
 
+void printlist(list<NodePtr> l){
+  list<NodePtr> ::iterator it ;
+  for(it=l.begin();it!=l.end();it++){
+        (*it)->data.print();
+        cout<<" , ";
+    }
+    cout<<endl;
+}
 
 AStar::AStar(Graph g):G(g.allNodes){
 
@@ -37,6 +45,20 @@ bool AStar::findInList( list<NodePtr> l,NodePtr n){
     return false;
 }
 
+NodePtr AStar::findInOpenList(NodePtr n){
+    if(n==NULL){
+        std::cout<<"Searching for a NULL element in the list\n";
+        return NULL;
+    }
+    list<NodePtr> ::iterator it ;
+    for(it=openList.begin();it!=openList.end();it++){
+        if( n->data == (*it)->data){
+           return (*it);
+        }
+    }
+    return NULL;
+}
+
 bool AStar::addNodeToList( list<NodePtr>& l,NodePtr n){
     
     if(n==NULL){
@@ -70,7 +92,7 @@ bool AStar::getShortestPath(int _start, int _end){
 
   NodePtr goal = G.allNodes[_end]; 
   NodePtr start =G.allNodes[_start];
-    getShortestPath(start,goal);
+  getShortestPath(start,goal);
 }
 
 bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
@@ -90,52 +112,50 @@ bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
   while(!(openList.size() == 0)){
         
      NodePtr current  = getMinimumNode(openList);
-     printf("Expanding Node current id  %lld\n", current->id);
-     current->data = goal->data;
+     printf("Expanding node:id= %lld\n", current->id);
      if(current->data == goal->data){
-         std::cout<<"Path found\n";
-         reconstructPath(goal);
+         std::cout<<"Path found. Reconstructing now\n";
+         reconstructPath(current);
          return true;
      }
-     cout<<"current ";
-     current->data.print();
-     cout<<"\n";
-
-     cout<<"final ";
-     goal->data.print();
-     cout<<"\n";
-     
-     break;
      removeNodeFromList(openList,current); 
 
      addNodeToList(closedList,current);
-     printf("Adding node with id %lld to Closed list, no of Nbrs \n", current->id);
-
-    printf(" printing Nodes here \n");
-    current->print();
-    vector< NodePtr> nodeNbrs = getNeighbours(current);
+     printf("Adding node= %lld to Closed list\n", current->id);
+     vector< NodePtr> nodeNbrs = getNeighbours(current);
     
     for(int i=0;i<nodeNbrs.size();i++){
+        //nbr is a neighbouring node
         NodePtr nbr = nodeNbrs[i];
         if(findInList(closedList,nbr)){
+            //TODO: remove the node from the closed and shift in open
+            cout<<"Node found in closed list"<<endl;
             continue;
         }
         int tentative_g_score = current->g_score + distance(current,nbr);
-        printf("Printing nbrs doubtful about zero nbr , %lld\n",nbr->id);
-        printf("printing node data\n");
         nbr->printData();
         printf("\n");
-        if(!findInList(openList,nbr) || tentative_g_score < nbr->g_score){
+
+        //TODO update this with the follwing logic.
+        // update if it is found in open list with higher g score
+        // or else it is not in open list.
+        NodePtr check_node = findInOpenList(nbr);
+        if(check_node!=NULL && tentative_g_score < check_node->g_score){
+            check_node->came_from = current;
+            check_node->g_score = tentative_g_score;
+            check_node->f_score = tentative_g_score + H(check_node,goal);
+            printf("Updating node in open list %lld with new parent = %lld\n",check_node->id,current->id);
+        }
+        else if(check_node==NULL){
             nbr->came_from = current;
             nbr->g_score = tentative_g_score;
             nbr->f_score = tentative_g_score + H(nbr,goal);
-            printf("Setting came_from for the node %lld = %lld\n",nbr->id,current->id);
-            if(!(findInList(openList,nbr))){
-                addNodeToList(openList,nbr);
-                printf("Adding node with id %lld to Open list with f_score %d \n", nbr->id,nbr->f_score);
-            }
+            addNodeToList(openList,nbr);
+            printf("Adding node= %lld to Open list with f_score %d \n", nbr->id,nbr->f_score);
         }
-    }
+      }
+
+    cout<<"------------------------------------------------------------------------------------"<<endl;
   }
   
   return false;
@@ -144,6 +164,7 @@ bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
 void AStar::reconstructPath(NodePtr node){
     NodePtr came_from = node->came_from;
     if(came_from==NULL){
+        cout<<"came from is null"<<endl;
         return;
     }
     else{
