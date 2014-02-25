@@ -18,29 +18,36 @@ struct Data{
        }
        return true;
    }
-   bool equals(Data d){
-    for(int i =0;i<_state.size();i++){
-            if(_state[i] == d._state[i]){
-                continue;
-            }
-            else{
-                return false;
-            }
-       }
-       return true;
-
-   }
+   
    void print(){
-       for(int i=0;i<9;i++){
+       for(int i=0;i<_state.size();i++){
             printf("%d",_state[i]);
        }
     return; 
 
    }
-   Data& operator=(const Data &rhs){
-
-
+   Data& operator=(const Data &d){
+      if(_state.size()==0){
+        for(int i=0;i<d._state.size();i++){
+          _state.push_back(d._state[i]);
+        }
+      }
+      else if(_state.size()==9){
+        for(int i=0;i<d._state.size();i++){
+          _state[i]=d._state[i];
+        }
+      }
+      else{
+        for(int i=9;i>_state.size();i--){
+          _state.push_back(0);
+        }
+        for(int i=0;i<d._state.size();i++){
+          _state[i]=d._state[i];
+        }
+      }
+      return *this;
     } 
+
     void assign(Data d){
       for(int i=0;i<d._state.size();i++){
           _state.push_back(d._state[i]);
