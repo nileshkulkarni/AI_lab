@@ -1,0 +1,57 @@
+Result : (0.031088,)Accuracy  % is : 98
+	Layer ID 2 
+		Neuron ID , del (9 ,  -0.007576) 
+		Output Weights 
+		Input Weights 0: 11.569279 1: 12.365661 2: 7.925488 3: 7.488406 
+		 Output 0.031088 
+ 
+ 
+
+	Layer ID 1 
+		Neuron ID , del (0 ,  -0.000000) 
+		Output Weights 0: 12.365661 
+		Input Weights 0: -18.239400 1: 0.016037 2: -6.172527 3: 0.103703 4: 0.711447 5: -4.148711 6: -0.017444 
+		 Output 0.000425 
+ 
+ 		Neuron ID , del (1 ,  -0.010887) 
+		Output Weights 0: 7.925488 
+		Input Weights 0: -10.519158 1: 0.113778 2: 1.164228 3: 0.264115 4: 0.274946 5: -4.226962 6: 0.286301 
+		 Output 0.998494 
+ 
+ 		Neuron ID , del (2 ,  -0.000768) 
+		Output Weights 0: 7.488406 
+		Input Weights 0: -4.402544 1: 0.154696 2: -5.193031 3: -0.026906 4: -2.251697 5: 4.881305 6: -0.002284 
+		 Output 0.028192 
+ 
+ 
+
+	Layer ID 0 
+		Neuron ID , del (3 ,  0.008158) 
+		Output Weights 0: 0.016037 1: 0.113778 2: 0.154696 
+		Input Weights 0: 0.000000 
+		 Output 1.000000 
+ 
+ 		Neuron ID , del (4 ,  0.052146) 
+		Output Weights 0: -6.172527 1: 1.164228 2: -5.193031 
+		Input Weights 0: 0.000000 
+		 Output 3.000000 
+ 
+ 		Neuron ID , del (5 ,  0.000000) 
+		Output Weights 0: 0.103703 1: 0.264115 2: -0.026906 
+		Input Weights 0: 0.000000 
+		 Output 1.000000 
+ 
+ 		Neuron ID , del (6 ,  0.002535) 
+		Output Weights 0: 0.711447 1: 0.274946 2: -2.251697 
+		Input Weights 0: 0.000000 
+		 Output 1.000000 
+ 
+ 		Neuron ID , del (7 ,  -0.507224) 
+		Output Weights 0: -4.148711 1: -4.226962 2: 4.881305 
+		Input Weights 0: 0.000000 
+		 Output 2.000000 
+ 
+ 		Neuron ID , del (8 ,  0.006235) 
+		Output Weights 0: -0.017444 1: 0.286301 2: -0.002284 
+		Input Weights 0: 0.000000 
+		 Output 1.000000 
