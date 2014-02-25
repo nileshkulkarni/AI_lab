@@ -21,7 +21,7 @@ NodePtr AStar::getMinimumNode( list<NodePtr> l){
             min = (*it)->f_score;
         }
     }
-    printf("Minimum f_score node is %lld ", n->id);
+    printf("Minimum f_score node is %lld \n", n->id);
     return n;
 }
 bool AStar::findInList( list<NodePtr> l,NodePtr n){
@@ -91,12 +91,21 @@ bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
         
      NodePtr current  = getMinimumNode(openList);
      printf("Expanding Node current id  %lld\n", current->id);
-     if(current->data==goal->data){
+     current->data = goal->data;
+     if(current->data == goal->data){
          std::cout<<"Path found\n";
          reconstructPath(goal);
          return true;
      }
+     cout<<"current ";
+     current->data.print();
+     cout<<"\n";
 
+     cout<<"final ";
+     goal->data.print();
+     cout<<"\n";
+     
+     break;
      removeNodeFromList(openList,current); 
 
      addNodeToList(closedList,current);

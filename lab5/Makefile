@@ -1,12 +1,12 @@
-Astar: Astar.o 8puzzle.o main.cpp  graph.o node.o 
+Astar: Astar.o 8puzzle.o main.cpp  graph.o node.o header.h 
 	g++ -g -o Astar main.cpp 8puzzle.o Astar.o  graph.o node.o
-8puzzle.o: 8puzzle.cpp 8puzzle.h node.h
+8puzzle.o: 8puzzle.cpp 8puzzle.h node.h header.h 
 	g++ 8puzzle.cpp -c -g
-Astar.o: Astar.cpp Astar.h node.h 
+Astar.o: Astar.cpp Astar.h node.h header.h 
 	g++ Astar.cpp -c -g
-graph.o : graph.cpp graph.h node.h
+graph.o: graph.cpp graph.h node.h header.h 
 	g++ graph.cpp -c -g 
-node.o: node.cpp
+node.o: node.cpp header.h 
 	g++ node.cpp -c -g
 clean : 
 	rm *.o Astar

@@ -10,9 +10,7 @@ Node:: Node(int i){
     }
     
 Node:: Node(Data d){
-        id = totalNodes;
-        totalNodes++;
-        data = d;
+        data.assign(d);
         string s;     
         cout<<"Printing Node data here *** ???\n";
         printData();
@@ -36,9 +34,9 @@ void Node::setgenerator(AdjacentGenerator _gen){
 }
 
 void Node::print(){
-    printf("** Node  %ld\n", id);
+    printf("** Node  %lld\n", id);
     for(int i=0;i< neighbours.size();i++){
-        printf("\t%ld" , neighbours[i]->id);
+        printf("\t%lld" , neighbours[i]->id);
     }
     printf("\n");
 }
