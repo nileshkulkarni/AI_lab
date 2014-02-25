@@ -9,8 +9,8 @@
 #include "network_layer.h"
 
 
-#define ERROR_THRESHOLD 4
-#define PRINTRATE 10
+#define ERROR_THRESHOLD 1
+#define PRINTRATE 100
 
 
 using namespace std;
