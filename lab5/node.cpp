@@ -13,8 +13,11 @@ Node:: Node(Data d){
         id = totalNodes;
         totalNodes++;
         data = d;
-        string s;      
+        string s;     
+        cout<<"Printing Node data here *** ???\n";
+        printData();
         id=d.getHash();
+        cout<<"here setting id "<<id<<"\n";
 }
 void Node:: addNeighbour(NodePtr n){
     for(int i =0;i<neighbours.size();i++){
