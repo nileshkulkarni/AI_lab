@@ -15,7 +15,7 @@ class Node{
     
     public:
     static int totalNodes; 
-    long int id; 
+    long long  int id; 
     NodePtr came_from;
     vector<NodePtr> neighbours;
     int g_score ;
