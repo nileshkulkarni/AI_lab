@@ -3,14 +3,20 @@
 #include <cstdlib>
 #include <vector>
 #include <stdio.h>
+#include <string>
+#include <sstream>
 #include <math.h>
 #include "neural_network.h"
 
+#define FILE "iris.data"
+#define FILE1 "monks-1.test.txt"
+#define FILE2 "monks-2.test.txt"
+#define FILE3 "monks-2.test.txt"
 using namespace std;
 
 int getFilesizeIris() {
     string line;
-    ifstream infile("iris.data", ios::in);
+    ifstream infile(FILE, ios::in);
     int nlines=0;
     if(infile.is_open()) {
         while(getline(infile,line)) {
@@ -27,7 +33,7 @@ int getFilesizeIris() {
 
 vector<Vec> getTrainingInputIris(int nfold, int partForValidation) {
     vector<Vec> input;
-    int nlines = getFilesize();
+    int nlines = getFilesizeIris();
     cout<<"nlines : "<<nlines<<endl;
     double linesInaPart = ceil((double)nlines/nfold);
     int partSize = (int)linesInaPart;
@@ -35,7 +41,7 @@ vector<Vec> getTrainingInputIris(int nfold, int partForValidation) {
     if(nlines == -1) cout<<"Unable to get file size!"<<endl;
     else {
         string line;
-        ifstream infile("extracted-features.dump", ios::in);
+        ifstream infile(FILE, ios::in);
         int nlines=0;
         int current_part=1;
         if(infile.is_open()) {
@@ -54,14 +60,13 @@ vector<Vec> getTrainingInputIris(int nfold, int partForValidation) {
                     int count=0;
                     while(count!=partSize) {
                         getline(infile,line);
-                        int l = line.size();
+                        string buf;
+                        stringstream ss(line);
                         Vec inp;
-                        int index = 2;
-                        while(index<=l) {
-                            char c1 = (char)line[index];
-                            float in = (float)atoi(&c1);
+                        ss >> buf;
+                        while(ss >> buf) {
+                            float in = (float)atof(buf.c_str());
                             inp.push_back(in);
-                            index+=2;
                         }
                         input.push_back(inp);
                         count++;
@@ -70,14 +75,13 @@ vector<Vec> getTrainingInputIris(int nfold, int partForValidation) {
                 }
                 else {
                     while(getline(infile,line)) {
-                        int l = line.size();
+                        string buf;
+                        stringstream ss(line);
                         Vec inp;
-                        int index = 2;
-                        while(index<=l) {
-                            char c1 = (char)line[index];
-                            float in = (float)atoi(&c1);
+                        ss >> buf;
+                        while(ss >> buf) {
+                            float in = (float)atof(buf.c_str());
                             inp.push_back(in);
-                            index+=2;
                         }
                         input.push_back(inp);
                     }
@@ -91,9 +95,9 @@ vector<Vec> getTrainingInputIris(int nfold, int partForValidation) {
 }
 
 
-vector<Vec> crossValinput(int nfold, int partForValidation) {
+vector<Vec> crossValinputIris(int nfold, int partForValidation) {
     vector<Vec> input;
-    int nlines = getFilesize();
+    int nlines = getFilesizeIris();
     cout<<"nlines : "<<nlines<<endl;
     double linesInaPart = ceil((double)nlines/nfold);
     int partSize = (int)linesInaPart;
@@ -101,7 +105,7 @@ vector<Vec> crossValinput(int nfold, int partForValidation) {
     if(nlines == -1) cout<<"Unable to get file size!"<<endl;
     else {
         string line;
-        ifstream infile("extracted-features.dump", ios::in);
+        ifstream infile(FILE, ios::in);
         int nlines=0;
         int current_part=1;
         if(infile.is_open()) {
@@ -110,14 +114,13 @@ vector<Vec> crossValinput(int nfold, int partForValidation) {
                     int count=0;
                     while(count!=partSize) {
                         getline(infile,line);
-                        int l = line.size();
+                        string buf;
+                        stringstream ss(line);
                         Vec inp;
-                        int index = 2;
-                        while(index<=l) {
-                            char c1 = (char)line[index];
-                            float in = (float)atoi(&c1);
+                        ss >> buf;
+                        while(ss >> buf) {
+                            float in = (float)atof(buf.c_str());
                             inp.push_back(in);
-                            index+=2;
                         }
                         input.push_back(inp);
                         count++;
@@ -142,15 +145,15 @@ vector<Vec> crossValinput(int nfold, int partForValidation) {
 }
 
 
-vector<Vec> crossValOutput(int nfold, int partForValidation) {
+vector<Vec> crossValOutputIris(int nfold, int partForValidation) {
     vector<Vec> output;
-    int nlines = getFilesize();
+    int nlines = getFilesizeIris();
     double linesInaPart = ceil((double)nlines/nfold);
     int partSize = (int)linesInaPart;
     if(nlines == -1) cout<<"Unable to get file size!"<<endl;
     else {
         string line;
-        ifstream infile("extracted-features.dump", ios::in);
+        ifstream infile(FILE, ios::in);
         int nlines=0;
         int current_part=1;
         if(infile.is_open()) {
@@ -163,15 +166,15 @@ vector<Vec> crossValOutput(int nfold, int partForValidation) {
                         int index=0;
                         char ch = (char)line[index]; 
                         int a = atoi(&ch);
-                        if(a==-1) {
+                        if(a==1) {
                             outp.push_back(0);
                             outp.push_back(0);
                         }
-                        else if(a==0) {
+                        else if(a==2) {
                             outp.push_back(0);
                             outp.push_back(1);
                         }
-                        else if(a==1) {
+                        else if(a==3) {
                             outp.push_back(1);
                             outp.push_back(1);
                         }
@@ -196,15 +199,15 @@ vector<Vec> crossValOutput(int nfold, int partForValidation) {
     return output;        
 }
 
-vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
+vector<Vec> getTrainingOutputIris(int nfold, int partForValidation) {
     vector<Vec> output;
-    int nlines = getFilesize();
+    int nlines = getFilesizeIris();
     double linesInaPart = ceil((double)nlines/nfold);
     int partSize = (int)linesInaPart;
     if(nlines == -1) cout<<"Unable to get file size!"<<endl;
     else {
         string line;
-        ifstream infile("extracted-features.dump", ios::in);
+        ifstream infile(FILE, ios::in);
         int nlines=0;
         int current_part=1;
         if(infile.is_open()) {
@@ -225,15 +228,15 @@ vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
                         int index=0;
                         char ch = (char)line[index]; 
                         int a = atoi(&ch);
-                        if(a==-1) {
+                        if(a==1) {
                             outp.push_back(0);
                             outp.push_back(0);
                         }
-                        else if(a==0) {
+                        else if(a==2) {
                             outp.push_back(0);
                             outp.push_back(1);
                         }
-                        else if(a==1) {
+                        else if(a==3) {
                             outp.push_back(1);
                             outp.push_back(1);
                         }
@@ -249,15 +252,15 @@ vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
                         int index = 0;
                         char c1 = (char)line[index];
                         float a = (float)atoi(&c1);
-                        if(a==-1) {
+                        if(a==1) {
                             outp.push_back(0);
                             outp.push_back(0);
                         }
-                        else if(a==0) {
+                        else if(a==2) {
                             outp.push_back(0);
                             outp.push_back(1);
                         }
-                        else if(a==1) {
+                        else if(a==3) {
                             outp.push_back(1);
                             outp.push_back(1);
                         }

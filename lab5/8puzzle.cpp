@@ -11,12 +11,12 @@ int findpos(vector<int>& vec){
     return -1;
 }
 
-vector< NodePtr > getNeighbours(NodePtr np){
-    vector<int> v = np->data._state;
+vector< Node > getNeighbours(Node np){
+    vector<int> v = np.data._state;
     printf("Getting Nbrs of ***  ");
-    np->printData();
+    np.printData();
     int _0pos = findpos(v);
-    vector< NodePtr > neighbors;
+    vector< Node > neighbors;
     vector<int> left;
     vector<int> right;
     vector<int> top;
@@ -29,9 +29,9 @@ vector< NodePtr > getNeighbours(NodePtr np){
         left[_0pos-1]=0;
         Data d;
         d._state = left;
-        NodePtr n = new Node(d);
+        Node n(d);
         neighbors.push_back(n);
-        n->printData();
+        n.printData();
     }
     if(_0pos!=0 && _0pos!=1 && _0pos!=2){
         top.assign(v.begin(),v.end());
@@ -40,9 +40,9 @@ vector< NodePtr > getNeighbours(NodePtr np){
         top[_0pos-3]=0;
         Data d;
         d._state = top;
-        NodePtr n = new Node(d);
+        Node n(d);
         neighbors.push_back(n);
-        n->printData();
+        n.printData();
     }
     if(_0pos!=2 && _0pos!=5 && _0pos!=8){
         right.assign(v.begin(),v.end());
@@ -51,9 +51,9 @@ vector< NodePtr > getNeighbours(NodePtr np){
         right[_0pos+1]=0; 
         Data d;
         d._state = right;
-        NodePtr n = new Node(d);
+        Node n(d);
         neighbors.push_back(n);
-        n->printData();
+        n.printData();
     }
     if(_0pos!=6 && _0pos!=7 && _0pos!=8){
         down.assign(v.begin(),v.end());
@@ -62,9 +62,9 @@ vector< NodePtr > getNeighbours(NodePtr np){
         down[_0pos+3]=0;
         Data d;
         d._state = down;
-        NodePtr n = new Node(d);
+        Node n(d);
         neighbors.push_back(n);
-        n->printData();
+        n.printData();
     }
 
     return neighbors;

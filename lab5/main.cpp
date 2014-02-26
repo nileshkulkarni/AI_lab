@@ -5,28 +5,29 @@
 #include <cmath>
 
 
-int heuristic(NodePtr n1, NodePtr n2){
+int heuristic(Node n1, Node n2){
     
-    if(n1->id == 1)
+    if(n1.id == 1)
         return 5;
-    if(n1->id == 3)
+    if(n1.id == 3)
         return 3;
-    if(n1->id == 5)
+    if(n1.id == 5)
         return 10;
-    if(n1->id == 2)
+    if(n1.id == 2)
         return 6;
-    if(n1->id == 4) return 4;
-    if(n1->id=0)
+    if(n1.id == 4)
+        return 4;
+    if(n1.id=0)
         return 10;
-    if(n1->id==6)
+    if(n1.id==6)
         return 0;
     return 1;
 
 }
-int difference(NodePtr n1,NodePtr n2, int no){
+int difference(Node n1,Node n2, int no){
     int start=-1 , end=-1;
-    for(int i =0;i<n1->data._state.size();i++){
-        if(n1->data._state[i] ==no){
+    for(int i =0;i<n1.data._state.size();i++){
+        if(n1.data._state[i] ==no){
             start = i;
             break;
         }
@@ -35,8 +36,8 @@ int difference(NodePtr n1,NodePtr n2, int no){
         printf("Unable to calculate heuristic start is -1\n");
         exit(0);
     }
-    for(int i =0;i<n2->data._state.size();i++){
-        if(n2->data._state[i] ==no){
+    for(int i =0;i<n2.data._state.size();i++){
+        if(n2.data._state[i] ==no){
             end = i;
             break;
         }
@@ -53,7 +54,7 @@ int difference(NodePtr n1,NodePtr n2, int no){
    
     return abs(endX -startX) + abs(endY-startY);
 }
-int manhattan(NodePtr n1, NodePtr n2){
+int manhattan(Node n1, Node n2){
     int diff=0; 
     for(int i=0;i<9;i++){
         diff += difference(n1,n2,i); 
@@ -61,90 +62,74 @@ int manhattan(NodePtr n1, NodePtr n2){
     return diff;
 }
 
+int displace(Node n1, Node n2){
+    int diff=0; 
+    for(int i=0;i<9;i++){
+        if(n1.data._state[i] !=n1.data._state[i]){
+           diff++; 
+        }
+    }
+    return diff;
+}
 int main(){
-   /* 
-    NodePtr start = new Node(0); 
-    NodePtr n1 = new Node(2); 
-    NodePtr n2 = new Node(1);
-    NodePtr goal = new Node(3); 
-    start->addNeighbour(n1);
-    start->addNeighbour(n2);
-    n1->addNeighbour(start);
-    n1->addNeighbour(n2);
-    n2->addNeighbour(start);
-    n2->addNeighbour(goal);
-    goal->addNeighbour(n2);
-    
-    nodeVector l;
-    l.push_back(start);
-    l.push_back(n1);
-    l.push_back(n2);
-    l.push_back(goal);
-    Graph graph(l);
-   */
     vector< vector <int> > adjecencyMat;
     vector<int> state;
-    state.push_back(0);
-    state.push_back(1);
-    for(int i = 2; i < 9 ; i++)
-        state.push_back(i);
+   
+
+    printf("Enter the Start Node in Row Major form");
+    int j;
+    for(int i =0;i<9;i++){
+        cin>>j;
+        state.push_back(j);
+    }
     Data d;
-    d._state=state;
-    NodePtr start = new Node(d);
+    d.vec_assign(state);
+    Node start(d);
     
     vector<int> finals;
-    finals.push_back(1);
-    finals.push_back(0);
-    for(int j=2;j<9;j++){
-        finals.push_back(j);
+    for(int i =1;i<9;i++){
+        finals.push_back(i);
     }
+    finals.push_back(0);
+    /*    
+    finals.push_back(1);
+    finals.push_back(2);
+    finals.push_back(3);
+    finals.push_back(4);
+    finals.push_back(5);
+    finals.push_back(6);
+    finals.push_back(7);
+    finals.push_back(8);
+    finals.push_back(0);
+    */ 
     Data d2;
-    d2._state=finals;
-    NodePtr stop = new Node(d2);
+    d2.vec_assign(finals);
+    Node stop(d2);
+    
     printf("Printing Start ");
-    start->printData();
+    start.printData();
     printf("\nPrinting End ");
-    stop->printData();
+    stop.printData();
     printf(" \n");
     Graph graph(start); 
     AStar a(graph);
-   // graph.print();
-    a.setHeuristicFunction( & manhattan);
-    a.getShortestPath(start,stop);
-
-    /*
- 
     
-    int noOfNodes = 7;
-    adjecencyMat.resize(noOfNodes);
-    for(int i =0;i<noOfNodes;i++){
-        adjecencyMat[i].resize(noOfNodes);
+    string hue;
+    
+INPUT:    printf("Enter Heuristic to use \n");
+    cin>>hue;
+    if(hue == "MANHATTEN"){
+        a.setHeuristicFunction( & manhattan);
+        a.getShortestPath(start,stop);
     }
- */
-    /*
-    adjecencyMat[0][1] =1;  
-    adjecencyMat[0][2] = 1;
-    adjecencyMat[0][5] = 1;
-    adjecencyMat[1][3] = 1;
-    adjecencyMat[2][4] = 1;
-    adjecencyMat[3][6] = 1;
-    adjecencyMat[5][6] = 1;
-    adjecencyMat[4][6] = 1;
-    Graph graph(adjecencyMat); 
-     */
-    /*vector<int> start_state;
-    for(int i =0;i<10;i++){
-        start_state.push_back(i);
-    }
-    Data d;
-    d._state = start_state;
-    Node startNode(d);
-    Graph graph(&startNode); 
+    else if(hue== "DISPLACED"){
 
-    AStar a(graph);
-   // graph.print();
-    a.setHeuristicFunction( & manhattan);
-    a.getShortestPath(0,6);
-    */
+        a.setHeuristicFunction( & displace);
+        a.getShortestPath(start,stop);
+    }
+    else{
+        printf("Heuristic not found\n");
+        goto INPUT; 
+    } 
     return 1;
 }

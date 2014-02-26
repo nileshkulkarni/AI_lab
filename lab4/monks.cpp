@@ -3,13 +3,21 @@
 #include <cstdlib>
 #include <vector>
 #include <stdio.h>
+#include <string>
+#include <sstream>
 #include <math.h>
 #include "neural_network.h"
 
-#define FILE "extracted-features.dump"
+
+#define FILE FILE3
+
+#define FILE1 "iris.data"
+#define FILE2 "monks-1.test.txt"
+#define FILE3 "monks-2.test.txt"
+#define FILE4 "monks-3.test.txt"
 using namespace std;
 
-int getFilesize() {
+int getFilesizeMonks() {
     string line;
     ifstream infile(FILE, ios::in);
     int nlines=0;
@@ -26,9 +34,9 @@ int getFilesize() {
     }
 }
 
-vector<Vec> getTrainingInput(int nfold, int partForValidation) {
+vector<Vec> getTrainingInputMonks(int nfold, int partForValidation) {
     vector<Vec> input;
-    int nlines = getFilesize();
+    int nlines = getFilesizeMonks();
     cout<<"nlines : "<<nlines<<endl;
     double linesInaPart = ceil((double)nlines/nfold);
     int partSize = (int)linesInaPart;
@@ -55,14 +63,13 @@ vector<Vec> getTrainingInput(int nfold, int partForValidation) {
                     int count=0;
                     while(count!=partSize) {
                         getline(infile,line);
-                        int l = line.size();
+                        string buf;
+                        stringstream ss(line);
                         Vec inp;
-                        int index = 2;
-                        while(index<=l) {
-                            char c1 = (char)line[index];
-                            float in = (float)atoi(&c1);
+                        ss >> buf;
+                        while(ss >> buf) {
+                            float in = (float)atof(buf.c_str());
                             inp.push_back(in);
-                            index+=2;
                         }
                         input.push_back(inp);
                         count++;
@@ -71,14 +78,13 @@ vector<Vec> getTrainingInput(int nfold, int partForValidation) {
                 }
                 else {
                     while(getline(infile,line)) {
-                        int l = line.size();
+                        string buf;
+                        stringstream ss(line);
                         Vec inp;
-                        int index = 2;
-                        while(index<=l) {
-                            char c1 = (char)line[index];
-                            float in = (float)atoi(&c1);
+                        ss >> buf;
+                        while(ss >> buf) {
+                            float in = (float)atof(buf.c_str());
                             inp.push_back(in);
-                            index+=2;
                         }
                         input.push_back(inp);
                     }
@@ -92,9 +98,9 @@ vector<Vec> getTrainingInput(int nfold, int partForValidation) {
 }
 
 
-vector<Vec> crossValinput(int nfold, int partForValidation) {
+vector<Vec> crossValinputMonks(int nfold, int partForValidation) {
     vector<Vec> input;
-    int nlines = getFilesize();
+    int nlines = getFilesizeMonks();
     cout<<"nlines : "<<nlines<<endl;
     double linesInaPart = ceil((double)nlines/nfold);
     int partSize = (int)linesInaPart;
@@ -111,14 +117,13 @@ vector<Vec> crossValinput(int nfold, int partForValidation) {
                     int count=0;
                     while(count!=partSize) {
                         getline(infile,line);
-                        int l = line.size();
+                        string buf;
+                        stringstream ss(line);
                         Vec inp;
-                        int index = 2;
-                        while(index<=l) {
-                            char c1 = (char)line[index];
-                            float in = (float)atoi(&c1);
+                        ss >> buf;
+                        while(ss >> buf) {
+                            float in = (float)atof(buf.c_str());
                             inp.push_back(in);
-                            index+=2;
                         }
                         input.push_back(inp);
                         count++;
@@ -143,9 +148,9 @@ vector<Vec> crossValinput(int nfold, int partForValidation) {
 }
 
 
-vector<Vec> crossValOutput(int nfold, int partForValidation) {
+vector<Vec> crossValOutputMonks(int nfold, int partForValidation) {
     vector<Vec> output;
-    int nlines = getFilesize();
+    int nlines = getFilesizeMonks();
     double linesInaPart = ceil((double)nlines/nfold);
     int partSize = (int)linesInaPart;
     if(nlines == -1) cout<<"Unable to get file size!"<<endl;
@@ -164,17 +169,13 @@ vector<Vec> crossValOutput(int nfold, int partForValidation) {
                         int index=0;
                         char ch = (char)line[index]; 
                         int a = atoi(&ch);
-                        if(a==-1) {
+                        if(a==0) {
                             outp.push_back(0);
-                            outp.push_back(0);
-                        }
-                        else if(a==0) {
-                            outp.push_back(0);
-                            outp.push_back(1);
+           //                 outp.push_back(0);
                         }
                         else if(a==1) {
                             outp.push_back(1);
-                            outp.push_back(1);
+          //                  outp.push_back(1);
                         }
 
                         output.push_back(outp);
@@ -197,9 +198,9 @@ vector<Vec> crossValOutput(int nfold, int partForValidation) {
     return output;        
 }
 
-vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
+vector<Vec> getTrainingOutputMonks(int nfold, int partForValidation) {
     vector<Vec> output;
-    int nlines = getFilesize();
+    int nlines = getFilesizeMonks();
     double linesInaPart = ceil((double)nlines/nfold);
     int partSize = (int)linesInaPart;
     if(nlines == -1) cout<<"Unable to get file size!"<<endl;
@@ -226,17 +227,13 @@ vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
                         int index=0;
                         char ch = (char)line[index]; 
                         int a = atoi(&ch);
-                        if(a==-1) {
+                        if(a==0) {
                             outp.push_back(0);
-                            outp.push_back(0);
-                        }
-                        else if(a==0) {
-                            outp.push_back(0);
-                            outp.push_back(1);
+           //                 outp.push_back(0);
                         }
                         else if(a==1) {
                             outp.push_back(1);
-                            outp.push_back(1);
+          //                  outp.push_back(1);
                         }
 
                         output.push_back(outp);
@@ -250,17 +247,13 @@ vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
                         int index = 0;
                         char c1 = (char)line[index];
                         float a = (float)atoi(&c1);
-                        if(a==-1) {
+                        if(a==0) {
                             outp.push_back(0);
-                            outp.push_back(0);
-                        }
-                        else if(a==0) {
-                            outp.push_back(0);
-                            outp.push_back(1);
+           //                 outp.push_back(0);
                         }
                         else if(a==1) {
                             outp.push_back(1);
-                            outp.push_back(1);
+          //                  outp.push_back(1);
                         }
 
                         output.push_back(outp);
