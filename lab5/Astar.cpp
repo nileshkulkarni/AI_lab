@@ -121,7 +121,7 @@ bool AStar::getShortestPath(Node _start, Node _end){
   came_from_map[start.id] = -1;
   addNodeToSet(openSet,start);
   while(!(openSet.size() == 0)){
-     printf("Size of open list is %d \n", openSet.size()); 
+     printf("Size of open list is %ld \n", openSet.size()); 
      Node current  = getMinimumNode(openSet);
      printf("Expanding node:id= %lld\n", current.id);
      if(current.data == goal.data){

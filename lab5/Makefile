@@ -1,5 +1,5 @@
-Astar: Astar.o 8puzzle.o main.cpp  graph.o node.o header.h 
-	g++ -g -o Astar main.cpp 8puzzle.o Astar.o  graph.o node.o
+8puzzle: Astar.o 8puzzle.o main.cpp  graph.o node.o header.h 
+	g++ -g -o 8puzzle main.cpp 8puzzle.o Astar.o  graph.o node.o
 8puzzle.o: 8puzzle.cpp 8puzzle.h node.h header.h 
 	g++ 8puzzle.cpp -c -g
 Astar.o: Astar.cpp Astar.h node.h header.h 
@@ -9,5 +9,5 @@ graph.o: graph.cpp graph.h node.h header.h
 node.o: node.cpp header.h 
 	g++ node.cpp -c -g
 clean : 
-	rm *.o Astar
+	rm -rf *.o 8puzzle Cannibal
 
