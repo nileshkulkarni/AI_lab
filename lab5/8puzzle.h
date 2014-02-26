@@ -4,10 +4,9 @@
 #include <list>
 #include <stdio.h>
 #include <vector>
-#include "Astar.h"
-#include "graph.h"
 #include "node.h"
 #include "header.h"
+#include <cmath>
 using namespace std;
 //Note: the grid is assumed to be a vector of 9x1 as opposed to 3x3
 

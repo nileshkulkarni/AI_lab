@@ -12,6 +12,7 @@
 #include "8puzzle.h"
 #include <map>
 #include <cmath>
+
 using namespace std;
 typedef int (*HeuristicF)(Node, Node) ;
 class AStar{
