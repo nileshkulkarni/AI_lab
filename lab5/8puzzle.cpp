@@ -13,8 +13,10 @@ int findpos(vector<int>& vec){
 
 vector< Node > getNeighbours(Node np){
     vector<int> v = np.data._state;
+#if DEBUG
     printf("Getting Nbrs of ***  ");
     np.printData();
+#endif
     int _0pos = findpos(v);
     vector< Node > neighbors;
     vector<int> left;
@@ -31,7 +33,9 @@ vector< Node > getNeighbours(Node np){
         d._state = left;
         Node n(d);
         neighbors.push_back(n);
+#if DEBUG
         n.printData();
+#endif
     }
     if(_0pos!=0 && _0pos!=1 && _0pos!=2){
         top.assign(v.begin(),v.end());
@@ -42,7 +46,10 @@ vector< Node > getNeighbours(Node np){
         d._state = top;
         Node n(d);
         neighbors.push_back(n);
+#if DEBUG
         n.printData();
+#endif
+
     }
     if(_0pos!=2 && _0pos!=5 && _0pos!=8){
         right.assign(v.begin(),v.end());
@@ -53,7 +60,10 @@ vector< Node > getNeighbours(Node np){
         d._state = right;
         Node n(d);
         neighbors.push_back(n);
+#if DEBUG
         n.printData();
+#endif
+
     }
     if(_0pos!=6 && _0pos!=7 && _0pos!=8){
         down.assign(v.begin(),v.end());
@@ -64,7 +74,10 @@ vector< Node > getNeighbours(Node np){
         d._state = down;
         Node n(d);
         neighbors.push_back(n);
+#if DEBUG
         n.printData();
+#endif
+
     }
 
     return neighbors;
@@ -81,3 +94,17 @@ void printstate(vector<int>& v){
     }
     return;
 }
+
+void printNode(long long int id){
+    std::vector<int> v;
+    long long int a;
+    for(int i=1;i<10;i++){
+        a=pow(10,9-i);
+        v.push_back(id/a);
+        id=id%a;    
+    }
+    printstate(v);
+    cout<<"------------------\n";
+    return;
+}
+
