@@ -119,28 +119,42 @@ int main(){
    */
     vector< vector <int> > adjecencyMat;
     vector<int> state;
-    state.push_back(0);
-    state.push_back(1);
+  /*  state.push_back(0);
+    state.push_back(4);
+    state.push_back(5);
+    state.push_back(6);
     state.push_back(2);
+    state.push_back(1);
+    state.push_back(7);
+    state.push_back(8);
     state.push_back(3);
-    for(int i = 4; i < 9 ; i++)
-        state.push_back(i);
+*/    
+    
+     state.push_back(4);
+     state.push_back(2);
+     state.push_back(3);
+     state.push_back(8);
+     state.push_back(0);
+     state.push_back(6);
+     state.push_back(7);
+     state.push_back(5);
+     state.push_back(1);
     Data d;
     d.vec_assign(state);
     Node start(d);
     
     vector<int> finals;
      finals.push_back(1);
-     finals.push_back(4);
      finals.push_back(2);
-     finals.push_back(0);
      finals.push_back(3);
+     finals.push_back(4);
      finals.push_back(5);
-    for(int j=6;j<9;j++){
-        finals.push_back(j);
-    }
+     finals.push_back(6);
+     finals.push_back(7);
+     finals.push_back(8);
+     finals.push_back(0);
     
-    Data d2;
+     Data d2;
     d2.vec_assign(finals);
     Node stop(d2);
     printf("Printing Start ");

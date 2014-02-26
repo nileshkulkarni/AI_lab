@@ -22,7 +22,7 @@ class Node{
         int f_score ;
         struct Data data;
         AdjacentGenerator ag; 
-        
+        bool operationEqual; 
         Node(int i);
         
         Node(Data d);
@@ -33,6 +33,7 @@ class Node{
 
         void print();
         bool operator<(const Node& n)const;
+        bool operator==(const Node& n)const;
 
 };
 #endif
