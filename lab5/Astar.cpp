@@ -191,10 +191,9 @@ bool AStar::getShortestPath(Node _start, Node _end){
 void AStar::reconstructPath(int long long id,int steps){
     long long int came_from = came_from_map[id]; 
     if(came_from == -1){
-        long long int end = 123456780;
-        printNode(end);
         cout<<"Reached Destination"<<endl;
         cout<<"Took "<<steps<<" steps to complete"<<endl;
+        cout<<"Expanded "<<closedSet.size()<<" nodes in the Graph"<<endl;
         return;
     }
     else{

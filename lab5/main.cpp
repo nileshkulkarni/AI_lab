@@ -71,6 +71,11 @@ int displace(Node n1, Node n2){
     }
     return diff;
 }
+
+int zero(Node n1,Node n2){
+    return 0;
+}
+
 int main(){
     vector< vector <int> > adjecencyMat;
     vector<int> state;
@@ -114,6 +119,10 @@ INPUT:    printf("Enter Heuristic to use \n");
     else if(hue== "DISPLACED"){
 
         a.setHeuristicFunction( & displace);
+        a.getShortestPath(start,stop);
+    }
+    else if(hue=="ZERO"){
+        a.setHeuristicFunction( & zero);
         a.getShortestPath(start,stop);
     }
     else{
