@@ -21,6 +21,5 @@ vector< Node > getNeighbours(Node);
 
 //print the node given its id
 void printNode(long long int);
-long long int getHash(vector<int> _state);
 
 #endif
