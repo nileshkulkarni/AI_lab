@@ -10,6 +10,14 @@ int findpos(vector<int>& vec){
     }
     return -1;
 }
+long long int getHash(vector<int> _state){
+  long long int id =0;
+    for(int i =0;i<9;i++){
+        id= id*10 + _state[i];
+    }
+    return id;
+
+}
 
 vector< Node > getNeighbours(Node np){
     vector<int> v = np.data._state;
@@ -94,7 +102,6 @@ void printstate(vector<int>& v){
     }
     return;
 }
-
 void printNode(long long int id){
     std::vector<int> v;
     long long int a;

@@ -1,5 +1,6 @@
 #include "node.h"
- int Node::totalNodes = 0;
+
+int Node::totalNodes = 0;
 
 Node:: Node(int i){
         id =i;
@@ -13,7 +14,7 @@ Node:: Node(int i){
 Node:: Node(Data d){
         data.assign(d);
         //printData();
-        id=d.getHash();
+        id=getHash(d._state);
         g_score = 0 ;
         f_score = 0 ;
         came_from = NULL;
