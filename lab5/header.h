@@ -8,6 +8,7 @@ class Node;
 
 struct Data{
    vector<int> _state;
+   int _size;
    inline bool operator== (const Data &d) const{
        
        for(int i =0;i<_state.size();i++){
@@ -35,23 +36,9 @@ struct Data{
 
    //this works now
    Data& operator=(const Data &d){
-      if(_state.size()==0){
-        for(int i=0;i<d._state.size();i++){
-          _state.push_back(d._state[i]);
-        }
-      }
-      else if(_state.size()==9){
-        for(int i=0;i<d._state.size();i++){
-          _state[i]=d._state[i];
-        }
-      }
-      else{
-        for(int i=9;i>_state.size();i--){
-          _state.push_back(0);
-        }
-        for(int i=0;i<d._state.size();i++){
-          _state[i]=d._state[i];
-        }
+      _state.clear();
+      for(int i=0;i<d._state.size();i++){
+        _state[i]=(d._state)[i];
       }
       return *this;
     } 
