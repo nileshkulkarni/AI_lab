@@ -12,14 +12,22 @@ int findpos(vector<int>& vec){
     return -1;
 }
 bool checkValid(vector<int> v){
-    return v[0]>=v[1] && v[2]>=v[3];
+    if(v[0]>0 && v[2] > 0){
+      return v[0]>=v[1] && v[2]>=v[3];
+    }
+    else if(v[0]==0){
+      return v[2]>=v[3];
+    }
+    else if(v[2]==0) {
+      return v[0]>=v[1];
+    }
+    
 }
 vector< Node > getNeighbours(Node np){
     vector<int> v = np.data._state;
     vector< Node > neighbors;
     
     int Boat = v[4];  
-    
     if(Boat){
        if(v[2]>0){
            vector<int> v1 = v;
@@ -97,6 +105,7 @@ vector< Node > getNeighbours(Node np){
                d._state.assign(v1.begin(),v1.end());
                Node n(d);
                neighbors.push_back(n);
+               
            }
        }
        if(v[1]>0){
@@ -109,6 +118,7 @@ vector< Node > getNeighbours(Node np){
                d._state.assign(v1.begin(),v1.end());
                Node n(d);
                neighbors.push_back(n);
+               
            }
        }
        if(v[0]>1){
@@ -121,6 +131,7 @@ vector< Node > getNeighbours(Node np){
                d._state.assign(v1.begin(),v1.end());
                Node n(d);
                neighbors.push_back(n);
+               
            }
        }
        if(v[1]>1){
@@ -133,6 +144,7 @@ vector< Node > getNeighbours(Node np){
                d._state.assign(v1.begin(),v1.end());
                Node n(d);
                neighbors.push_back(n);
+               
            }
        }
        if(v[2]>0 && v[3]>0){
@@ -149,6 +161,7 @@ vector< Node > getNeighbours(Node np){
                d._state.assign(v1.begin(),v1.end());
                Node n(d);
                neighbors.push_back(n);
+               
            }
        }
 
