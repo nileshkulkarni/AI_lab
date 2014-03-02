@@ -84,6 +84,7 @@ vector< Node > getNeighbours(Node np){
                neighbors.push_back(n);
            }
        }
+       return neighbors;
     }
     else{
        if(v[0]>0){
@@ -150,6 +151,8 @@ vector< Node > getNeighbours(Node np){
                neighbors.push_back(n);
            }
        }
+
+       return neighbors;
     } 
 }
 
