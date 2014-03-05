@@ -1,3 +1,5 @@
+bidirectional: Astar.o 8puzzle.o 8main.cpp  bidirectional.cpp graph.o node.o header.h 
+	g++ -g -o bidirectional bidirectional.cpp 8puzzle.o Astar.o  graph.o node.o
 8puzzle: Astar.o 8puzzle.o 8main.cpp  graph.o node.o header.h 
 	g++ -g -o 8puzzle 8main.cpp 8puzzle.o Astar.o  graph.o node.o
 Missionary: Astar.o Missionary.o Mmain.cpp  graph.o node.o header.h 
