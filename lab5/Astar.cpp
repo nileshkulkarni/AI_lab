@@ -41,6 +41,16 @@ bool AStar::findInSet( multiset<Node> l,Node n){
     return false;
 }
 
+Node AStar::getNodeFromSet( multiset<Node> l,Node n){
+
+    multiset<Node> ::iterator it;
+    for(it = l.begin();it!=l.end();it++){
+        if(n.id == (*it).id){
+            return *it;
+        }
+
+    }
+}
 
 
 pair<Node,bool> AStar::findInOpenSet(Node n){
@@ -128,7 +138,7 @@ bool AStar::getShortestPath(Node _start, Node _end){
 
      addNodeToSet(closedSet,current);
 #if DEBUG
-     printf("Adding node= %lld to Closed multiset\n", current.id);
+     printf ("Adding node= %lld to Closed multiset\n", current.id);
 #endif
      vector<Node> nodeNbrs = getNeighbours(current);
      
@@ -140,7 +150,23 @@ bool AStar::getShortestPath(Node _start, Node _end){
 #if DEBUG
             cout<<"Node found in closed multiset "<< nbr.id<<endl;
 #endif
-            continue;
+            Node nodeInClosedList = getNodeFromSet(closedSet,nbr);
+            
+            int temp_g_score = current.g_score + distance(current,nbr);
+            
+            if(temp_g_score <  nodeInClosedList.g_score){
+                printf(" Removing a Node from closed list id %lld in previous %lld  \n", nodeInClosedList.id,came_from_map[nodeInClosedList.id]);
+                printf(" New gscore is %d , old gscore is %d  new wannabe parent %lld\n",temp_g_score, nodeInClosedList.g_score,current.id );
+                printf(" hscore for %lld   wannabe parent %d \n" ,current.id , H(current,goal));
+                //printf(" hscore for %lld   previous parent \n" ,current.id , H(current,goal));
+               // reconstructPath(nodeInClosedList.id],0);
+                //exit(0);
+                removeNodeFromSet(closedSet,nodeInClosedList);
+            }
+            else{
+                continue;
+            }
+
         }
         int tentative_g_score = current.g_score + distance(current,nbr);
 #if DEBUG
