@@ -54,6 +54,7 @@ int difference(Node n1,Node n2, int no){
    
     return abs(endX -startX) + abs(endY-startY);
 }
+
 int manhattan(Node n1, Node n2){
     int diff=0; 
     for(int i=1;i<9;i++){
