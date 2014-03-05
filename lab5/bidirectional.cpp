@@ -148,7 +148,7 @@ int main(int argc, char* argv[]){
         		
         		printNode(s2.id);
         		int steps2 = e.reconstructPath_bi(s2.id);
-        		steps = max(steps,steps2);
+        		steps = steps + steps2;
         		cout<<"Took "<<2*steps<<" steps to complete"<<endl;
         		return 1;
         	}
@@ -162,7 +162,7 @@ int main(int argc, char* argv[]){
         		cout<<"----------------------------------------"<<endl;
         		printNode(s1.id);
         		int steps2=e.reconstructPath_bi(s1.id);
-        		steps = max(steps,steps2);
+        		steps = steps + steps2;
         		cout<<"Took "<<2*steps<<" steps to complete"<<endl;
         		return 1;
         	}
