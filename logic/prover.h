@@ -1,14 +1,19 @@
 #include "formula.h"
-#include <list>
+#include <vector>
 
 class prover{
 	
-	list<formula> Hypothesis;
-	list<formula> Introductory_formulae; //for Introduction in Axiom1
+	vector<formula*> Hypothesis;
+	int nH;
+	vector<formula*> Introductory_formulae; //for Introduction in Axiom1
+	int nI;
 	
-	
-	
+public:
 
+	prover(int nH_ , int nI_);
+	prover(int nH_ , int nI_ , istream &in);
+
+	void input(istream &in);
 
 
 };
