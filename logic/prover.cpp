@@ -1,5 +1,4 @@
-#include "formula.h"
+#include "prover.h"
 
-formula H1;
-formula H2;
-formula H3;
+
+
