@@ -1,4 +1,7 @@
+#ifndef FORMULA_H
+#define FORMULA_H
 #include <iostream>
+
 using namespace std;
 
 struct formula{
@@ -38,3 +41,4 @@ formula *Axiom3(formula *A);
 bool equal(formula *A , formula *B);
 bool operator==(formula A , formula B);
 
+#endif

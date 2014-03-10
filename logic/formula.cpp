@@ -34,11 +34,6 @@ void formula::print(ostream &out){
 	out<<")";
 }
 
-
-
-
-
-
 bool equal(formula *A , formula *B){
 	
 	if(A==NULL && B==NULL) return true;

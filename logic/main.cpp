@@ -1,6 +1,8 @@
 #include <iostream>
 #include "formula.h"
 
+#include "prover.h"
+
 using namespace std;
 
 formula* F; //global variable for False
@@ -16,7 +18,7 @@ int main(){
 	F->length = 1;
 /*Initialization Done */
 	
-	formula *f1 = new formula;
+	/*formula *f1 = new formula;
 	cin>>*f1;
 	formula *f2 = new formula;
 	cin>>*f2;
@@ -30,5 +32,16 @@ int main(){
 	cout<<*f4<<" : "<<f4->length<<endl;
 	formula *f5 = implication(f2, f4);
 	cout<<*f5<<" : "<<f5->length<<endl;
+    */
+    vector<formula*> Hypt;
+    vector<formula*> Intr;
+    prover *p1 = new prover(2,2,Hypt,Intr);
+    cin>>*p1;
+    cout<<*p1;
+    cout<<"here : "<<endl;
+	p1->MPclosure();
+	p1->Axiom1closure();
+	p1->Axiom3closure();
+	cout<<*p1;
 	return 0;
 }
