@@ -14,6 +14,10 @@ public:
 	prover(int nH_ , int nI_ , istream &in);
 
 	void input(istream &in);
+	
+	bool Hmember(formula *f);
+	void MPclosure();
+	void Axiom3closure();
 
 
 };

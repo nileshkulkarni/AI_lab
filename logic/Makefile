@@ -2,7 +2,7 @@ CC=g++-4.6
 TARGET=formulaCheck
 
 
-NeuralNetwork : formula.o main.cpp
+formulaCheck : formula.o main.cpp
 	$(CC) -g -o $(TARGET) formula.o main.cpp
 
 

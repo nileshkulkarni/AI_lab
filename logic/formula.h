@@ -20,7 +20,6 @@ struct formula{
 		A.input(in);
 		return in;
  }
-
 };
 
 
