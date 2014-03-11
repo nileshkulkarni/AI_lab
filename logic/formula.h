@@ -4,6 +4,9 @@
 
 using namespace std;
 
+
+
+
 struct formula{
 	
 	char val;
@@ -25,8 +28,8 @@ struct formula{
  }
 };
 
-
 extern formula *F; //global variable to store F
+
 
 
 formula *implication(formula *A , formula *B);
@@ -34,7 +37,7 @@ formula *implication(formula *A , formula *B);
 formula *Axiom1(formula *A , formula *B);  //Introduction Axiom , introduces B
 formula *Axiom2(formula *A , formula *B , formula *C);
 formula *Axiom3(formula *A);
-
+void destroy(formula *f);
 
 //Gotta do something about this
 
