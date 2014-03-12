@@ -118,13 +118,36 @@ function A*(start,goal)
     return failure
 \end{verbatim}
 \end{frame}
-\begin{frame}{Readable Mathematics}
+\section{Analysis}
+\subsection{Better Heuristics perform Better}
+\begin{frame}{Better Heuristics perform Better}
 
-Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
-$$S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
-      = \frac{1}{n}\sum_{i}^{n} X_i$$
-denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal $\mathcal{N}(0, \sigma^2)$.
+The following heuristics were implemented for 8 puzzle problem:
+\begin{itemize}
+\item Heuristic : Number of Nodes , Number of Steps
+\item EUCLIDEAN : 4933 , 24 steps
+\item MANHATTEN : 1259 , 24 steps
+\item LINEAR CONFLICT : 900 , 24 steps 
+\end{itemize}
 
+The linear conflict adds at least two moves to the Manhattan Distance of the two conflicting tiles, by forcing them to surround one another. Therefore the heuristic function will add a cost of 2 moves for each pair of conflicting tiles.
+\newline \newline
+As can be easily inferred Manhatten is better than Euclidean. And by the definition of linear conflict, it is better than Manhatten.
+\newline 
+The same is inferred via experiments.
 \end{frame}
 
+\subsection{Sub-Optimal Path}
+\begin{frame}{Sub-Optimal Path}
+To demonstrate h(n)  \textgreater  h*(n) we used the hueristic h(n) to be the Euclidean squared! The following data shows why it gives a suboptimal path.
+\newline \newline
+The given input node: 1 8 5 6 3 4 2 7 0 
+\newline \newline
+Observed Results:
+\begin{itemize}
+\item Optimal = 24 steps
+\item Euclidean Squared = 26 steps
+\end{itemize}
+
+\end{frame}
 \end{document}
