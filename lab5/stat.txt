@@ -1,0 +1,9 @@
+EUCLIDEAN : 4933  24 steps
+MANHATTEN : 1259  24 steps
+DIJIKSTRA : infi  didnot converge
+LINEAR_CONFLICT : 900 24 steps
+DISPLACE  
+
+
+5 2 1 6 0 7 8 4 3  MANHATTEN hugta hai..  6016 steps
+5 2 1 6 0 7 8 4 3 OVER_ESTIMATE  2870 steps
