@@ -3,6 +3,7 @@
 
 void destroy(formula *f){
 	
+	assert(f!=NULL);
 	if(!f->leaf){
 		 
 		delete(f->lhs);
@@ -32,6 +33,39 @@ void formula::input(istream &in) {
 	if(val == 'F')
 		False = true;
 }
+
+
+
+void formula::inputInfix(istream &in){
+	
+	char a;
+	in>>a;
+	if(a=='('){
+		lhs = new formula;
+		lhs->inputInfix(in);
+		in>>a;
+		assert(a=='-');
+		val = '-';
+		rhs = new formula;
+		rhs->inputInfix(in);
+		leaf = false;
+		length = lhs->length + rhs->length;
+		in>>a;
+		assert(a==')');
+		return;
+	}
+	
+	//else
+	length = 1;
+	leaf = true;
+	val = a;
+	if(val=='F')
+		False = true;
+}
+
+
+
+
 
 
 
