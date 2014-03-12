@@ -7,3 +7,239 @@ DISPLACE
 
 5 2 1 6 0 7 8 4 3  MANHATTEN hugta hai..  6016 steps
 5 2 1 6 0 7 8 4 3 OVER_ESTIMATE  2870 steps
+
+
+
+non optimal path :
+
+    1 8 5 6 3 4 2 7 0 
+Optimal = 24 steps
+EUCLIDEAN^2 = 26 steps
+
+Took 26 steps to complete
+Expanded 1549 nodes in the Graph
+
+ ./8puzzle 
+Enter the Start Node in Row Major form 1 8 5  6 3  4 2 7 0
+Start Node is: 
+ 1 8 5
+ 6 3 4
+ 2 7 0
+
+
+End Node is: 
+ 1 2 3
+ 4 5 6
+ 7 8 0
+
+
+Enter Heuristic to use 
+OVER_ESTIMATE
+ Removing a Node from closed list id 153268074 in previous 153268704  
+ New gscore is 8 , old gscore is 12  new wannabe parent 153068274
+ hscore for 153068274   wannabe parent 12 
+ Removing a Node from closed list id 153268704 in previous 153208764  
+ New gscore is 9 , old gscore is 11  new wannabe parent 153268074
+ hscore for 153268074   wannabe parent 9 
+ Removing a Node from closed list id 153268740 in previous 153268704  
+ New gscore is 10 , old gscore is 12  new wannabe parent 153268704
+ hscore for 153268704   wannabe parent 8 
+ Removing a Node from closed list id 153260748 in previous 153268740  
+ New gscore is 11 , old gscore is 13  new wannabe parent 153268740
+ hscore for 153268740   wannabe parent 5 
+ Removing a Node from closed list id 153206748 in previous 153260748  
+ New gscore is 12 , old gscore is 14  new wannabe parent 153260748
+ hscore for 153260748   wannabe parent 5 
+ Removing a Node from closed list id 150263748 in previous 153260748  
+ New gscore is 12 , old gscore is 14  new wannabe parent 153260748
+ hscore for 153260748   wannabe parent 5 
+ Removing a Node from closed list id 153026748 in previous 153206748  
+ New gscore is 13 , old gscore is 15  new wannabe parent 153206748
+ hscore for 153206748   wannabe parent 4 
+ Removing a Node from closed list id 103256748 in previous 153206748  
+ New gscore is 13 , old gscore is 15  new wannabe parent 153206748
+ hscore for 153206748   wannabe parent 4 
+ Removing a Node from closed list id 153246708 in previous 153206748  
+ New gscore is 13 , old gscore is 15  new wannabe parent 153206748
+ hscore for 153206748   wannabe parent 4 
+ Removing a Node from closed list id 13256748 in previous 103256748  
+ New gscore is 14 , old gscore is 16  new wannabe parent 103256748
+ hscore for 103256748   wannabe parent 3 
+ Removing a Node from closed list id 130256748 in previous 103256748  
+ New gscore is 14 , old gscore is 16  new wannabe parent 103256748
+ hscore for 103256748   wannabe parent 3 
+ Removing a Node from closed list id 53126748 in previous 153026748  
+ New gscore is 14 , old gscore is 16  new wannabe parent 153026748
+ hscore for 153026748   wannabe parent 4 
+ Removing a Node from closed list id 153726048 in previous 153026748  
+ New gscore is 14 , old gscore is 16  new wannabe parent 153026748
+ hscore for 153026748   wannabe parent 4 
+ Removing a Node from closed list id 153246078 in previous 153246708  
+ New gscore is 14 , old gscore is 16  new wannabe parent 153246708
+ hscore for 153246708   wannabe parent 4 
+ Removing a Node from closed list id 105263748 in previous 150263748  
+ New gscore is 13 , old gscore is 15  new wannabe parent 150263748
+ hscore for 150263748   wannabe parent 6 
+ Removing a Node from closed list id 213056748 in previous 13256748  
+ New gscore is 15 , old gscore is 17  new wannabe parent 13256748
+ hscore for 13256748   wannabe parent 4 
+ Removing a Node from closed list id 160258743 in previous 106258743  
+ New gscore is 12 , old gscore is 14  new wannabe parent 168250743
+ hscore for 168250743   wannabe parent 11 
+ Removing a Node from closed list id 138205764 in previous 108235764  
+ New gscore is 8 , old gscore is 10  new wannabe parent 138265704
+ hscore for 138265704   wannabe parent 12 
+ Removing a Node from closed list id 138250764 in previous 138205764  
+ New gscore is 9 , old gscore is 11  new wannabe parent 138205764
+ hscore for 138205764   wannabe parent 12 
+ Removing a Node from closed list id 130258764 in previous 103258764  
+ New gscore is 10 , old gscore is 12  new wannabe parent 138250764
+ hscore for 138250764   wannabe parent 11 
+ Removing a Node from closed list id 523168740 in previous 523160748  
+ New gscore is 16 , old gscore is 18  new wannabe parent 523168704
+ hscore for 523168704   wannabe parent 8 
+ Removing a Node from closed list id 523140786 in previous 523146780  
+ New gscore is 17 , old gscore is 19  new wannabe parent 523104786
+ hscore for 523104786   wannabe parent 7 
+ Removing a Node from closed list id 130658274 in previous 103658274  
+ New gscore is 6 , old gscore is 8  new wannabe parent 138650274
+ hscore for 138650274   wannabe parent 18 
+ Removing a Node from closed list id 185723604 in previous 185723064  
+ New gscore is 7 , old gscore is 9  new wannabe parent 185703624
+ hscore for 185703624   wannabe parent 19 
+ Removing a Node from closed list id 185723640 in previous 185723604  
+ New gscore is 8 , old gscore is 10  new wannabe parent 185723604
+ hscore for 185723604   wannabe parent 16 
+ Removing a Node from closed list id 153728604 in previous 153728064  
+ New gscore is 11 , old gscore is 13  new wannabe parent 153708624
+ hscore for 153708624   wannabe parent 15 
+ Removing a Node from closed list id 153728640 in previous 153728604  
+ New gscore is 12 , old gscore is 14  new wannabe parent 153728604
+ hscore for 153728604   wannabe parent 12 
+ Removing a Node from closed list id 153720648 in previous 153728640  
+ New gscore is 13 , old gscore is 15  new wannabe parent 153728640
+ hscore for 153728640   wannabe parent 9 
+ Removing a Node from closed list id 263158740 in previous 263150748  
+ New gscore is 18 , old gscore is 20  new wannabe parent 263158704
+ hscore for 263158704   wannabe parent 8 
+ Removing a Node from closed list id 153802746 in previous 153820746  
+ New gscore is 18 , old gscore is 20  new wannabe parent 153842706
+ hscore for 153842706   wannabe parent 5 
+ Removing a Node from closed list id 103852746 in previous 153802746  
+ New gscore is 19 , old gscore is 21  new wannabe parent 153802746
+ hscore for 153802746   wannabe parent 5 
+ Removing a Node from closed list id 153742680 in previous 153742608  
+ New gscore is 14 , old gscore is 16  new wannabe parent 153740682
+ hscore for 153740682   wannabe parent 11 
+ Removing a Node from closed list id 123086745 in previous 123786045  
+ New gscore is 21 , old gscore is 23  new wannabe parent 23186745
+ hscore for 23186745   wannabe parent 4 
+ Removing a Node from closed list id 123658740 in previous 123650748  
+ New gscore is 18 , old gscore is 20  new wannabe parent 123658704
+ hscore for 123658704   wannabe parent 9 
+
+Path found.Reconstructing the path.
+ 1 2 3
+ 4 5 0
+ 7 8 6
+------------------
+ 1 2 0
+ 4 5 3
+ 7 8 6
+------------------
+ 1 0 2
+ 4 5 3
+ 7 8 6
+------------------
+ 1 5 2
+ 4 0 3
+ 7 8 6
+------------------
+ 1 5 2
+ 0 4 3
+ 7 8 6
+------------------
+ 0 5 2
+ 1 4 3
+ 7 8 6
+------------------
+ 5 0 2
+ 1 4 3
+ 7 8 6
+------------------
+ 5 2 0
+ 1 4 3
+ 7 8 6
+------------------
+ 5 2 3
+ 1 4 0
+ 7 8 6
+------------------
+ 5 2 3
+ 1 0 4
+ 7 8 6
+------------------
+ 5 0 3
+ 1 2 4
+ 7 8 6
+------------------
+ 0 5 3
+ 1 2 4
+ 7 8 6
+------------------
+ 1 5 3
+ 0 2 4
+ 7 8 6
+------------------
+ 1 5 3
+ 2 0 4
+ 7 8 6
+------------------
+ 1 5 3
+ 2 8 4
+ 7 0 6
+------------------
+ 1 5 3
+ 2 8 4
+ 7 6 0
+------------------
+ 1 5 3
+ 2 8 0
+ 7 6 4
+------------------
+ 1 5 0
+ 2 8 3
+ 7 6 4
+------------------
+ 1 0 5
+ 2 8 3
+ 7 6 4
+------------------
+ 1 8 5
+ 2 0 3
+ 7 6 4
+------------------
+ 1 8 5
+ 2 6 3
+ 7 0 4
+------------------
+ 1 8 5
+ 2 6 3
+ 0 7 4
+------------------
+ 1 8 5
+ 0 6 3
+ 2 7 4
+------------------
+ 1 8 5
+ 6 0 3
+ 2 7 4
+------------------
+ 1 8 5
+ 6 3 0
+ 2 7 4
+------------------
+ 1 8 5
+ 6 3 4
+ 2 7 0
+
