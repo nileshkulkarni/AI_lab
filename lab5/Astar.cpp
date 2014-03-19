@@ -336,6 +336,10 @@ int AStar::openSize(){
   return openSet.size();
 }
 
+int AStar::closedSize(){
+  return closedSet.size();
+}
+
 int AStar::reconstructPath_bi(int long long id){
     int steps = 0;
     long long int came_from = came_from_map[id]; 

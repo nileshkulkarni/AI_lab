@@ -150,6 +150,7 @@ int main(int argc, char* argv[]){
         		int steps2 = e.reconstructPath_bi(s2.id);
         		steps = steps + steps2;
         		cout<<"Took "<<steps<<" steps to complete"<<endl;
+                cout<<"Expanded "<<a.closedSize() + e.closedSize()<<" Nodes during search"<<endl;
         		return 1;
         	}
         	if(e.findInClosedSet(s1)){
@@ -164,6 +165,7 @@ int main(int argc, char* argv[]){
         		int steps2=e.reconstructPath_bi(s1.id);
         		steps = steps + steps2;
         		cout<<"Took "<<steps<<" steps to complete"<<endl;
+                cout<<"Expanded "<<a.closedSize() + e.closedSize()<<" Nodes during search"<<endl;
         		return 1;
         	}
         }

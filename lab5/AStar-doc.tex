@@ -17,7 +17,7 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 
-\title[Your Short Title]{A* Search Algorithm: An Analysis}
+\title[AI Lab Report]{A* Search Algorithm: An Analysis}
 \author{Sushant | Nilesh | Vipul | Anand}
 \institute{Indian Institute of Technology, Bombay}
 
@@ -140,9 +140,9 @@ The same is inferred via experiments.
 \subsection{Sub-Optimal Path}
 \begin{frame}{Sub-Optimal Path}
 To demonstrate h(n)  \textgreater  h*(n) we used the hueristic h(n) to be the Euclidean squared! The following data shows why it gives a suboptimal path.
-\newline \newline
+\newline
 The given input node: 1 8 5 6 3 4 2 7 0 
-\newline \newline
+\newline
 Observed Results:
 \begin{itemize}
 \item Optimal = 24 steps
@@ -150,4 +150,25 @@ Observed Results:
 \end{itemize}
 
 \end{frame}
+
+\subsection{Bidirectional Search}
+\begin{frame}{Bidirectional Search}
+Implemented a bidirectional search, wherein search is implemented from the start node and the goal node. The search is stopped when the new chosen node to be expanded is already present in the closed list of the other search. 
+\newline
+The given input node: 0 6 2 1 4 7 3 8 5 
+\newline
+Observed Results:
+\begin{itemize}
+\item Normal Manhatten = 22 steps, Expanded 803 nodes in graph
+\item Bidirectional Manhatten = 24 steps, Expanded 536 nodes in graph
+\end{itemize}
+Conclusion:
+\begin{itemize}
+\item Bidirectional Search may lead to a suboptimal path.
+\item A significant advantage is that number of nodes expanded is less as compared to that of normal A* Search. So a better performance is achieved.
+\end{itemize}
+
+\end{frame}
+
+
 \end{document}
