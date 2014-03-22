@@ -97,6 +97,14 @@ bool prover::Hmember(formula *f){
     return (Hypothesis.find(f->stringify()) != Hypothesis.end());
 }
 
+int prover::computeMaxFormulalength() {
+	int maxL=-1;
+	map<string , formula*>:: iterator iH = Hypothesis.begin();
+	for(; iH!=Hypothesis.end();iH++) {
+		maxL=max(maxL, (iH->second).length);
+	}
+	return maxL;	
+}
 
 
 int prover::MPclosure(){
