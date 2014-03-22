@@ -2,7 +2,7 @@
 #define _FORMULA_H
 
 #include "formula.h"
-
+#include <map>
 #include <vector>
 #include <cassert>
 
@@ -10,15 +10,16 @@
 
 class prover{
 	
-	vector<formula*> Hypothesis;
+	map<string , formula*> Hypothesis;
 	int nH;
-	vector<formula*> Introductory_formulae; //for Introduction in Axiom1
+	map<string , formula*> Introductory_formulae; //for Introduction in Axiom1
 	int nI;
+	int maxAllowedLength;
 	
 public:
 
 	prover(int nH_ , int nI_);
-	prover(int nH_ , int nI_ , vector<formula*> H, vector<formula*> I);
+	prover(int nH_ , int nI_ , map<string, formula*> H, map<string, formula*> I);
 	prover(int nH_ , int nI_ , istream &in);
     void printH(ostream &out);
 	void printI(ostream &out);
@@ -40,6 +41,8 @@ public:
 	int Axiom1closure();
     int Axiom2closure();
     int Axiom3closure();
+    
+    void step();
 
 
 };
