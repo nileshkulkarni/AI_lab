@@ -31,7 +31,7 @@ prover::prover(int nH_ , int nI_){
 	nI = nI_;
 }
 
-prover::prover(int nH_ , int nI_ , map<string, formula*> H, map<string, formula*> I) {
+prover::prover(int nH_ , int nI_ , unordered_map<string, formula*> H, unordered_map<string, formula*> I) {
     nH = nH_;
     nI = nI_;
     Hypothesis = H;
@@ -53,8 +53,6 @@ void prover::input(istream &in){
 	for(int i=0;i<nH;i++){
 		formula *tH = new formula;
 		tH->inputInfix(in);
-		cout<<*tH<<endl;
-		cout<<" : is the Input formula"<<endl;
 		Hypothesis.insert(pair<string,formula*>(tH->stringify(),tH));
 	}
 	
@@ -63,11 +61,27 @@ void prover::input(istream &in){
 		tI->inputInfix(in);
 		Introductory_formulae.insert(pair<string,formula*>(tI->stringify(),tI));
 	}
+
+   destination = new formula;
+   destination->inputInfix(in);		
+   
+   while(destination->leaf == false){
+	   assert(destination->lhs && destination->rhs);
+	   Hypothesis.insert(pair<string,formula*>(destination->lhs->stringify() , destination->lhs));
+	   destination = destination->rhs;
+   }
+   
+   if(destination->val != 'F'){
+	   formula *t = implication(destination , F);
+	   Hypothesis.insert(pair<string,formula*>(t->stringify(), t));
+	   destination = F;
+	}
+   
 }
 
 
 void prover::printH(ostream &out){
-    map<string , formula*>:: iterator iH = Hypothesis.begin();
+    unordered_map<string , formula*>:: iterator iH = Hypothesis.begin();
     out<<"Printing Hypothesis vector..\n";
     for(; iH!=Hypothesis.end(); iH++) {
         (iH->second)->print(out);
@@ -77,13 +91,22 @@ void prover::printH(ostream &out){
 
 
 void prover::printI(ostream &out){
-    map<string , formula*>:: iterator iH = Introductory_formulae.begin();
+    unordered_map<string , formula*>:: iterator iH = Introductory_formulae.begin();
     out<<"Printing Introductory vector..\n";
     for(; iH!=Introductory_formulae.end(); iH++) {
         (iH->second)->print(out);
         out<<endl;
     }
 }
+
+
+
+bool prover::check(){
+	
+	return(Hmember(destination));
+}
+
+
 
 
 bool prover::Hmember(formula *f){
@@ -94,7 +117,7 @@ bool prover::Hmember(formula *f){
 
 int prover::computeMaxFormulalength() {
 	int maxL=-1;
-	map<string , formula*>:: iterator iH = Hypothesis.begin();
+	unordered_map<string , formula*>:: iterator iH = Hypothesis.begin();
 	for(; iH!=Hypothesis.end();iH++) {
 		maxL=max(maxL, (iH->second)->length);
 	}
@@ -106,12 +129,12 @@ int prover::MPclosure(){
 	
 	int totalCount;
 	int count;
-    map<string, formula*>:: iterator it;
+    unordered_map<string, formula*>:: iterator it;
 	totalCount = 0;
     count = 1; //some non-zero number
     while(count > 0){
 		count=0;
-		map<string, formula*> add;
+		unordered_map<string, formula*> add;
 		for(it = Hypothesis.begin();it!=Hypothesis.end();it++){
 			formula *itf = it->second;
 			assert(itf!=NULL);
@@ -134,11 +157,11 @@ int prover::MPclosure(){
 int prover::Axiom1closure() {
 	int count=0;   
  
-    map<string, formula*>:: iterator itrH[2];
-    map<string, formula*>:: iterator itrHstart[2];
-    map<string, formula*>:: iterator itrHend[2];
+    unordered_map<string, formula*>:: iterator itrH[2];
+    unordered_map<string, formula*>:: iterator itrHstart[2];
+    unordered_map<string, formula*>:: iterator itrHend[2];
     
-    map<string, formula*> add;
+    unordered_map<string, formula*> add;
     int iteration = 0;
     while(iteration < (1<<2)){
 		
@@ -175,11 +198,11 @@ int prover::Axiom1closure() {
 int prover::Axiom2closure() {
     int count=0;   
  
-    map<string, formula*>::  iterator itrH[3];
-    map<string, formula*>::  iterator itrHstart[3];
-    map<string, formula*>::  iterator itrHend[3];
+    unordered_map<string, formula*>::  iterator itrH[3];
+    unordered_map<string, formula*>::  iterator itrHstart[3];
+    unordered_map<string, formula*>::  iterator itrHend[3];
     
-    map<string, formula*> add;
+    unordered_map<string, formula*> add;
     int iteration = 0;
     while(iteration < (1<<3)){
 		
@@ -216,9 +239,9 @@ int prover::Axiom3closure() {
 
     int count=0;
 
-    map<string, formula*>:: iterator itrI = Introductory_formulae.begin();
-    map<string, formula*>:: iterator itrH = Hypothesis.begin();
-	map<string, formula*> add; 
+    unordered_map<string, formula*>:: iterator itrI = Introductory_formulae.begin();
+    unordered_map<string, formula*>:: iterator itrH = Hypothesis.begin();
+	unordered_map<string, formula*> add; 
     for(; itrH!=Hypothesis.end(); itrH++) {
         formula* hyp = itrH->second;                                //hyp is A from Hypothesis
         formula* checkH = Axiom3(hyp);               //checkH is (((A -> F) -> F) -> A)
@@ -248,13 +271,14 @@ int prover::Axiom3closure() {
 
 
 void prover::cutDownAxiom3(){
-	map<string, formula*>:: iterator itrH = Hypothesis.begin();
-	map<string, formula*> add; 
+	unordered_map<string, formula*>:: iterator itrH = Hypothesis.begin();
+	unordered_map<string, formula*> add; 
     for(; itrH!=Hypothesis.end(); itrH++) {
 		Axiom3Form(itrH->second);
 		if(Axiom3Form(itrH->second)){
 			formula *f = implication(itrH->second , ((itrH->second)->lhs)->lhs);
 			add.insert(pair<string, formula*>(f->stringify(), f));
+			cout<<"This is useful :"<<endl;
 		}
 	}
    Hypothesis.insert(add.begin(), add.end());	
@@ -266,7 +290,7 @@ void prover::cutDownAxiom3(){
 void prover::step(){
 	
 	maxAllowedLength = computeMaxFormulalength() + 1;
-	for(int i=0; i<8;i++){
+	for(int i=0; i<4;i++){
 		Axiom1closure();
 		//Axiom2closure();
 		//Axiom3closure();
@@ -275,11 +299,14 @@ void prover::step(){
 		cout<<"mAL is : "<<maxAllowedLength<<endl;
 		cout<<"Size of Hypothesis : "<<Hypothesis.size()<<endl;
 		maxAllowedLength = next(maxAllowedLength);
+		if(check()){
+			cout<<"Mil gya"<<endl;
+			break;
+		}
 	}
 	
 	cout<<*this<<endl;
 	cout<<"Size of Hypothesis : "<<Hypothesis.size()<<endl;
-
 }	
 	
 	
