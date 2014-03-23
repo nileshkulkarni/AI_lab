@@ -53,13 +53,13 @@ void prover::input(istream &in){
 	for(int i=0;i<nH;i++){
 		formula *tH = new formula;
 		tH->inputInfix(in);
-		Hypothesis.insert(pair<string,formula*>(tH->stringify(),tH));
+		Hypothesis.insert(pair<string,formula*>(tH->s,tH));
 	}
 	
 	for(int i=0;i<nI;i++){
 		formula *tI = new formula;
 		tI->inputInfix(in);
-		Introductory_formulae.insert(pair<string,formula*>(tI->stringify(),tI));
+		Introductory_formulae.insert(pair<string,formula*>(tI->s,tI));
 	}
 
    destination = new formula;
@@ -67,13 +67,13 @@ void prover::input(istream &in){
    
    while(destination->leaf == false){
 	   assert(destination->lhs && destination->rhs);
-	   Hypothesis.insert(pair<string,formula*>(destination->lhs->stringify() , destination->lhs));
+	   Hypothesis.insert(pair<string,formula*>(destination->lhs->s , destination->lhs));
 	   destination = destination->rhs;
    }
    
    if(destination->val != 'F'){
 	   formula *t = implication(destination , F);
-	   Hypothesis.insert(pair<string,formula*>(t->stringify(), t));
+	   Hypothesis.insert(pair<string,formula*>(t->s, t));
 	   destination = F;
 	}
    
@@ -112,7 +112,7 @@ bool prover::check(){
 bool prover::Hmember(formula *f){
 	
 	assert(f!=NULL);
-    return (Hypothesis.find(f->stringify()) != Hypothesis.end());
+    return (Hypothesis.find(f->s) != Hypothesis.end());
 }
 
 int prover::computeMaxFormulalength() {
@@ -141,7 +141,7 @@ int prover::MPclosure(){
 			if(itf->leaf) continue;
 			if(Hmember(itf->lhs) && (!Hmember(itf->rhs))){
 				//cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
-				add.insert(pair<string,formula*>(itf->rhs->stringify() , itf->rhs));
+				add.insert(pair<string,formula*>(itf->rhs->s , itf->rhs));
 				count++;
 			}
 		}
@@ -175,7 +175,7 @@ int prover::Axiom1closure() {
 			for(itrH[1] = itrHstart[1]; itrH[1]!=itrHend[1]; itrH[1]++) {
 					formula *f6 = Axiom1(itrH[0]->second , itrH[1]->second);
 					if(!Hmember(f6) && (f6->length <= maxAllowedLength)) {
-						add.insert(pair<string, formula*>(f6->stringify() , f6));
+						add.insert(pair<string, formula*>(f6->s , f6));
 						count++;
 					}
 					else
@@ -207,6 +207,8 @@ int prover::Axiom2closure() {
     while(iteration < (1<<3)){
 		
 		//cout<<iteration<<endl;
+		
+		
 		for(int i=0;i<3;i++){
 			itrHstart[i] = getbit(iteration , i)? Hypothesis.begin() : Introductory_formulae.begin();	
 			itrHend[i] = getbit(iteration , i)? Hypothesis.end() : Introductory_formulae.end();	
@@ -219,7 +221,7 @@ int prover::Axiom2closure() {
 					//cout<<"comes here: "<<iteration<<" : "<<t++<<" : "<<Hypothesis.size()<<endl;
 					formula *f6 = Axiom2(itrH[0]->second , itrH[1]->second , itrH[2]->second);
 					if(!Hmember(f6) && (f6->length <= maxAllowedLength)) {
-						add.insert(pair<string, formula*>(f6->stringify() , f6));
+						add.insert(pair<string, formula*>(f6->s , f6));
 						count++;
 					} 
 					else destroyAxiom2(f6);
@@ -246,7 +248,7 @@ int prover::Axiom3closure() {
         formula* hyp = itrH->second;                                //hyp is A from Hypothesis
         formula* checkH = Axiom3(hyp);               //checkH is (((A -> F) -> F) -> A)
         if(!Hmember(checkH) && (checkH->length <= maxAllowedLength)) {
-			add.insert(pair<string, formula*>(checkH->stringify(), checkH));
+			add.insert(pair<string, formula*>(checkH->s, checkH));
             count++;
         }
         else
@@ -258,7 +260,7 @@ int prover::Axiom3closure() {
         formula* Intr = itrI->second;                               //hyp is B from Introductory_formulae
         formula* checkI = Axiom3(Intr);              //checkI is (((B -> F) -> F) -> B)
         if(!Hmember(checkI) && (checkI->length <= maxAllowedLength)) {
-            add.insert(pair<string, formula*>(checkI->stringify(), checkI));
+            add.insert(pair<string, formula*>(checkI->s, checkI));
             count++;
         }
         else
@@ -277,7 +279,7 @@ void prover::cutDownAxiom3(){
 		Axiom3Form(itrH->second);
 		if(Axiom3Form(itrH->second)){
 			formula *f = implication(itrH->second , ((itrH->second)->lhs)->lhs);
-			add.insert(pair<string, formula*>(f->stringify(), f));
+			add.insert(pair<string, formula*>(f->s, f));
 			cout<<"This is useful :"<<endl;
 		}
 	}
@@ -290,7 +292,7 @@ void prover::cutDownAxiom3(){
 void prover::step(){
 	
 	maxAllowedLength = computeMaxFormulalength() + 1;
-	for(int i=0; i<4;i++){
+	for(int i=0; i<10;i++){
 		Axiom1closure();
 		//Axiom2closure();
 		//Axiom3closure();
