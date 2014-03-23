@@ -1,17 +1,46 @@
 #include "formula.h"
 
 
-void destroy(formula *f){
+void destroyAxiom1(formula *f){
 	
-	assert(f!=NULL);
-	if(!f->leaf){
-		delete(f->lhs);
-		delete(f->rhs);
-	}
+	//assert((f!=NULL) && (!f->leaf) && (f->rhs) && (f->lhs) && (f->rhs->leaf));
+	delete(f->rhs);
 	delete(f);
 }
 
 
+void destroyAxiom2(formula *f){
+	
+	//assert((f!=NULL) && (!f->leaf) && (f->rhs) && (f->lhs) && (f->rhs->leaf));
+	delete((f->lhs)->rhs);
+	delete(f->lhs);
+	delete((f->rhs)->lhs);
+	delete((f->rhs)->rhs);
+	delete(f->rhs);
+	delete(f);
+}
+
+
+
+
+void destroyAxiom3(formula *f){
+	
+	delete(f->lhs->lhs);
+	delete(f->lhs);
+	delete(f);
+}
+
+
+bool Axiom3Form(formula *f){
+	
+	if(f==NULL) return false;
+	if(f->lhs == NULL) return false;
+	
+	if((f->lhs)->leaf) return false;
+	return ((f->lhs->rhs->val == 'F') && (f->rhs->val == 'F'));
+}	
+	
+	
 
 
 

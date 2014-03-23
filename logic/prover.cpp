@@ -6,11 +6,6 @@ inline int next(int i){
 }
 
 
-
-
-
-
-
 inline int getbit(int n , int bit){ //bit is 0 indexed
 	return (n>>bit)%2;
 }
@@ -159,7 +154,9 @@ int prover::Axiom1closure() {
 					if(!Hmember(f6) && (f6->length <= maxAllowedLength)) {
 						add.insert(pair<string, formula*>(f6->stringify() , f6));
 						count++;
-					} 
+					}
+					else
+						destroyAxiom1(f6);
 				}
 			}
 			
@@ -196,13 +193,13 @@ int prover::Axiom2closure() {
 		for(itrH[0] = itrHstart[0]; itrH[0]!=itrHend[0]; itrH[0]++) {
 			for(itrH[1] = itrHstart[1]; itrH[1]!=itrHend[1]; itrH[1]++) {
 				for(itrH[2] = itrHstart[2]; itrH[2]!=itrHend[2]; itrH[2]++) {
-	//				cout<<"comes here: "<<iteration<<" : "<<t++<<" : "<<Hypothesis.size()<<endl;
+					//cout<<"comes here: "<<iteration<<" : "<<t++<<" : "<<Hypothesis.size()<<endl;
 					formula *f6 = Axiom2(itrH[0]->second , itrH[1]->second , itrH[2]->second);
 					if(!Hmember(f6) && (f6->length <= maxAllowedLength)) {
 						add.insert(pair<string, formula*>(f6->stringify() , f6));
 						count++;
 					} 
-					else destroy(f6);
+					else destroyAxiom2(f6);
 				}
 			}
 		}	
@@ -229,6 +226,9 @@ int prover::Axiom3closure() {
 			add.insert(pair<string, formula*>(checkH->stringify(), checkH));
             count++;
         }
+        else
+			destroyAxiom3(checkH);
+        
     }
     
     for(; itrI!=Introductory_formulae.end(); itrI++) {
@@ -238,11 +238,28 @@ int prover::Axiom3closure() {
             add.insert(pair<string, formula*>(checkI->stringify(), checkI));
             count++;
         }
+        else
+			destroyAxiom3(checkI);
     }
     
     Hypothesis.insert(add.begin() , add.end());
     return count;
 }
+
+
+void prover::cutDownAxiom3(){
+	map<string, formula*>:: iterator itrH = Hypothesis.begin();
+	map<string, formula*> add; 
+    for(; itrH!=Hypothesis.end(); itrH++) {
+		Axiom3Form(itrH->second);
+		if(Axiom3Form(itrH->second)){
+			formula *f = implication(itrH->second , ((itrH->second)->lhs)->lhs);
+			add.insert(pair<string, formula*>(f->stringify(), f));
+		}
+	}
+   Hypothesis.insert(add.begin(), add.end());	
+}
+
 	
 	
 	
@@ -250,14 +267,19 @@ void prover::step(){
 	
 	maxAllowedLength = computeMaxFormulalength() + 1;
 	for(int i=0; i<8;i++){
-		cout<<"mAL is : "<<maxAllowedLength<<endl;
 		Axiom1closure();
-		printH(cout);
-		Axiom2closure();
-		Axiom3closure();
+		//Axiom2closure();
+		//Axiom3closure();
+		cutDownAxiom3();
 		MPclosure();
+		cout<<"mAL is : "<<maxAllowedLength<<endl;
+		cout<<"Size of Hypothesis : "<<Hypothesis.size()<<endl;
 		maxAllowedLength = next(maxAllowedLength);
 	}
+	
+	cout<<*this<<endl;
+	cout<<"Size of Hypothesis : "<<Hypothesis.size()<<endl;
+
 }	
 	
 	
