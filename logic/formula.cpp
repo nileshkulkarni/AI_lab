@@ -1,18 +1,45 @@
 #include "formula.h"
 
 
-void destroy(formula *f){
+void destroyAxiom1(formula *f){
 	
-	assert(f!=NULL);
-	if(!f->leaf){
-		 
-		delete(f->lhs);
-		delete(f->rhs);
-	}
+	//assert((f!=NULL) && (!f->leaf) && (f->rhs) && (f->lhs) && (f->rhs->leaf));
+	delete(f->rhs);
 	delete(f);
 }
 
 
+void destroyAxiom2(formula *f){
+	
+	//assert((f!=NULL) && (!f->leaf) && (f->rhs) && (f->lhs) && (f->rhs->leaf));
+	delete((f->lhs)->rhs);
+	delete(f->lhs);
+	delete((f->rhs)->lhs);
+	delete((f->rhs)->rhs);
+	delete(f->rhs);
+	delete(f);
+}
+
+
+
+
+void destroyAxiom3(formula *f){
+	
+	delete(f->lhs->lhs);
+	delete(f->lhs);
+	delete(f);
+}
+
+
+bool Axiom3Form(formula *f){
+	
+	if(f==NULL) return false;
+	if(f->leaf) return false;
+	if((f->lhs)->leaf) return false;
+	return ((f->lhs->rhs->val == 'F') && (f->rhs->val == 'F'));
+}	
+	
+	
 
 
 
@@ -22,6 +49,7 @@ void formula::input(istream &in) {
 	in>>val;
 	leaf = true;
 	length = 1;
+	s.push_back(val);
 	if(val == '-'){
 		lhs = new formula;
 		rhs = new formula;
@@ -29,6 +57,7 @@ void formula::input(istream &in) {
 		rhs->input(in);
 		leaf = false;
 		length = lhs->length + rhs->length;
+		s = s + lhs->s + rhs->s;
 	}
 	if(val == 'F')
 		False = true;
@@ -40,6 +69,7 @@ void formula::inputInfix(istream &in){
 	
 	char a;
 	in>>a;
+
 	if(a=='('){
 		lhs = new formula;
 		lhs->inputInfix(in);
@@ -51,22 +81,34 @@ void formula::inputInfix(istream &in){
 		leaf = false;
 		length = lhs->length + rhs->length;
 		in>>a;
+		s ="-" + lhs->s + rhs->s;
 		assert(a==')');
-		return;
 	}
 	
-	//else
-	length = 1;
-	leaf = true;
-	val = a;
-	if(val=='F')
-		False = true;
+	else{
+		length = 1;
+		leaf = true;
+		val = a;
+		if(val=='F')
+			False = true;
+		s = "";
+		s.push_back(val);	
+		lhs = NULL;
+		rhs = NULL;	
+	}
 }
 
 
 
-
-
+string formula::stringify(){
+	string s;
+	s.push_back(val);
+	if(leaf == false){
+		assert((lhs!=NULL) && (rhs!=NULL));
+		s = s + lhs->stringify() + rhs->stringify();
+	}
+	return s;
+}
 
 
 void formula::print(ostream &out){
@@ -108,9 +150,11 @@ formula *implication(formula *A , formula *B){
 	formula *ret = new formula;
 	ret->val = '-';
 	ret->leaf = false;
+	ret->False = false;
 	ret->lhs = A;
 	ret->rhs = B;
 	ret->length = A->length + B->length;
+	ret->s = "-" + A->s + B->s;
 	return ret;
 }
 

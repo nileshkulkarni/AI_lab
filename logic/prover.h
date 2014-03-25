@@ -2,7 +2,7 @@
 #define _FORMULA_H
 
 #include "formula.h"
-
+#include <unordered_map>
 #include <vector>
 #include <cassert>
 
@@ -10,21 +10,25 @@
 
 class prover{
 	
-	vector<formula*> Hypothesis;
+	unordered_map<string , formula*> Hypothesis;
 	int nH;
-	vector<formula*> Introductory_formulae; //for Introduction in Axiom1
+	unordered_map<string , formula*> Introductory_formulae; //for Introduction in Axiom1
 	int nI;
+	formula *destination;
+	int maxAllowedLength;
 	
 public:
 
 	prover(int nH_ , int nI_);
-	prover(int nH_ , int nI_ , vector<formula*> H, vector<formula*> I);
+	prover(int nH_ , int nI_ , unordered_map<string, formula*> H, unordered_map<string, formula*> I);
 	prover(int nH_ , int nI_ , istream &in);
     void printH(ostream &out);
 	void printI(ostream &out);
+	bool check();
 	
 	void input(istream &in);
     friend ostream &operator<<(ostream &out, prover A){   
+		out<<"Destination is : "<<*(A.destination)<<endl;
 		A.printH(out);
 		A.printI(out);
 		return out;
@@ -35,11 +39,17 @@ public:
 		return in;
     }
 	
+	int computeMaxFormulalength();
+	
 	bool Hmember(formula *f);
 	int MPclosure();
 	int Axiom1closure();
     int Axiom2closure();
     int Axiom3closure();
+    
+    void cutDownAxiom3();
+    
+    void step();
 
 
 };

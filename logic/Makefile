@@ -1,4 +1,4 @@
-CC=g++-4.6
+CC=g++-4.6 -g -std=c++0x
 TARGET=formulaCheck
 
 
