@@ -48,6 +48,7 @@ void destroyAxiom2(formula *f);
 void destroyAxiom3(formula *f);
 
 bool Axiom3Form(formula *f);
+bool Axiom2lhsForm(formula *f);
 //Gotta do something about this
 
 bool equal(formula *A , formula *B);
