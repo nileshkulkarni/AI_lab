@@ -1,5 +1,8 @@
 #include "prover.h"
 //#include "formula.h"
+#define AST_NODE_SPACE "               "
+
+
 
 inline int next(int i){
 	return i+1;
@@ -144,15 +147,17 @@ void prover:: fillTraceVec(formula* f,int entry, string msg) {
 	traceVec.push_back(p1);
 	
 	unordered_map<string,trace>::const_iterator it = traceMap.find(f->s);
+	f->print(cout);
 	if(it==traceMap.end()) {
 		cout<<"Not found"<<endl;
 	}
 	else {
 		trace tr = it->second;
-		bool terminate = ((tr.axiom_used).compare("DT"));
+		bool terminate = (tr.axiom_used == "DT");
 		string m="";
+		cout<<"terminate is :"<<terminate<<endl;
 		if(terminate) return;
-			if(((tr.axiom_used).compare("A1")) == 0) {
+			if(tr.axiom_used == "A1") {
 				m = "A1";
 				formula* f1 = f->lhs;
 				formula* f2 = (f->rhs)->lhs;
@@ -160,7 +165,7 @@ void prover:: fillTraceVec(formula* f,int entry, string msg) {
 				fillTraceVec(f2,entry+2,m);
 			}
 			
-			else if(((tr.axiom_used).compare("A2")) == 0) {
+			else if(tr.axiom_used == "A2") {
 				m = "A2";
 				formula* f1 = (f->lhs)->lhs;
 				formula* f2 = ((f->lhs)->rhs)->lhs;
@@ -170,13 +175,13 @@ void prover:: fillTraceVec(formula* f,int entry, string msg) {
 				fillTraceVec(f3,entry+3,m);
 			}
 			
-			else if(((tr.axiom_used).compare("A3")) == 0) {
+			else if(tr.axiom_used == "A3") {
 				m = "A3";
 				formula* f1 = ((f->lhs)->lhs)->lhs;
 				fillTraceVec(f1,entry+1,m);
 			}
 			
-			else if(((tr.axiom_used).compare("MP")) == 0) {
+			else if(tr.axiom_used == "MP") {
 				m = "MP";
 				formula* f_1 = tr.f1;
 				formula* f_2 = tr.f2;
@@ -194,40 +199,39 @@ void prover:: fillTraceVec(formula* f,int entry, string msg) {
 void prover::printTraceVec() {
 	int index=0;
 	while(index!=traceVec.size()-2) {
-		cout<<"IN1"<<endl;
 		string msg = (traceVec[index].second).first;
 		if(msg.compare("Destination found!") == 0) break;
 		formula* f = (traceVec[index].second).second;
-		if(msg.compare("A1") == 0) {
+		if(msg == "A1") {
 			formula* f2 = (traceVec[index+1].second).second;
 			cout<<"Applying axiom-1 on : ";
-			cout<<f->s<<" and "<<f2->s<<endl;
+			cout<<*f<<" and "<<*f2<<endl;
 			index+=2;
 		}
 		
-		else if(msg.compare("A2") == 0) {
+		else if(msg == "A2") {
 			formula* f2 = (traceVec[index+1].second).second;
 			formula* f3 = (traceVec[index+2].second).second;
 			cout<<"Applying axiom-2 on : ";
-			cout<<f->s<<" , "<<f2->s<<" and "<<f3->s<<endl;
+			cout<<*f<<" , "<<*f2<<" and "<<*f3<<endl;
 			index+=3;
 		}
 		
-		else if(msg.compare("A3") == 0) {
+		else if(msg == "A3") {
 			cout<<"Applying axiom-3 on : ";
-			cout<<f->s<<endl;
+			cout<<*f;
 			index+=1;
 		}
 		
-		else if(msg.compare("MP") == 0) {
+		else if(msg == "MP") {
 			formula* f2 = (traceVec[index+1].second).second;
 			cout<<"Applying Modus ponens on : ";
-			cout<<f->s<<" and "<<f2->s<<endl;
+			cout<<*f<<" and "<<*f2<<" --------->   ";
 			index+=2;
 		}
 	}
 	formula* dest = (traceVec[index].second).second;
-	cout<<"Found : "<<dest->s<<endl;
+	cout<<*dest<<endl;
 	cout<<"Proved!"<<endl; 
 }
 
@@ -266,9 +270,8 @@ int prover::MPclosure(){
 			assert(itf!=NULL);
 			if(itf->leaf) continue;
 			if(Hmember(itf->lhs) && (!Hmember(itf->rhs))){
-				//cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
+				cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
 				add.insert(pair<string,formula*>(itf->rhs->s , itf->rhs));
-				
 				/******************For tracing back*****************/
 				string s = "MP";
 				setTrace(itf->rhs,itf->lhs,itf,s);
@@ -304,10 +307,7 @@ int prover::Axiom1closure() {
     int iteration = 0;
     while(iteration < (1<<2)){
 		
-		if(!getbit(iteration,0)) {
-			iteration++;
-			continue;
-		}
+	
 		//cout<<iteration<<endl;
 		for(int i=0;i<2;i++){
 			itrHstart[i] = getbit(iteration , i)? Hypothesis.begin() : Introductory_formulae.begin();	
@@ -494,7 +494,7 @@ void prover::cutDownAxiom3(){
 void prover::step(){
 	
 	maxAllowedLength = computeMaxFormulalength() + 1;
-	for(int i=0; i<30;i++){
+	for(int i=0; i<50;i++){
 		
 		int old_size = Hypothesis.size();
 		cutDownAxiom3();
@@ -514,7 +514,7 @@ void prover::step(){
 			maxAllowedLength = next(maxAllowedLength);
 		if(check()){
 			cout<<"Mil gya"<<endl;
-			fillTraceVec(destination_orig,1,"Destination found!");
+			fillTraceVec(destination,1,"Destination found!");
 			sort(traceVec.begin(), traceVec.end(),comp_tr);
 			cout<<"****************************************Printing Trace*******************************************"<<endl;
 			printTraceVec();
@@ -523,7 +523,7 @@ void prover::step(){
 		}
 	}
 	
-	cout<<*this<<endl;
+	//cout<<*this<<endl;
 	cout<<"Size of Hypothesis : "<<Hypothesis.size()<<endl;
 }	
 	
