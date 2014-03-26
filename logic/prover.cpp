@@ -21,6 +21,9 @@ bool member(formula *f , vector<formula*>::iterator start , vector<formula*>::it
 
 
 
+bool comp_tr(pair<int,pair<string, formula*> > v1, pair<int,pair<string,formula*> > v2) {
+		return (v1.first > v2.first);
+}	
 
 
 
@@ -63,17 +66,24 @@ void prover::input(istream &in){
 	}
 
    destination = new formula;
-   destination->inputInfix(in);		
+   destination->inputInfix(in);
+   destination_orig = destination;		
    
    while(destination->leaf == false){
 	   assert(destination->lhs && destination->rhs);
 	   Hypothesis.insert(pair<string,formula*>(destination->lhs->s , destination->lhs));
+	   /**Dummy trace to terminate trace back**/ 
+	   string s="DT";
+	   setTrace(destination->lhs,NULL,NULL,s);
 	   destination = destination->rhs;
    }
    
    if(destination->val != 'F'){
 	   formula *t = implication(destination , F);
 	   Hypothesis.insert(pair<string,formula*>(t->s, t));
+	   /**Dummy trace to terminate trace back**/
+	   string s="DT";
+	   setTrace(t,NULL,NULL,s);
 	   destination = F;
 	}
    
@@ -106,7 +116,122 @@ bool prover::check(){
 	return(Hmember(destination));
 }
 
+/***************************************Trace******************************************/
 
+void prover:: setTrace(formula* self, formula* MP_1, formula* MP_2, string axiom) {
+	assert(self!=NULL);
+	trace tr;
+	tr.self = self;
+	tr.axiom_used=axiom;
+	tr.f1=MP_1;
+	tr.f2=MP_2;
+	
+	string st = self->s;
+	pair<string, trace> p;
+	p.first = st;
+	p.second = tr;
+	traceMap.insert(p);
+}
+				
+void prover:: fillTraceVec(formula* f,int entry, string msg) {
+	//cout<<"Entry: "<<entry<<" Msg: "<<msg<<endl;
+	pair<int, pair<string, formula*> > p1;
+	p1.first=entry;
+	pair<string, formula*> p;
+	p.first=msg;
+	p.second=f;
+	p1.second=p;
+	traceVec.push_back(p1);
+	
+	unordered_map<string,trace>::const_iterator it = traceMap.find(f->s);
+	if(it==traceMap.end()) {
+		cout<<"Not found"<<endl;
+	}
+	else {
+		trace tr = it->second;
+		bool terminate = ((tr.axiom_used).compare("DT"));
+		string m="";
+		if(terminate) return;
+			if(((tr.axiom_used).compare("A1")) == 0) {
+				m = "A1";
+				formula* f1 = f->lhs;
+				formula* f2 = (f->rhs)->lhs;
+				fillTraceVec(f1,entry+1,m);
+				fillTraceVec(f2,entry+2,m);
+			}
+			
+			else if(((tr.axiom_used).compare("A2")) == 0) {
+				m = "A2";
+				formula* f1 = (f->lhs)->lhs;
+				formula* f2 = ((f->lhs)->rhs)->lhs;
+				formula* f3 = ((f->lhs)->rhs)->rhs;
+				fillTraceVec(f1,entry+1,m);
+				fillTraceVec(f2,entry+2,m);
+				fillTraceVec(f3,entry+3,m);
+			}
+			
+			else if(((tr.axiom_used).compare("A3")) == 0) {
+				m = "A3";
+				formula* f1 = ((f->lhs)->lhs)->lhs;
+				fillTraceVec(f1,entry+1,m);
+			}
+			
+			else if(((tr.axiom_used).compare("MP")) == 0) {
+				m = "MP";
+				formula* f_1 = tr.f1;
+				formula* f_2 = tr.f2;
+				fillTraceVec(f_1,entry+1,m);
+				fillTraceVec(f_2,entry+2,m);
+			}
+			
+			else {}
+	
+	}
+					
+}
+
+
+void prover::printTraceVec() {
+	int index=0;
+	while(index!=traceVec.size()-2) {
+		cout<<"IN1"<<endl;
+		string msg = (traceVec[index].second).first;
+		if(msg.compare("Destination found!") == 0) break;
+		formula* f = (traceVec[index].second).second;
+		if(msg.compare("A1") == 0) {
+			formula* f2 = (traceVec[index+1].second).second;
+			cout<<"Applying axiom-1 on : ";
+			cout<<f->s<<" and "<<f2->s<<endl;
+			index+=2;
+		}
+		
+		else if(msg.compare("A2") == 0) {
+			formula* f2 = (traceVec[index+1].second).second;
+			formula* f3 = (traceVec[index+2].second).second;
+			cout<<"Applying axiom-2 on : ";
+			cout<<f->s<<" , "<<f2->s<<" and "<<f3->s<<endl;
+			index+=3;
+		}
+		
+		else if(msg.compare("A3") == 0) {
+			cout<<"Applying axiom-3 on : ";
+			cout<<f->s<<endl;
+			index+=1;
+		}
+		
+		else if(msg.compare("MP") == 0) {
+			formula* f2 = (traceVec[index+1].second).second;
+			cout<<"Applying Modus ponens on : ";
+			cout<<f->s<<" and "<<f2->s<<endl;
+			index+=2;
+		}
+	}
+	formula* dest = (traceVec[index].second).second;
+	cout<<"Found : "<<dest->s<<endl;
+	cout<<"Proved!"<<endl; 
+}
+
+/***************************************************************************************/
 
 
 bool prover::Hmember(formula *f){
@@ -143,6 +268,11 @@ int prover::MPclosure(){
 			if(Hmember(itf->lhs) && (!Hmember(itf->rhs))){
 				//cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
 				add.insert(pair<string,formula*>(itf->rhs->s , itf->rhs));
+				
+				/******************For tracing back*****************/
+				string s = "MP";
+				setTrace(itf->rhs,itf->lhs,itf,s);
+				/****************************************************/
 				count++;
 			}
 		}
@@ -174,6 +304,10 @@ int prover::Axiom1closure() {
     int iteration = 0;
     while(iteration < (1<<2)){
 		
+		if(!getbit(iteration,0)) {
+			iteration++;
+			continue;
+		}
 		//cout<<iteration<<endl;
 		for(int i=0;i<2;i++){
 			itrHstart[i] = getbit(iteration , i)? Hypothesis.begin() : Introductory_formulae.begin();	
@@ -188,6 +322,10 @@ int prover::Axiom1closure() {
 					if(!Hmember(f6) && (f6->length <= maxAllowedLength)) {
 						add.insert(pair<string, formula*>(f6->s , f6));
 						count++;
+						/******************For tracing back*****************/
+						string s = "A1";
+						setTrace(f6,NULL,NULL,s);	
+						/****************************************************/
 					}
 					else
 						destroyAxiom1(f6);
@@ -221,6 +359,10 @@ int prover::Axiom2finish() {
 			formula *t = Axiom2(itf->lhs , itf->rhs->lhs , itf->rhs->rhs);
 			if(t->length <= maxAllowedLength){
 				add.insert(pair<string, formula*>(t->s , t));
+				/******************For tracing back*****************/
+				string s = "A2";
+				setTrace(t,NULL,NULL,s);
+				/****************************************************/
 				count++;
 			}
 			else
@@ -267,6 +409,10 @@ int prover::Axiom2closure() {
 					formula *f6 = Axiom2(itrH[0]->second , itrH[1]->second , itrH[2]->second);
 					if(!Hmember(f6) && (f6->length <= maxAllowedLength)) {
 						add.insert(pair<string, formula*>(f6->s , f6));
+						/******************For tracing back*****************/
+						string s="A2";
+						setTrace(f6,NULL,NULL,s);
+						/****************************************************/
 						count++;
 					} 
 					else destroyAxiom2(f6);
@@ -294,6 +440,10 @@ int prover::Axiom3closure() {
         formula* checkH = Axiom3(hyp);               //checkH is (((A -> F) -> F) -> A)
         if(!Hmember(checkH) && (checkH->length <= maxAllowedLength)) {
 			add.insert(pair<string, formula*>(checkH->s, checkH));
+			/******************For tracing back*****************/
+			string s="A3";
+			setTrace(checkH,NULL,NULL,s);
+			/****************************************************/
             count++;
         }
         else
@@ -306,7 +456,10 @@ int prover::Axiom3closure() {
         formula* checkI = Axiom3(Intr);              //checkI is (((B -> F) -> F) -> B)
         if(!Hmember(checkI) && (checkI->length <= maxAllowedLength)) {
             add.insert(pair<string, formula*>(checkI->s, checkI));
-            count++;
+            /******************For tracing back*****************/
+			string s1="A3";
+			setTrace(checkI,NULL,NULL,s1);
+			/****************************************************/
         }
         else
 			destroyAxiom3(checkI);
@@ -325,6 +478,10 @@ void prover::cutDownAxiom3(){
 		if(Axiom3Form(itrH->second)){
 			formula *f = implication(itrH->second , ((itrH->second)->lhs)->lhs);
 			add.insert(pair<string, formula*>(f->s, f));
+			/******************For tracing back*****************/
+			string s="A3";
+			setTrace(f,NULL,NULL,s);
+			/****************************************************/
 			cout<<"This is useful :"<<endl;
 		}
 	}
@@ -337,8 +494,9 @@ void prover::cutDownAxiom3(){
 void prover::step(){
 	
 	maxAllowedLength = computeMaxFormulalength() + 1;
-	for(int i=0; i<20;i++){
+	for(int i=0; i<30;i++){
 		
+		int old_size = Hypothesis.size();
 		cutDownAxiom3();
 		Axiom2finish();
 		
@@ -352,10 +510,15 @@ void prover::step(){
 		}
 		cout<<"mAL is : "<<maxAllowedLength<<endl;
 		cout<<"Size of Hypothesis: "<<Hypothesis.size()<<endl;
-		if(i%2)
+		if(Hypothesis.size() == old_size)
 			maxAllowedLength = next(maxAllowedLength);
 		if(check()){
 			cout<<"Mil gya"<<endl;
+			fillTraceVec(destination_orig,1,"Destination found!");
+			sort(traceVec.begin(), traceVec.end(),comp_tr);
+			cout<<"****************************************Printing Trace*******************************************"<<endl;
+			printTraceVec();
+			cout<<"##################################################################################################"<<endl;
 			break;
 		}
 	}
