@@ -270,7 +270,7 @@ int prover::MPclosure(){
 			assert(itf!=NULL);
 			if(itf->leaf) continue;
 			if(Hmember(itf->lhs) && (!Hmember(itf->rhs))){
-				cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
+				//cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
 				add.insert(pair<string,formula*>(itf->rhs->s , itf->rhs));
 				/******************For tracing back*****************/
 				string s = "MP";
