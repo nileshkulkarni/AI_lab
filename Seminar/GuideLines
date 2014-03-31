@@ -16,4 +16,7 @@ Kalman Filters for Robot Localization:
         -- State Estimation
         -- Gaussian ProsteriorBelief & Gaussian PriorBelief
         -- Linear Kalman Filter
-
+        
+ -- Extended Kalman Filters:
+        -- Berif Overview, applications
+    
