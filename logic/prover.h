@@ -5,9 +5,19 @@
 #include <unordered_map>
 #include <vector>
 #include <cassert>
+#include <algorithm>
+
+struct trace {
+	formula* self;
+	string axiom_used;
+	formula* f1;
+	formula* f2;
+};
 
 
+bool comp_tr(pair<int,pair<string,formula*> >v1, pair<int,pair<string, formula*> > v2);	
 
+	
 class prover{
 	
 	
@@ -16,10 +26,14 @@ public:
 	int nH;
 	unordered_map<string , formula*> Introductory_formulae; //for Introduction in Axiom1
 	int nI;
+	unordered_map<string, trace> traceMap;
 	formula *destination;
 	formula *originalDestination;
 	unordered_map<string , formula*> originalHypothesis;
 	int maxAllowedLength;
+	vector< pair<int, pair <string, formula*> > > traceVec;
+	
+public:
 
 
 	prover();
@@ -57,7 +71,11 @@ public:
     }
 	
 	int computeMaxFormulalength();
-	
+	/********Trace****************/
+	void setTrace(formula* self, formula* MP_1, formula* MP_2, string axiom);
+	void fillTraceVec(formula* f, int entry, string s);
+	void printTraceVec();
+	/*****************************/
 	bool Hmember(formula *f);
 	int MPclosure();
 	int Axiom1closure();
