@@ -129,6 +129,10 @@ void prover:: setTrace(formula* self, formula* MP_1, formula* MP_2, string axiom
 	tr.f1=MP_1;
 	tr.f2=MP_2;
 	
+	if(self->leaf){
+		cout<<"comes here "<<*self<<endl;
+	}
+	
 	string st = self->s;
 	pair<string, trace> p;
 	p.first = st;
@@ -137,19 +141,27 @@ void prover:: setTrace(formula* self, formula* MP_1, formula* MP_2, string axiom
 }
 				
 void prover:: fillTraceVec(formula* f,int entry, string msg) {
-	//cout<<"Entry: "<<entry<<" Msg: "<<msg<<endl;
+	cout<<"Entry: "<<entry<<" Msg: "<<msg<<endl;
 	pair<int, pair<string, formula*> > p1;
 	p1.first=entry;
+	cout<<"bp 1"<<endl;
 	pair<string, formula*> p;
+	cout<<"bp 2"<<endl;
 	p.first=msg;
+	cout<<"bp 2.33"<<endl;
 	p.second=f;
+	cout<<"bp 2.66"<<endl;
 	p1.second=p;
+	cout<<"bp 3"<<endl;
 	traceVec.push_back(p1);
 	
 	unordered_map<string,trace>::const_iterator it = traceMap.find(f->s);
-	f->print(cout);
+	cout<<"**********************************"<<endl;
+	//f->print(cout);
 	if(it==traceMap.end()) {
-		cout<<"Not found"<<endl;
+	//	assert(f->leaf);
+		return;
+	//	cout<<" "<<Hmember(f)<<" "<<"Not found"<<endl;
 	}
 	else {
 		trace tr = it->second;
@@ -161,16 +173,22 @@ void prover:: fillTraceVec(formula* f,int entry, string msg) {
 				m = "A1";
 				formula* f1 = f->lhs;
 				formula* f2 = (f->rhs)->lhs;
+				cout<<"ENDED1"<<endl;
 				fillTraceVec(f1,entry+1,m);
+				cout<<"ENDED1.2"<<endl;
 				fillTraceVec(f2,entry+2,m);
 			}
 			
 			else if(tr.axiom_used == "A2") {
 				m = "A2";
+				//cout<<"A2222222222"<<endl;
 				formula* f1 = (f->lhs)->lhs;
 				formula* f2 = ((f->lhs)->rhs)->lhs;
 				formula* f3 = ((f->lhs)->rhs)->rhs;
+				//cout<<*f2<<"lkdjsfkljdsflkjskdlfjkldsjfkl"<<endl;
+				cout<<"ENDED2"<<endl;
 				fillTraceVec(f1,entry+1,m);
+				//assert(f2==NULL);
 				fillTraceVec(f2,entry+2,m);
 				fillTraceVec(f3,entry+3,m);
 			}
@@ -178,6 +196,7 @@ void prover:: fillTraceVec(formula* f,int entry, string msg) {
 			else if(tr.axiom_used == "A3") {
 				m = "A3";
 				formula* f1 = ((f->lhs)->lhs)->lhs;
+				cout<<"ENDED3"<<endl;
 				fillTraceVec(f1,entry+1,m);
 			}
 			
@@ -185,7 +204,10 @@ void prover:: fillTraceVec(formula* f,int entry, string msg) {
 				m = "MP";
 				formula* f_1 = tr.f1;
 				formula* f_2 = tr.f2;
+				//assert(f_2==NULL);
+				cout<<"ENDED4"<<endl;
 				fillTraceVec(f_1,entry+1,m);
+				cout<<"ENDED5"<<endl;
 				fillTraceVec(f_2,entry+2,m);
 			}
 			
@@ -226,7 +248,7 @@ void prover::printTraceVec() {
 		else if(msg == "MP") {
 			formula* f2 = (traceVec[index+1].second).second;
 			cout<<"Applying Modus ponens on : ";
-			cout<<*f<<" and "<<*f2<<" --------->   ";
+			cout<<*f<<" and "<<*f2<<" --------->   "<<endl;
 			index+=2;
 		}
 	}
@@ -271,9 +293,14 @@ int prover::MPclosure(){
 			if(itf->leaf) continue;
 			if(Hmember(itf->lhs) && (!Hmember(itf->rhs))){
 				//cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
+				if(itf->rhs->leaf)
+					cout<<"In MP closure : "<<*(itf->rhs)<<endl;
 				add.insert(pair<string,formula*>(itf->rhs->s , itf->rhs));
 				/******************For tracing back*****************/
 				string s = "MP";
+				/*cout<<endl;
+				cout<<"In MP : "<<itf->rhs->s<<" "<<itf->s<<endl;
+				cout<<endl;*/
 				setTrace(itf->rhs,itf->lhs,itf,s);
 				/****************************************************/
 				count++;
@@ -324,6 +351,11 @@ int prover::Axiom1closure() {
 						count++;
 						/******************For tracing back*****************/
 						string s = "A1";
+						if(f6->leaf){
+						cout<<endl;
+						cout<<"In A1 : "<<f6->s<<endl;
+						cout<<endl;
+						}
 						setTrace(f6,NULL,NULL,s);	
 						/****************************************************/
 					}
@@ -361,6 +393,11 @@ int prover::Axiom2finish() {
 				add.insert(pair<string, formula*>(t->s , t));
 				/******************For tracing back*****************/
 				string s = "A2";
+				if(t->leaf){
+				cout<<endl;
+				cout<<"In A2 finish: "<<t->s<<endl;
+				cout<<endl;
+			   }
 				setTrace(t,NULL,NULL,s);
 				/****************************************************/
 				count++;
@@ -411,6 +448,11 @@ int prover::Axiom2closure() {
 						add.insert(pair<string, formula*>(f6->s , f6));
 						/******************For tracing back*****************/
 						string s="A2";
+						if(f6->leaf){
+						cout<<endl;
+						cout<<"In A2: "<<f6->s<<endl;
+						cout<<endl;
+					  }
 						setTrace(f6,NULL,NULL,s);
 						/****************************************************/
 						count++;
@@ -442,6 +484,9 @@ int prover::Axiom3closure() {
 			add.insert(pair<string, formula*>(checkH->s, checkH));
 			/******************For tracing back*****************/
 			string s="A3";
+			cout<<endl;
+			cout<<"In A3: "<<checkH->s<<endl;
+			cout<<endl;
 			setTrace(checkH,NULL,NULL,s);
 			/****************************************************/
             count++;
@@ -458,6 +503,9 @@ int prover::Axiom3closure() {
             add.insert(pair<string, formula*>(checkI->s, checkI));
             /******************For tracing back*****************/
 			string s1="A3";
+			cout<<endl;
+			cout<<"In A3: "<<checkI->s<<endl;
+			cout<<endl;
 			setTrace(checkI,NULL,NULL,s1);
 			/****************************************************/
         }
@@ -476,10 +524,15 @@ void prover::cutDownAxiom3(){
     for(; itrH!=Hypothesis.end(); itrH++) {
 		Axiom3Form(itrH->second);
 		if(Axiom3Form(itrH->second)){
-			formula *f = implication(itrH->second , ((itrH->second)->lhs)->lhs);
+			formula *f = Axiom3(itrH->second->lhs->lhs);
 			add.insert(pair<string, formula*>(f->s, f));
 			/******************For tracing back*****************/
 			string s="A3";
+			if(f->leaf){
+			cout<<endl;
+			cout<<"In cutDown A3: "<<f->s<<endl;
+			cout<<endl;
+		    }
 			setTrace(f,NULL,NULL,s);
 			/****************************************************/
 			cout<<"This is useful :"<<endl;
@@ -515,9 +568,9 @@ void prover::step(){
 		if(check()){
 			cout<<"Mil gya"<<endl;
 			fillTraceVec(destination,1,"Destination found!");
-			sort(traceVec.begin(), traceVec.end(),comp_tr);
+			//sort(traceVec.begin(), traceVec.end(),comp_tr);
 			cout<<"****************************************Printing Trace*******************************************"<<endl;
-			printTraceVec();
+			//printTraceVec();
 			cout<<"##################################################################################################"<<endl;
 			break;
 		}
