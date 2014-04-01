@@ -13,7 +13,6 @@ struct formula{
 	formula *lhs;
 	formula *rhs;
 	bool leaf;
-	bool False;
 	string s;
 	int length; //Useful for search strategies
 	

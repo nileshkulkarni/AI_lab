@@ -1,7 +1,7 @@
 #include <iostream>
 #include "formula.h"
-
 #include "prover.h"
+#include "problemTree.h"
 
 using namespace std;
 
@@ -14,7 +14,6 @@ int main(){
 	F = new formula;
 	F->leaf = true;
 	F->val = 'F';
-	F->False = true;
 	F->length = 1;
 	F->s = "F";
 
@@ -39,10 +38,19 @@ int main(){
     cin>>*p1;
     cout<<*p1<<endl;
     
-	p1->step();
+    
+    problemTree* pt = new problemTree(p1, 0);
+    pt->expand();
+    //pt->print(cout);
+	pt->step();
+	cout<<"Found  = "<<pt->result<<endl;
+	
+	if(pt->result){
+		cout<<"TRACING BACK.."<<endl;
+		pt->traceBack();
+	}
+	//p1->step(40);
 	//p1->printH(cout);
-	cout<<"came here: "<<endl;
-	cout<<"Found  = "<<p1->check()<<endl;
 	
 	cout<<"--------------------------------------------"<<endl;
 //	cout<<*p1<<endl;

@@ -67,8 +67,6 @@ void formula::input(istream &in) {
 		length = lhs->length + rhs->length;
 		s = s + lhs->s + rhs->s;
 	}
-	if(val == 'F')
-		False = true;
 }
 
 
@@ -97,8 +95,6 @@ void formula::inputInfix(istream &in){
 		length = 1;
 		leaf = true;
 		val = a;
-		if(val=='F')
-			False = true;
 		s = "";
 		s.push_back(val);	
 		lhs = NULL;
@@ -158,7 +154,6 @@ formula *implication(formula *A , formula *B){
 	formula *ret = new formula;
 	ret->val = '-';
 	ret->leaf = false;
-	ret->False = false;
 	ret->lhs = A;
 	ret->rhs = B;
 	ret->length = A->length + B->length;
