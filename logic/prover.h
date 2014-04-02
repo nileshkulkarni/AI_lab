@@ -6,12 +6,14 @@
 #include <vector>
 #include <cassert>
 #include <algorithm>
+#include <queue>
 
 struct trace {
 	formula* self;
 	string axiom_used;
 	formula* f1;
 	formula* f2;
+	bool done;
 };
 
 
@@ -31,6 +33,7 @@ public:
 	formula *originalDestination;
 	unordered_map<string , formula*> originalHypothesis;
 	int maxAllowedLength;
+	vector<trace> traceVec1;
 	vector< pair<int, pair <string, formula*> > > traceVec;
 	
 public:
@@ -57,7 +60,8 @@ public:
 	
 	int simplify();
     void simpilifyDestination();
-    
+    void setDummyTrace();
+
     friend ostream &operator<<(ostream &out, prover A){   
 		out<<"Destination is : "<<*(A.destination)<<endl;
 		A.printH(out);
@@ -73,7 +77,7 @@ public:
 	int computeMaxFormulalength();
 	/********Trace****************/
 	void setTrace(formula* self, formula* MP_1, formula* MP_2, string axiom);
-	void fillTraceVec(formula* f, int entry, string s);
+	void fillTraceVec(formula* f);
 	void printTraceVec(int nspaces);
 	void traceBack(int nspaces);
 	/*****************************/

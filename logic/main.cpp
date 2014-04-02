@@ -45,16 +45,27 @@ int main(){
     pt->print(cout);
     pt->step();
 	cout<<"Found  = "<<pt->result<<endl;
-	
-	if(pt->result){
-		cout<<"TRACING BACK.."<<endl;
-		pt->traceBack();
-	}
-	//p1->step(40);
-	//p1->printH(cout);
-	
+	char c=' ';
+	while(c!='0'){
+		if(pt->result){
+			cout<<"TRACING BACK... "<<endl;
+			pt->traceBack();
+			break;
+		}
+		
+		else{
+			cout<<"NOT FOUND"<<endl;
+			cout<<"ENTER HUMAN INPUT:(ENTER Axiom No to Use, 0 for no- "<<endl;
+			cin>>c;
+		}
+		if(c == '1')
+			pt->p->Axiom1closure();
+		if(c == '2')
+			pt->p->Axiom2closure();
+		if(c == '3')
+			pt->p->Axiom3closure();	
+	}	
 	cout<<"--------------------------------------------"<<endl;
-//	cout<<*p1<<endl;
 
 	return 0;
 }
