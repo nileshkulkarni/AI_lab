@@ -12,17 +12,16 @@
 class problemTree{
 public:
 	int depth;
-	int nodeInfo;
 	bool result;
+	bool solvedFromFirstPrinciples;
 	prover *p;
-	list<problemTree *> children;
+	list<list<problemTree *>*> children;
 	problemTree(int _depth);
 	problemTree(prover *_p, int _depth);
 	void expand();
 	void traceBack();
 	void print(ostream& out);
 	void step();
-	
 };
 
 

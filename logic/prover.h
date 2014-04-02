@@ -74,7 +74,8 @@ public:
 	/********Trace****************/
 	void setTrace(formula* self, formula* MP_1, formula* MP_2, string axiom);
 	void fillTraceVec(formula* f, int entry, string s);
-	void printTraceVec();
+	void printTraceVec(int nspaces);
+	void traceBack(int nspaces);
 	/*****************************/
 	bool Hmember(formula *f);
 	int MPclosure();
@@ -84,7 +85,6 @@ public:
     
     int Axiom2finish();
     void cutDownAxiom3();
-    
     bool step(int nSteps);
 
 
