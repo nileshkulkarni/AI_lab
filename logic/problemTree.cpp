@@ -27,12 +27,17 @@ void problemTree::expand(){
 	    if(p->checkUseful(t)){
 			list<problemTree*> * newList = new list<problemTree*>;
 			formula *temp = t;
+			formula *previous = NULL;
 			while(!temp->leaf){
 				problemTree *child = new problemTree(depth+1);
 				child->p = new prover;
 				*(child->p) = *p;
 				child->p->Hypothesis.erase(t->s);
 				child->p->originalHypothesis.erase(t->s);
+				if(previous){
+					child->p->Hypothesis.insert(pair<string,formula*>(previous->s,previous));
+					child->p->originalHypothesis.insert(pair<string,formula*>(previous->s,previous));
+				}
 				child->p->destination = temp->lhs;
 				child->p->originalDestination = temp->lhs;
 				child->p->simpilifyDestination();
@@ -40,6 +45,7 @@ void problemTree::expand(){
 				//cout<<endl<<"Printing child:"<<endl;
 				//cout<<*(child->p)<<endl;
 				newList->push_back(child);
+				previous = temp->lhs;
 				temp = temp->rhs;
 			}
 			assert(temp->val == 'F');	
