@@ -34,19 +34,20 @@ int main(){
     int a,b;
     cin>>a>>b;
     prover *p1 = new prover(a,b);
-    
     cin>>*p1;
-    cout<<*p1<<endl;
+    prover *itp;
     
     
-    problemTree* pt = new problemTree(p1, 0);
-  
-    pt->expand();
-    pt->print(cout);
-    pt->step();
-	cout<<"Found  = "<<pt->result<<endl;
-	char c=' ';
+    char c=' ';
 	while(c!='0'){
+		
+		itp = new prover();
+		*itp = *p1;
+		problemTree* pt = new problemTree(itp, 0);
+		pt->expand();
+		pt->print(cout);
+		pt->step();
+		cout<<"Found  = "<<pt->result<<endl;
 		if(pt->result){
 			cout<<"TRACING BACK... "<<endl;
 			pt->traceBack();
@@ -55,16 +56,18 @@ int main(){
 		
 		else{
 			cout<<"NOT FOUND"<<endl;
-			cout<<"ENTER HUMAN INPUT:(ENTER Axiom No to Use, 0 for no- "<<endl;
+			cout<<"ENTER HUMAN INPUT:(ENTER Formula (after 1) to Use, 0 for no- "<<endl;
+			formula *f = new formula;
 			cin>>c;
+			if(c=='1'){
+				f->inputInfix(cin);
+				p1->Hypothesis.insert(pair<string,formula*>(f->s,f));
+				p1->originalHypothesis.insert(pair<string,formula*>(f->s,f));
+				p1->simpilifyDestination();
+				pt->destroy();
+			}
 		}
-		if(c == '1')
-			pt->p->Axiom1closure();
-		if(c == '2')
-			pt->p->Axiom2closure();
-		if(c == '3')
-			pt->p->Axiom3closure();	
-	}	
+	}
 	cout<<"--------------------------------------------"<<endl;
 
 	return 0;
