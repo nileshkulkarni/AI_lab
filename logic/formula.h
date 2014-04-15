@@ -16,6 +16,11 @@ struct formula{
 		A.print(out);
 		return out;
  }
+  friend istream &operator>>(istream &in, formula &A){   
+		A.input(in);
+		return in;
+ }
+
 };
 
 
@@ -32,5 +37,5 @@ formula *Axiom3(formula *A);
 //Gotta do something about this
 
 bool equal(formula *A , formula *B);
-bool operator==(const formula A ,const formula B);
+bool operator==(formula A , formula B);
 
