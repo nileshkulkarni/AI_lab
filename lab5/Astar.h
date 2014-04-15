@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "graph.h"
 #include "node.h"
-
+#include "header.h"
 using namespace std;
 typedef int (*HeuristicF)(NodePtr, NodePtr) ;
 class AStar{
