@@ -8,6 +8,9 @@ private:
     float weight;
 public: 
     Edge():
+    float getDel(){
+		return end.getDel();
+	}
     Neuron* getStart();
     Neuron* getEnd();
     void setStart(Neuron*);

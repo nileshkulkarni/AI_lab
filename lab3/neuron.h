@@ -1,7 +1,7 @@
-#include<iostream>
-#include<stdio.h>
-#include<list>
-#include<vector>
+#include <iostream>
+#include <stdio.h>
+#include <list>
+#include <vector>
 
 
 
@@ -39,6 +39,7 @@ class Neuron{
         float getDel();
         void updateDel();
         void updateDel(Vec t);
+        void update();
 
 };
 
@@ -55,6 +56,5 @@ void Neuron :: updateDel(){
 		del +=	outputEdges[i] * (outputEdges[i].getEnd())->getDel() * output * (1 - output);
 	}
 }
-
 
 
