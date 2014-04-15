@@ -40,8 +40,8 @@ in(1,t4,g5).
 in(2,t2,g5).
 
 
-signal(T,1) :- out(T,G) , in(S1,Y,G) , signal(Y,1) , type(G,or)
-			;  out(T,G) , in(1,X,G) , in(2,Y,G) , signal(Y,1) , signal(X,1), type(G,and)
+signal(T,1) :- out(T,G) , in(S1,Y,G) , signal(Y,1) , type(G,or) , !
+			;  out(T,G) , in(1,X,G) , in(2,Y,G) , signal(Y,1) , signal(X,1), type(G,and) , !
 			;  out(T,G) , in(S1,X,G) , in(S2,Y,G) , signal(Y,1) , signal(X,0), type(G,xor).
 			
-signal(T,0) :- \+ signal(T,1)
+signal(T,0) :- \+ signal(T,1).
