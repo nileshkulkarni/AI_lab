@@ -1,9 +1,6 @@
 #include "network_layer.h"
-
-
-
+extern float NETA;
 int NetworkLayer::totalLayers = 0;
-
 
 NetworkLayer :: NetworkLayer (){
 	layerId = totalLayers;
