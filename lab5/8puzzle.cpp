@@ -1,10 +1,5 @@
-#include <iostream>
-#include "Astar.h"
-#include "node.h"
-#include "graph.h"
-#include <list>
-#include <vector>
-#include "header.h"
+#include "8puzzle.h"
+
 
 using namespace std;
 int findpos(vector<int>& vec){
@@ -15,7 +10,6 @@ int findpos(vector<int>& vec){
     }
     return -1;
 }
-void printstate(vector<int>&);
 
 vector< NodePtr > getNeighbours(NodePtr np){
     vector<int> v = np->data._state;
@@ -81,21 +75,3 @@ void printstate(vector<int>& v){
     }
     return;
 }
-/*
-int main(){
-    vector<int> state;
-    state.push_back(1);
-    state.push_back(0);
-    for(int i = 2; i < 9 ; i++)
-        state.push_back(i);
-    Data d;
-    d._state=state;
-    NodePtr start = new Node(d);
-    vector<NodePtr>  n = getNeighbours(start);
-    for (vector<NodePtr>::iterator it=n.begin() ; it != n.end(); ++it){
-        printstate((*it)->data._state);
-        cout<<endl<<endl;
-    }
-
-}
-*/
