@@ -188,6 +188,7 @@ bool AStar::getShortestPath(Node _start, Node _end){
   return false;
 }
 
+
 void AStar::reconstructPath(int long long id,int steps){
     long long int came_from = came_from_map[id]; 
     if(came_from == -1){
@@ -200,5 +201,127 @@ void AStar::reconstructPath(int long long id,int steps){
         printNode(came_from);
         reconstructPath(came_from,steps+1);
         return;
+    }
+}
+
+
+
+
+void AStar::bidirectional(Node _start, Node _end){
+  Node goal = _end;
+  Node start = _start;
+  came_from_map[start.id] = -1;
+  addNodeToSet(openSet,start);
+  return;
+
+}
+
+
+Node AStar::next(){
+
+#if DEBUG
+     printf("Size of open list is %d \n", openSet.size()); 
+#endif
+     Node current  = getMinimumNode(openSet);
+
+     return current;
+}
+
+
+void AStar::update(Node current, Node goal){
+
+     removeMinimum(openSet,current); 
+
+     addNodeToSet(closedSet,current);
+#if DEBUG
+     printf("Adding node= %lld to Closed multiset\n", current.id);
+#endif
+     vector<Node> nodeNbrs = getNeighbours(current);
+     
+    for(int i=0;i<nodeNbrs.size();i++){
+        //nbr is a neighbouring node
+        Node nbr = nodeNbrs[i];
+        if(findInSet(closedSet,nbr)){
+            //TODO: remove the node from the closed and shift in open
+#if DEBUG
+            cout<<"Node found in closed multiset "<< nbr.id<<endl;
+#endif
+            continue;
+        }
+        int tentative_g_score = current.g_score + distance(current,nbr);
+#if DEBUG
+        nbr.printData();
+#endif
+        //TODO update this with the follwing logic.
+        // update if it is found in open multiset with higher g score
+        // or else it is not in open multiset.
+        pair<Node,bool> check = findInOpenSet(nbr);
+        
+        if(check.second && tentative_g_score < check.first.g_score){
+            removeNodeFromSet(openSet,nbr);
+            came_from_map[check.first.id] = current.id;
+#if DEBUG
+            printf("Setting parent of %lld to %lld\n", check.first.id, current.id);
+#endif
+            //check.first.came_from = &current;
+            check.first.g_score = tentative_g_score;
+            check.first.f_score = tentative_g_score + H(check.first,goal);
+            addNodeToSet(openSet,check.first);
+#if DEBUG
+            printf("Updating node in open multiset %lld with new parent = %lld\n",check.first.id,current.id);
+#endif
+        }
+        else if(check.second==false){
+            came_from_map[check.first.id] = current.id;
+#if DEBUG
+            printf("Setting parent of %lld to %lld\n", check.first.id, current.id);
+#endif
+            //nbr.came_from = &current;
+            nbr.g_score = tentative_g_score;
+            nbr.f_score = tentative_g_score + H(nbr,goal);
+            addNodeToSet(openSet,nbr);
+#if DEBUG
+            printf("Adding node= %lld to Open multiset with f_score %d \n", nbr.id,nbr.f_score);
+#endif
+        }
+      }
+
+#if DEBUG
+    cout<<"------------------------------------------------------------------------------------"<<endl;
+#endif
+
+    return;
+}
+
+
+
+bool AStar::findInClosedSet(Node n){
+    multiset<Node>::iterator it;
+    for(it = closedSet.begin();it!=closedSet.end();it++){
+      if(n.id == (*it).id){
+        return true;
+      }
+    }
+    return false;
+}
+
+
+int AStar::openSize(){
+  return openSet.size();
+}
+
+int AStar::reconstructPath_bi(int long long id){
+    int steps = 0;
+    long long int came_from = came_from_map[id]; 
+    while (came_from != -1){
+      printNode(came_from);
+      came_from = came_from_map[came_from]; 
+      steps++;
+    }
+    if(came_from == -1){
+        return steps;
+    }
+    else{
+        return -1;
     }
 }
