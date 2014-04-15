@@ -2,11 +2,11 @@
 
 using namespace std;
 
-Neuron::Neuron(){
-    
+Neuron::Neuron(int N){
+    noOfInputs = N;    
     id = totalNeurons;
     totalNeurons++;
-
+    
 }
 
 vector<Edge*> Neuron :: getinputEdges() {
