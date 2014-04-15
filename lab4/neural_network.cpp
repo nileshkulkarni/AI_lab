@@ -113,7 +113,7 @@ void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
             sub(outp , outs[i]); 
             maxError = max(maxError , mod(outp));
             meanError += mod(outp);
-//            cout<<mod(outp)<<" "<<mod2(outp)<<endl;
+            //cout<<mod(outp)<<" "<<endl;
         }	
         if(!printRate--){
 			printf("%d mean:%f max:%f\n",steps, meanError , maxError);

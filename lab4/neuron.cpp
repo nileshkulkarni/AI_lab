@@ -168,7 +168,7 @@ bool equal(Vec v1 , Vec v2){
     for(int i=0;i<v1.size();i++){
       double t = v1[i] - v2[i];
       t = (t>0)?t:-t;
-      ret = ret && (t < 0.3);
+      ret = ret && (t < 0.1);
   } 
     return ret;
 }
