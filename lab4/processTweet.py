@@ -279,6 +279,7 @@ def one_tweet(featureVector):
 	    if ((len(word) > 2) and d.check(word)):
                 words_up.append(word)
 	fp = open('TweetsCorpus/newCorpus/feature_one_tweet','w')
+    fp.write("1,")
     for w in featureVector:
         if w in words_up:
             fp.write("1,")
