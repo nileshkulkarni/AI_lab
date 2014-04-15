@@ -40,9 +40,10 @@ int main(){
     
     
     problemTree* pt = new problemTree(p1, 0);
+  
     pt->expand();
-    //pt->print(cout);
-	pt->step();
+    pt->print(cout);
+    pt->step();
 	cout<<"Found  = "<<pt->result<<endl;
 	
 	if(pt->result){

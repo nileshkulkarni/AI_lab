@@ -77,13 +77,25 @@ void formula::inputInfix(istream &in){
 	in>>a;
 
 	if(a=='('){
-		lhs = new formula;
-		lhs->inputInfix(in);
+		formula *f1 = new formula;
+		f1->inputInfix(in);
 		in>>a;
-		assert(a=='-');
+		formula *f2 = new formula;
+		f2->inputInfix(in);
+		
+		if(a=='|'){
+			lhs = implication(f1,F);
+			rhs = f2;
+	    }
+	    if(a=='&'){
+			lhs = implication(f1,implication(f2,F));
+			rhs = F;
+		}
+		if(a=='-'){
+			lhs = f1;
+			rhs = f2;
+		}
 		val = '-';
-		rhs = new formula;
-		rhs->inputInfix(in);
 		leaf = false;
 		length = lhs->length + rhs->length;
 		in>>a;
