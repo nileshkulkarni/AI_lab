@@ -27,16 +27,20 @@ void problemTree::expand(){
 	    if(p->checkUseful(t)){
 			list<problemTree*> * newList = new list<problemTree*>;
 			formula *temp = t;
-			formula *previous = NULL;
+			formula *previousFormula = NULL;
+			prover *previousProver = p;
 			while(!temp->leaf){
 				problemTree *child = new problemTree(depth+1);
 				child->p = new prover;
-				*(child->p) = *p;
-				child->p->Hypothesis.erase(t->s);
-				child->p->originalHypothesis.erase(t->s);
-				if(previous){
-					child->p->Hypothesis.insert(pair<string,formula*>(previous->s,previous));
-					child->p->originalHypothesis.insert(pair<string,formula*>(previous->s,previous));
+				*(child->p) = *previousProver;
+				if(previousFormula == NULL){
+					child->p->Hypothesis.erase(t->s);
+					child->p->originalHypothesis.erase(t->s);
+				}
+				else{
+					assert(previousFormula && previousProver);
+					child->p->Hypothesis.insert(pair<string,formula*>(previousFormula->s,previousFormula));
+					child->p->originalHypothesis.insert(pair<string,formula*>(previousFormula->s,previousFormula));
 				}
 				child->p->destination = temp->lhs;
 				child->p->originalDestination = temp->lhs;
@@ -44,8 +48,9 @@ void problemTree::expand(){
 				child->p->setDummyTrace();
 				//cout<<endl<<"Printing child:"<<endl;
 				//cout<<*(child->p)<<endl;
+				previousFormula = temp->lhs;
+				previousProver = child->p;
 				newList->push_back(child);
-				previous = temp->lhs;
 				temp = temp->rhs;
 			}
 			assert(temp->val == 'F');	
@@ -157,4 +162,16 @@ void problemTree::traceBack(){
 	
 	
 
+void problemTree::destroy(){
+	list<list<problemTree *>*>:: iterator cI;
+	list<problemTree *>:: iterator problem;
+  
+	for(cI = children.begin(); cI!=children.end(); cI++)
+		for(problem = (*cI)->begin(); problem != (*cI)->end(); problem++){
+			(*problem)->destroy();
+			free(*problem);
+		}
+			
+	free(p);
+}		
 
