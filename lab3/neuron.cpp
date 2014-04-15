@@ -15,7 +15,7 @@ vector<Edge*> Neuron :: getInputEdges() {
 
 void Neuron :: collectInputs() {
 	float collectedOut=0;
-	vector<Edge*> input = getinputEdges();
+	vector<Edge*> input = getInputEdges();
 	for(int i=0; i<input.size(); i++) {
 		Neuron* start = input[i]->getStart();
 		float w = input[i]->getWeight();
@@ -29,7 +29,7 @@ float Neuron::getOutput(){
 }
 void Neuron :: collectInputs(Vec In) {
 	float collectedOut=0;
-	vector<Edge*> input = getinputEdges();
+	vector<Edge*> input = getInputEdges();
 	for(int i=0; i<In.size(); i++) {
 		float w = input[i]->getWeight();
 		collectedOut+=w*In[i];
@@ -49,3 +49,9 @@ void Neuron :: updateDel(){
 	}
 }
 
+
+
+float Neuron :: getDel(){
+	return del;
+}
+        

@@ -41,6 +41,7 @@ class Neuron{
         void updateDel();
         void updateDel(Vec t);
         void update();
+        
 
 };
 

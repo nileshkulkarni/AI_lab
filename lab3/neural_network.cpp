@@ -1,19 +1,22 @@
 #include "neural_network.h"
 
+int Neuron::totalNeurons = 0;
 
-void NeuralNetwork::_init(){
-            
-
-
-
+NeuralNetwork::NeuralNetwork(){
 }
 
-NeuralNetwork::NeuralNetwork(int layers,int noOfNeurons){
+
+
+
+
+void NeuralNetwork::_init(){
+}
+
+
+
+NeuralNetwork::NeuralNetwork(int nlayers){
     _init();
-    for(int i =0;i<n;i++){
-        NetworkLayer lay(noOfNeurons);        
-        layers.push(lay);
-    }
+    layers.resize(nlayers);
 } 
 
 void NeuralNetwork::feedForward(Vec in){
@@ -37,7 +40,7 @@ Vec NeuralNetwork::getOutput(Vec in){
 }
 
 
-NeuralNetwork :: backPropagate(){
+void NeuralNetwork :: backPropagate(){
 	
 	layers[noOfLayers-1].backPropagate(outputs);
 	
@@ -48,4 +51,4 @@ NeuralNetwork :: backPropagate(){
 	for(int i=noOfLayers-1; i>0 ; i++){
 		layers[i].updateWeights();
 	}
-}
+}	

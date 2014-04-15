@@ -4,6 +4,9 @@
 #include<vector>
 #include "network_layer.h"
 
+
+
+
 using namespace std;
 
 
@@ -16,11 +19,13 @@ class NeuralNetwork{
         Vec outputs;
         
     public:
-        void NeuralNetwork();
+        NeuralNetwork();
+        NeuralNetwork(int nlayers);
         void addTrainData(Vec input, Vec outputs); 
         void addHiddenLayer(); 
         void addAllTrainData(vector<Vec> input,vector<Vec> output); 
-        Vec getOuput(Vec input);
-        void backPropagate(int Layer);
-        void feedForward();      
-}
+        Vec getOutput(Vec in);
+        void backPropagate();
+        void feedForward(); 
+        void feedForward(Vec in);      
+};
