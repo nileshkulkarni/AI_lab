@@ -16,7 +16,7 @@ class NeuralNetwork{
         Vec outputs;
         
     public:
-            NeuralNetwork(int layers,int noOfNeurons);
+        NeuralNetwork(int layers,int noOfNeurons);
         void addTrainData(Vec input, Vec outputs); 
         void addHiddenLayer(); 
         void addAllTrainData(vector<Vec> input,vector<Vec> output); 
