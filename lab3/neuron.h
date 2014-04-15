@@ -1,7 +1,7 @@
-#include<iostream>
-#include<stdio.h>
-#include<list>
-#include<vector>
+#include <iostream>
+#include <stdio.h>
+#include <list>
+#include <vector>
 
 
 
@@ -23,7 +23,6 @@ class Neuron{
     private:
         int id;
         bool outputNeuron;
-        Vec weights;
         vector<Edge*> inputEdges;
         vector<Edge*> outputEdges;
         int noOfInputs; 
@@ -41,6 +40,7 @@ class Neuron{
         float getDel();
         void updateDel();
         void updateDel(Vec t);
+        void update();
 
 };
 
@@ -57,6 +57,5 @@ void Neuron :: updateDel(){
 		del +=	outputEdges[i] * (outputEdges[i].getEnd())->getDel() * output * (1 - output);
 	}
 }
-
 
 
