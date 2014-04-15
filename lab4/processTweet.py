@@ -21,15 +21,15 @@ def processTweet(tweet):
 #process the entire tweetfile
 def processFile(filename):
     #Read the tweets one by one and process it
-    read = 'TweetsCorpus/twitter_'+filename
-    write= 'TweetsCorpus/processed_'+filename
+    read = 'TweetsCorpus/newCorpus/twitter_'+filename
+    write= 'TweetsCorpus/newCorpus/processed_'+filename
     fr = open(read, 'r')
     fw = open(write,'a')
     line = fr.readline()
      
     while line:
-        split_tweet = line.split('\t')
-        processedTweet = processTweet(split_tweet[1])
+       # split_tweet = line.split('\t')
+        processedTweet = processTweet(line)
         #fw.write(split_tweet[0])
         #fw.write('\t')
         fw.write(processedTweet)
@@ -83,8 +83,8 @@ def getFeatureVector(tweet,featureVector,stopWords):
 
 #start getAllFeatureWords from preprocessed tweets
 def getAllFeatureWords(filename,featureVector):
-    filename = 'TweetsCorpus/processed_'+filename
-    stopWords = getStopWordList("TweetsCorpus/stopword.txt")
+    filename = 'TweetsCorpus/newCorpus/processed_'+filename
+    stopWords = getStopWordList("TweetsCorpus/newCorpus/stopword.txt")
     fp = open(filename,'r')
     line = fp.readline()
     while line:
@@ -130,7 +130,19 @@ def getFreq(featureVector):
                     worddict[temp] = worddict.get(temp)+1
                 else:
                     worddict[word[:-3]] = 1
-            else:
+            elif(word.endswith("est") and d.check(word[:-3])):
+                if(word[:-3] in worddict):
+                    temp = word[:-3]
+                    worddict[temp] = worddict.get(temp)+1
+                else:
+                    worddict[word[:-3]] = 1    
+	    elif(word.endswith("ful") and d.check(word[:-3])):
+                if(word[:-3] in worddict):
+                    temp = word[:-3]
+                    worddict[temp] = worddict.get(temp)+1
+                else:
+                    worddict[word[:-3]] = 1    
+	    else:
                 if(word in worddict):
                     worddict[word] = worddict.get(word)+1
                 else:
@@ -153,7 +165,7 @@ def finalVector(worddict):
 
     fp.close()
 
-    fp = open("TweetsCorpus/featurewords.dump",'w')
+    fp = open("TweetsCorpus/newCorpus/featurewords.dump",'w')
     
     for word in finallist:
         fp.write(word)
@@ -173,17 +185,21 @@ def extract_features(tweet,featureVector,senti):
     for word in words:
         word = word.strip()
         word = word.strip('\'"?,.!') 
-        if(word.endswith("es") and d.check(word[:-2])):
+        if(word.endswith("es") and (len(word) > 2) and d.check(word[:-2])):
             words_up.append(word[:-2])
-        elif(word.endswith("s") and d.check(word[:-1])):
+        elif(word.endswith("s")):
             words_up.append(word[:-1])
-        elif(word.endswith("ed") and d.check(word[:-2])):
+        elif(word.endswith("ed") and (len(word) > 2) and d.check(word[:-2])):
             words_up.append(word[:-2])
-        elif(word.endswith("ing") and d.check(word[:-3])):
+        elif(word.endswith("ing") and (len(word) > 3) and  d.check(word[:-3])):
             words_up.append(word[:-3])
-        elif(word.endswith("ied") and d.check(word[:-3])):
+        elif(word.endswith("ied") and (len(word) > 3) and d.check(word[:-3])):
             words_up.append(word[:-3])
-        else:
+	elif(word.endswith("est") and (len(word) > 3) and d.check(word[:-3])):
+            words_up.append(word[:-3])                
+	elif(word.endswith("ful") and (len(word) > 3) and d.check(word[:-3])):
+            words_up.append(word[:-3])                
+	else:
             words_up.append(word)
     extractf = []
     extractf.append(senti) 
@@ -200,7 +216,7 @@ def extract_features(tweet,featureVector,senti):
 #start  printing feature vector
 def printFeatureVector(allWords):
     featureVector = []
-    fp=open("TweetsCorpus/processed_positive",'r')
+    fp=open("TweetsCorpus/newCorpus/processed_positive",'r')
     d=enchant.Dict()
     line = fp.readline()
     while line:
@@ -208,21 +224,21 @@ def printFeatureVector(allWords):
         line = fp.readline()
     fp.close()
     
-    fp=open("TweetsCorpus/processed_negative",'r')
+    fp=open("TweetsCorpus/newCorpus/processed_negative",'r')
     line = fp.readline()
     while line:
         featureVector.append(extract_features(line,allWords,-1))
         line = fp.readline()
     fp.close()
 
-    fp=open("TweetsCorpus/processed_objective",'r')
+    fp=open("TweetsCorpus/newCorpus/processed_objective",'r')
     line = fp.readline()
     while line:
         featureVector.append(extract_features(line,allWords,0))
         line = fp.readline()
     fp.close()
 
-    fp=open("TweetsCorpus/extracted-features.dump",'w')
+    fp=open("TweetsCorpus/newCorpus/extracted-features.dump",'w')
     for veclist in featureVector:
         for w in veclist:
             fp.write(str(w))

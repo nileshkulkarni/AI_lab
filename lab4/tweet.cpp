@@ -19,7 +19,7 @@ int main() {
 	vector<int> outputVec;
 	string line;
 	ifstream infile;
-	infile.open("./TweetsCorpus/extracted-features.dump");
+	infile.open("./TweetsCorpus/newCorpus/extracted-features.dump");
 	cout<<"Generating input and output vectors for training.."<<endl;
 	if(infile.is_open()) {
 		while(getline(infile,line)) {
