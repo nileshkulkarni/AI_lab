@@ -164,7 +164,7 @@ vector<Vec> crossValOutput(int nfold, int partForValidation) {
                         int index=0;
                         char ch = (char)line[index]; 
                         int a = atoi(&ch);
-                        if(a==-1) {
+                        if(a==2) {
                             outp.push_back(0);
                             outp.push_back(0);
                         }
@@ -226,7 +226,7 @@ vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
                         int index=0;
                         char ch = (char)line[index]; 
                         int a = atoi(&ch);
-                        if(a==-1) {
+                        if(a==2) {
                             outp.push_back(0);
                             outp.push_back(0);
                         }
@@ -250,7 +250,7 @@ vector<Vec> getTrainingOutput(int nfold, int partForValidation) {
                         int index = 0;
                         char c1 = (char)line[index];
                         float a = (float)atoi(&c1);
-                        if(a==-1) {
+                        if(a==2) {
                             outp.push_back(0);
                             outp.push_back(0);
                         }

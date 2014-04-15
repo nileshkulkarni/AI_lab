@@ -169,15 +169,39 @@ int main(){
 		
 		
 		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
-		nn.print();
+	//	nn.print();
+
+        cout << "Enter a new tweet : "<<endl;
+        string tw;
+        cin >> tw;
 		return 0;
     }
     
+    else if(OP == "NewTweet") {
+		vector<Vec> inputVec = getTrainingInput(5 , 0);
+    	vector<Vec> outputVec = getTrainingOutput(5, 0); 
+		Vec OutputResult;
+		
+		nn.addInputLayer(inputVec[0].size());
+		nn.addOutputLayer(2);
+    
+		cout<<"Input Layer added!"<<endl;
+		nn.generateEdges();
+		cout<<"Edges Generated!"<<endl;
+    	nn.addAllTrainData(inputVec, outputVec);
+        printf("Training Done!\n");
+		Vec OutputResult;
+	    Vec Input;	
+		OutputResult = nn.getOutput(Input[0]);
+		cout<<"\n Result : ";
+		printVec(OutputResult);
+        
+    }
+
     else if(OP == "Iris") {
 		cout<<"In Iris----------"<<endl;
 		
 		vector<Vec> inputVec = getTrainingInputIris(5 , 5);
-    	
     	
     	vector<Vec> outputVec = getTrainingOutputIris(5, 5); 
     	vector<Vec> validatingInputs = crossValinputIris(5, 5);
