@@ -36,5 +36,13 @@ class AStar{
         void reconstructPath(long long int,int);
         pair<Node,bool> findInOpenSet(Node n);
         map<long long int, long long int> came_from_map;
+        Node next();
+        void update(Node,Node);
+        void bidirectional(Node,Node);
+        bool findInClosedSet(Node n);
+        int openSize();
+        int reconstructPath_bi(long long int);
+
+
 };
 #endif
