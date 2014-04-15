@@ -24,4 +24,8 @@ NeuralNetwork :: backPropagate(){
 	for(int i=noOfLayers-2 ; i>=0 ; i++){
 		layers[i].backPropagate();
 	}
+	
+	
+	
+	
 }
