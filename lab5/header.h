@@ -71,14 +71,6 @@ struct Data{
    }
 
 
-   long long int getHash(){
-        long long int id =0;
-        for(int i =0;i<9;i++){
-            id= id*10 + _state[i];
-        }
-        return id;
-
-   }
 } ;
 
 vector< Node > getNeighbours(Node n);
