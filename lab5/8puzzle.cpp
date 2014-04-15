@@ -1,10 +1,5 @@
-#include <iostream>
-#include "Astar.h"
-#include "node.h"
-#include "graph.h"
-#include <list>
-#include <vector>
-#include "header.h"
+#include "8puzzle.h"
+
 
 using namespace std;
 int findpos(vector<int>& vec){
@@ -15,7 +10,6 @@ int findpos(vector<int>& vec){
     }
     return -1;
 }
-void printstate(vector<int>&);
 
 vector< NodePtr > getNeighbours(NodePtr np){
     vector<int> v = np->data._state;
