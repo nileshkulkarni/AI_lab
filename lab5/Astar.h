@@ -1,8 +1,8 @@
 #ifndef ASTAR_H
 #define ASTAR_H
 #include <iostream>
-#include<list>
-#include<set>
+#include <list>
+#include <set>
 #include <stdlib.h>
 #include <stdio.h>
 #include <utility>
@@ -11,6 +11,7 @@
 #include "header.h"
 #include "8puzzle.h"
 #include <map>
+#include <cmath>
 using namespace std;
 typedef int (*HeuristicF)(Node, Node) ;
 class AStar{

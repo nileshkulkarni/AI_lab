@@ -1,6 +1,7 @@
 #ifndef HEADER_H
 #define HEADER_H
 #include <vector>
+#define DEBUG 0
 using namespace std;
 
 class Node;
@@ -21,11 +22,15 @@ struct Data{
    }
    
    void print(){
-       for(int i=0;i<_state.size();i++){
-            printf("%d",_state[i]);
-       }
-    return; 
-
+       for(int i=0;i<9;i++){
+        if(i%3==2){
+            cout<<" "<<_state[i]<<endl;
+        }
+        else{
+            cout<<" "<<_state[i];
+        }
+    }
+    return;
    }
 
    //this works now

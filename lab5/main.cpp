@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #include "Astar.h"
 #include "node.h"
 #include "graph.h"
@@ -91,26 +91,15 @@ int main(){
         finals.push_back(i);
     }
     finals.push_back(0);
-    /*    
-    finals.push_back(1);
-    finals.push_back(2);
-    finals.push_back(3);
-    finals.push_back(4);
-    finals.push_back(5);
-    finals.push_back(6);
-    finals.push_back(7);
-    finals.push_back(8);
-    finals.push_back(0);
-    */ 
     Data d2;
     d2.vec_assign(finals);
     Node stop(d2);
     
-    printf("Printing Start ");
+    printf("Start Node is: \n");
     start.printData();
-    printf("\nPrinting End ");
+    printf("\nEnd Node is: \n");
     stop.printData();
-    printf(" \n");
+    printf("\n");
     Graph graph(start); 
     AStar a(graph);
     

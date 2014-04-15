@@ -20,4 +20,7 @@ void printstate(vector<int>&);
 //returns a vector of neighbours
 vector< Node > getNeighbours(Node);
 
+//print the node given its id
+void printNode(long long int);
+
 #endif
