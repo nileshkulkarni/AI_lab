@@ -42,7 +42,8 @@ void NetworkLayer :: initInput(int nNeurons){
 
 void NetworkLayer :: updateLayer() {
 	for(int i=0; i<Neurons.size(); i++) {
-		Neurons[i].collectInputs();
+		//printf("about to falult\n");
+        Neurons[i].collectInputs();
 	}
 }
 
@@ -67,7 +68,12 @@ Vec  NetworkLayer:: getOutput(){
 void NetworkLayer :: updateLayer(Vec In) {
 	
 	for(int i=0;i<Neurons.size();i++ ){
+		//printf("about to falult1\n");
+        //printf("i %d\n  ",i);
+        //printf("Neuron id %d\n", Neurons[i].getID());
+        //printf("Inputs %d\n", Neurons[i].getID());
 		Neurons[i].collectInputs(In[i]);
+
 	}
 }
 
@@ -91,6 +97,7 @@ void NetworkLayer ::backPropagate(Vec t){
         //cout<<"Layer Id is :"<<layerId<<endl;
         
         for(int i=0;i<N;i++){
+		//printf("about to falult2\n");
 			Neurons[i].collectInputs();
 			Neurons[i].updateDel(t[i]);
 		}	
