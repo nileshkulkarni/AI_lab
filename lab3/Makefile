@@ -1,14 +1,17 @@
 
+
+
+
 NeuralNetwork : edge.o neuron.o network_layer.o neural_network.o
-	g++ -o NeuralNetwork neuron.o edge.o network_layer.o neural_network.o main.cpp
+	g++ -g -o NeuralNetwork neuron.o edge.o network_layer.o neural_network.o main.cpp
 neural_network.o : neural_network.cpp network_layer.h neural_network.h edge.h neuron.h 
-	g++ -c neural_network.cpp
+	g++ -g -c neural_network.cpp
 network_layer.o : network_layer.cpp network_layer.h edge.h neuron.h
-	g++ -c network_layer.cpp
+	g++ -g -c network_layer.cpp
 neuron.o : neuron.cpp neuron.h edge.h  
-	g++ -c neuron.cpp
+	g++ -g -c neuron.cpp
 
 edge.o : edge.cpp edge.h neuron.h
-	g++ -c edge.cpp
+	g++ -g -c edge.cpp
 clean :
 	rm -rf *.o NeuralNetwork
