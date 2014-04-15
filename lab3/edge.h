@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "neuron.h"
 class Edge{
 private: 
@@ -7,5 +8,9 @@ private:
     float weight;
 public: 
     Edge():
+    Neuron* getStart();
+    Neuron* getEnd();
+    void setStart(Neuron*);
+    Neuron* setEnd(Neuron*);
 
 };
