@@ -17,7 +17,7 @@ class Perceptron{
 	bool checkDotProduct(vector<int> w , vector<int> row);
 	vector<int> addWeights(vector<int> w, vector<int> row);	
 	void PTA();
-	
+	void printVect(vector<int>);	
 	bool check(vector<int>);
 	
 
