@@ -41,8 +41,12 @@ formula *implication(formula *A , formula *B);
 formula *Axiom1(formula *A , formula *B);  //Introduction Axiom , introduces B
 formula *Axiom2(formula *A , formula *B , formula *C);
 formula *Axiom3(formula *A);
-void destroy(formula *f);
 
+void destroyAxiom1(formula *f);
+void destroyAxiom2(formula *f);
+void destroyAxiom3(formula *f);
+
+bool Axiom3Form(formula *f);
 //Gotta do something about this
 
 bool equal(formula *A , formula *B);

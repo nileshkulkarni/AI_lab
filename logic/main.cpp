@@ -38,12 +38,12 @@ int main(){
     
     cout<<*p1;
     formula *dest = new formula;
-    cin>>*dest;
+    dest->inputInfix(cin);
     cout<<"Destination formula is "<<*dest<<endl;
     cout<<*p1<<endl;
     
 	p1->step();
-	p1->printH(cout);
+	//p1->printH(cout);
 	cout<<"came here: "<<endl;
 	cout<<"Found  = "<<p1->Hmember(dest)<<endl;
 	

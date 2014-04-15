@@ -44,6 +44,8 @@ public:
     int Axiom2closure();
     int Axiom3closure();
     
+    void cutDownAxiom3();
+    
     void step();
 
 
