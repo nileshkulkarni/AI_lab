@@ -38,6 +38,14 @@ bool Axiom3Form(formula *f){
 	if((f->lhs)->leaf) return false;
 	return ((f->lhs->rhs->val == 'F') && (f->rhs->val == 'F'));
 }	
+
+
+bool Axiom2lhsForm(formula *f){
+	
+	if(f==NULL) return false;
+	if(f->leaf) return false;
+	return (!f->rhs->leaf);
+}
 	
 	
 

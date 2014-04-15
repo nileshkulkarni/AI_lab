@@ -132,6 +132,7 @@ int prover::MPclosure(){
     unordered_map<string, formula*>:: iterator it;
 	totalCount = 0;
     count = 1; //some non-zero number
+   	
     while(count > 0){
 		count=0;
 		unordered_map<string, formula*> add;
@@ -147,7 +148,15 @@ int prover::MPclosure(){
 		}
 		totalCount += count;
 		Hypothesis.insert(add.begin() , add.end());
-		//printH(cout);
+	/*	
+		printH(cout);
+		cout<<"2)^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"<<" add.size : "<<add.size();
+		cout<<" Hypothesis.size() :"<<Hypothesis.size()<<endl;
+		for(it = add.begin();it!=add.end();it++)
+			cout<<*(it->second)<<endl;
+		
+		cout<<"-----------------------------"<<endl;
+    */
     }		
 	return totalCount;
 }
@@ -165,13 +174,15 @@ int prover::Axiom1closure() {
     int iteration = 0;
     while(iteration < (1<<2)){
 		
-		cout<<iteration<<endl;
+		//cout<<iteration<<endl;
 		for(int i=0;i<2;i++){
 			itrHstart[i] = getbit(iteration , i)? Hypothesis.begin() : Introductory_formulae.begin();	
 			itrHend[i] = getbit(iteration , i)? Hypothesis.end() : Introductory_formulae.end();	
 		}
 		
 		for(itrH[0] = itrHstart[0]; itrH[0]!=itrHend[0]; itrH[0]++) {
+			if(2*(itrH[0]->second)->length > maxAllowedLength)
+				continue;
 			for(itrH[1] = itrHstart[1]; itrH[1]!=itrHend[1]; itrH[1]++) {
 					formula *f6 = Axiom1(itrH[0]->second , itrH[1]->second);
 					if(!Hmember(f6) && (f6->length <= maxAllowedLength)) {
@@ -192,6 +203,36 @@ int prover::Axiom1closure() {
 	return count;
 }
 
+
+
+
+int prover::Axiom2finish() {
+	
+	//cout<<"Inside:"<<endl;
+	int count = 0;
+	unordered_map<string, formula*>::  iterator it;
+    unordered_map<string, formula*> add;
+    for(it = Hypothesis.begin();it!=Hypothesis.end();it++){
+		formula *itf = it->second;
+		assert(itf!=NULL);
+		//cout<<"here :"<<*itf<<endl;
+		if(Axiom2lhsForm(itf)){
+			//cout<<"here :"<<endl;
+			formula *t = Axiom2(itf->lhs , itf->rhs->lhs , itf->rhs->rhs);
+			if(t->length <= maxAllowedLength){
+				add.insert(pair<string, formula*>(t->s , t));
+				count++;
+			}
+			else
+				destroyAxiom2(t);
+		}
+		//cout<<"cont :"<<endl;	
+	}
+	//printH(cout);
+	//cout<<"add.size :"<<add.size()<<" Hypothesis.size() "<<Hypothesis.size()<<endl;
+	Hypothesis.insert(add.begin() , add.end());
+	return count;
+}
 
 
 
@@ -216,7 +257,11 @@ int prover::Axiom2closure() {
 		
 		int t=0;
 		for(itrH[0] = itrHstart[0]; itrH[0]!=itrHend[0]; itrH[0]++) {
+			if(3*(itrH[0]->second->length) > maxAllowedLength)
+				continue;
 			for(itrH[1] = itrHstart[1]; itrH[1]!=itrHend[1]; itrH[1]++) {
+				if(3*(itrH[0]->second->length) + 2 *(itrH[1]->second->length) > maxAllowedLength)
+					continue;
 				for(itrH[2] = itrHstart[2]; itrH[2]!=itrHend[2]; itrH[2]++) {
 					//cout<<"comes here: "<<iteration<<" : "<<t++<<" : "<<Hypothesis.size()<<endl;
 					formula *f6 = Axiom2(itrH[0]->second , itrH[1]->second , itrH[2]->second);
@@ -292,15 +337,23 @@ void prover::cutDownAxiom3(){
 void prover::step(){
 	
 	maxAllowedLength = computeMaxFormulalength() + 1;
-	for(int i=0; i<10;i++){
-		Axiom1closure();
-		//Axiom2closure();
-		//Axiom3closure();
+	for(int i=0; i<20;i++){
+		
 		cutDownAxiom3();
-		MPclosure();
+		Axiom2finish();
+		
+		if(i%2){
+			Axiom1closure();
+		}//Axiom2closure();
+		//Axiom3closure();
+		
+		if(!(i%2)){
+			MPclosure();
+		}
 		cout<<"mAL is : "<<maxAllowedLength<<endl;
-		cout<<"Size of Hypothesis : "<<Hypothesis.size()<<endl;
-		maxAllowedLength = next(maxAllowedLength);
+		cout<<"Size of Hypothesis: "<<Hypothesis.size()<<endl;
+		if(i%2)
+			maxAllowedLength = next(maxAllowedLength);
 		if(check()){
 			cout<<"Mil gya"<<endl;
 			break;
