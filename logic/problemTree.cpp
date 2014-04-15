@@ -17,7 +17,8 @@ void problemTree::expand(){
 	
 	if(depth >= MAXDEPTH) return;
 	unordered_map<string, formula*>:: iterator it;
-	
+	p->simpilifyDestination();
+	p->setDummyTrace();
 //	cout<<endl<<"Printing Parent"<<endl;
 //	cout<<*p;
 	
@@ -44,8 +45,8 @@ void problemTree::expand(){
 				}
 				child->p->destination = temp->lhs;
 				child->p->originalDestination = temp->lhs;
-				child->p->simpilifyDestination();
-				child->p->setDummyTrace();
+				//child->p->simpilifyDestination();
+				//child->p->setDummyTrace();
 				//cout<<endl<<"Printing child:"<<endl;
 				//cout<<*(child->p)<<endl;
 				previousFormula = temp->lhs;
