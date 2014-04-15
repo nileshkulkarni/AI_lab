@@ -24,9 +24,8 @@ class Neuron{
         int id;
         bool outputNeuron;
         Vec weights;
-        Vec outputweights;
-        vector<Neuron*> inputEdges;
-        vector<Neuron*> outputEdges;
+        vector<Edge*> inputEdges;
+        vector<Edge*> outputEdges;
         int noOfInputs; 
         Vec inputs;
         float output;
@@ -54,8 +53,8 @@ void Neuron :: updateDel(Vec t){
 
 void Neuron :: updateDel(){
 	del = 0;
-	for(int i=0;i<outputNeurons.size();i++){
-		del +=	outputweights[i] * outputEdges[i].getDel() * output * (1 - output);
+	for(int i=0;i<outputEdges.size();i++){
+		del +=	outputEdges[i] * (outputEdges[i].getEnd())->getDel() * output * (1 - output);
 	}
 }
 
