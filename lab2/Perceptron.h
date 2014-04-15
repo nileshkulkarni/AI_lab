@@ -25,7 +25,7 @@ public:
 		int i=0;
 		while(i<nVec && steps-->0){
 		 
-		 cout<<i<<" "<<endl;
+		// cout<<i<<" "<<endl;
 		 for(i=0;i<nVec;i++){
 			 if(dotProduct(weights , vectors[i]) <= 0){
 				 weights.add(vectors[i]);

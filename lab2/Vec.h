@@ -37,6 +37,11 @@ struct Vec{
 	}
 	
 	
+	void prettyPrint(){
+		 for(int i=0;i<dimension;i++)
+		  cout<<arr[i]<<" ";
+		 cout<<endl; 
+	}	
 	void invertWeights(){
 		 for(int i=0;i<dimension;i++)
 		  arr[i] = -arr[i];

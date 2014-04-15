@@ -7,30 +7,26 @@ using namespace std;
 int main(){
   	
 	 int dim , nVec;
-	 cin>>dim >> nVec;
-	 
+
+     dim = 8;
+     nVec = (1<<7);
+    	 
 	 Vec* vectors = new Vec[nVec];
 	 
 	 
 	// set<Vec> vectorSet;
 	 
 	
+	for(int nv=0;nv<10;nv++){	 
 	 
-	 
-	 for(int i=0;i<nVec;i++){
-	   vectors[i].initialize(dim);
-	   vectors[i].input();
-    }
+		for(int i=0;i<nVec;i++){
+			vectors[i].initialize(dim);
+			vectors[i].input();
+		}
     
-    
-      int steps;
-	 cout<<"Enter the no of steps that you want the program to run for :";
-	 cin>>steps;
-    
-	    
-	 Perceptron P(dim);
-	 P.train(vectors , nVec , steps); 
-	 
-     P.printWeights();
+		Perceptron P(dim);
+		P.train(vectors , nVec , 1000000); 
+		P.printWeights();
+	}    
    return 0;
 }
