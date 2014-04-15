@@ -174,42 +174,50 @@ int main(){
 		
 		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
 	//	nn.print();
-		string tw;
-        
-		string file = "main.py -o";
-		string ex = "python ";
-		ex+=file;
-		system(ex.c_str());
-		
-	    Vec v_in = inputForOneTweet();
-	    
-	    OutputResult = nn.getOutput(v_in);
-        Vec postv,negtv,objtv;
-        postv.push_back(1);
-        postv.push_back(1);
+		while(1) {
+			int y;
+			cout<<"Do you want to analyze more tweets? | Press 1 to say Yes:"<<endl;
+			cin>>y;
+			if(y==1) {
+				string tw;
+				
+				string file = "main.py -o";
+				string ex = "python ";
+				ex+=file;
+				system(ex.c_str());
+				
+				Vec v_in = inputForOneTweet();
+				
+				OutputResult = nn.getOutput(v_in);
+				Vec postv,negtv,objtv;
+				postv.push_back(1);
+				postv.push_back(1);
 
-        negtv.push_back(0);
-        negtv.push_back(0);
+				negtv.push_back(0);
+				negtv.push_back(0);
 
-        objtv.push_back(0);
-        objtv.push_back(1);
-        
-        int c=-1;
-        if(equal(postv,OutputResult)) c=1;
-        else if(equal(negtv,OutputResult)) c=2;
-        else if(equal(objtv,OutputResult)) c=0;
-        else c=-1;
-        
-        
-		cout<<"\n Result : ";
-		printVec(OutputResult);
-        cout<<endl;
-        cout<<"The tweet seems to be : ";
-        if(c==1) cout<<"Positive!"<<endl;
-        else if(c==0) cout<<"Neutral!"<<endl;
-        else if(c==2) cout<<"Negative!"<<endl;
-        else cout<<c<<endl;
-		
+				objtv.push_back(0);
+				objtv.push_back(1);
+				
+				int c=-1;
+				if(equal(postv,OutputResult)) c=1;
+				else if(equal(negtv,OutputResult)) c=2;
+				else if(equal(objtv,OutputResult)) c=0;
+				else c=-1;
+				
+				
+				cout<<"\n Result : ";
+				printVec(OutputResult);
+				cout<<endl;
+				cout<<"The tweet seems to be : ";
+				if(c==1) cout<<"Positive!"<<endl;
+				else if(c==0) cout<<"Neutral!"<<endl;
+				else if(c==2) cout<<"Negative!"<<endl;
+				else cout<<c<<endl;
+			}
+			else break;
+		}
+			
         
 
 		return 0;
