@@ -14,7 +14,7 @@ Node:: Node(int i){
 Node:: Node(Data d){
         data.assign(d);
         //printData();
-        id=getHash();
+        id=d.getHash();
         g_score = 0 ;
         f_score = 0 ;
         came_from = NULL;
