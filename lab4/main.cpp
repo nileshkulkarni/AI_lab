@@ -15,7 +15,15 @@ vector<Vec> crossValinput(int nfold, int partForValidation);
 vector<Vec> crossValOutput(int nfold, int partForValidation);
 vector<Vec> getTrainingOutput(int nfold, int partForValidation);
 
+vector<Vec> getTrainingInputIris(int nfold, int partForValidation) ;
+vector<Vec> crossValinputIris(int nfold, int partForValidation);
+vector<Vec> crossValOutputIris(int nfold, int partForValidation);
+vector<Vec> getTrainingOutputIris(int nfold, int partForValidation);
 
+vector<Vec> getTrainingInputMonks(int nfold, int partForValidation) ;
+vector<Vec> crossValinputMonks(int nfold, int partForValidation);
+vector<Vec> crossValOutputMonks(int nfold, int partForValidation);
+vector<Vec> getTrainingOutputMonks(int nfold, int partForValidation);
 
 using namespace std;
 
@@ -45,7 +53,7 @@ int main(){
     	
     Vec in2;	
     int vsize;	
-    if(OP!="Tweet" && OP != "Iris"){
+    if(OP!="Tweet" && OP != "Iris" && OP != "Monks"){
     	vsize = getInputSize(OP);	
 	in2.resize(vsize);
 	}
@@ -56,7 +64,7 @@ int main(){
     cin>>nlayers;		
     NeuralNetwork nn(nlayers,1);
     
-    if(OP!="Tweet" && OP != "Iris"){
+    if(OP!="Tweet" && OP != "Iris" && OP != "Monks"){
     	nn.addInputLayer(vsize);
 	}
     //nn.addHiddenLayer(7);
@@ -83,7 +91,7 @@ int main(){
     }
     
     
-    else if(OP == "Tweet" || OP == "Iris") {
+    else if(OP == "Tweet") {
 		cout<<"In1----------"<<endl;
 		
 		vector<Vec> inputVec = getTrainingInput(5 , 5);
@@ -158,14 +166,169 @@ int main(){
 		
 		
 		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
+		nn.print();
 		return 0;
     }
     
-    else if(OP == "IRIS") {
+    else if(OP == "Iris") {
+		cout<<"In Iris----------"<<endl;
 		
+		vector<Vec> inputVec = getTrainingInputIris(5 , 5);
+    	
+    	
+    	vector<Vec> outputVec = getTrainingOutputIris(5, 5); 
+    	vector<Vec> validatingInputs = crossValinputIris(5, 5);
+    	vector<Vec> validatingOutputs = crossValOutputIris(5, 5);
+
+		assert(validatingInputs.size() == validatingOutputs.size());
+		printf("Sizes are %d %d %d %d \n", validatingInputs.size() , validatingOutputs.size() , inputVec.size() , outputVec.size()); 
+		
+    	
+    	printf("Sizes are %d %d \n" , inputVec[0].size() , inputVec[0].size());
+    	
+    	
+    		
+		for(int nhj=0;nhj<inputVec.size();nhj++){
+			printVec(outputVec[nhj]);
+			cout<<" : ";
+			printVec(inputVec[nhj]);
+		}
+    	
+    	
+    	
+		Vec OutputResult;
+
+		
+		
+		nn.addInputLayer(inputVec[0].size());
+		nn.addOutputLayer(2);
     
-	}
+		cout<<"Input Layer added!"<<endl;
+		nn.generateEdges();
+		cout<<"Edges Generated!"<<endl;
+    	nn.addAllTrainData(inputVec, outputVec);
+        printf("Training Done!\n");
+		printf("Generating validation inputs \n");
+		
+		
+		
+		
+		int NumberSucceeded = 0;
+		
+		
+		for(int nhj=0;nhj<inputVec.size();nhj++){
+			OutputResult = nn.getOutput(inputVec[nhj]);
+			cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
+			cout<<"Expected: ";
+			printVec(outputVec[nhj]);
+			cout<<"\n Result : ";
+			printVec(OutputResult);
+			NumberSucceeded += equal(OutputResult , outputVec[nhj]);
+		}
+		
+		
+		cout<<"Accuracy  on Trained % is : "<<(NumberSucceeded * 100)/inputVec.size()<<endl;
+		
+		
+		
+		NumberSucceeded = 0;
+		
+		for(int nhj=0;nhj<validatingInputs.size();nhj++){
+			OutputResult = nn.getOutput(validatingInputs[nhj]);
+			cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
+			cout<<"Expected: ";
+			printVec(validatingOutputs[nhj]);
+			cout<<"\n Result : ";
+			printVec(OutputResult);
+			NumberSucceeded += equal(OutputResult , validatingOutputs[nhj]);
+		}
+		
+		
+		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
+		return 0;
+    }
 	
+    else if(OP == "Monks") {
+		cout<<"In Monks----------"<<endl;
+		
+		vector<Vec> inputVec = getTrainingInputMonks(5 , 5);
+    	
+    	
+    	vector<Vec> outputVec = getTrainingOutputMonks(5, 5); 
+    	vector<Vec> validatingInputs = crossValinputMonks(5, 5);
+    	vector<Vec> validatingOutputs = crossValOutputMonks(5, 5);
+
+		assert(validatingInputs.size() == validatingOutputs.size());
+		printf("Sizes are %d %d %d %d \n", validatingInputs.size() , validatingOutputs.size() , inputVec.size() , outputVec.size()); 
+		
+    	
+    	printf("Sizes are %d %d \n" , inputVec[0].size() , outputVec[0].size());
+    	
+    	
+    		
+		for(int nhj=0;nhj<inputVec.size();nhj++){
+			printVec(outputVec[nhj]);
+			cout<<" : ";
+			printVec(inputVec[nhj]);
+		}
+    	
+    	
+    	
+		Vec OutputResult;
+
+		
+		
+		nn.addInputLayer(inputVec[0].size());
+		nn.addOutputLayer(outputVec[0].size());
+    
+		cout<<"Input Layer added!"<<endl;
+		nn.generateEdges();
+		cout<<"Edges Generated!"<<endl;
+    	nn.addAllTrainData(inputVec, outputVec);
+        printf("Training Done!\n");
+		printf("Generating validation inputs \n");
+		
+		
+		
+		
+		int NumberSucceeded = 0;
+		
+		
+		for(int nhj=0;nhj<inputVec.size();nhj++){
+			OutputResult = nn.getOutput(inputVec[nhj]);
+		//	cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
+		//	cout<<"Expected: ";
+		//	printVec(outputVec[nhj]);
+		//	cout<<"\n Result : ";
+		//	printVec(OutputResult);
+			NumberSucceeded += equal(OutputResult , outputVec[nhj]);
+		}
+		
+		
+		cout<<"Accuracy  on Trained % is : "<<(NumberSucceeded * 100)/inputVec.size()<<endl;
+		
+		
+		
+		NumberSucceeded = 0;
+		
+		for(int nhj=0;nhj<validatingInputs.size();nhj++){
+			OutputResult = nn.getOutput(validatingInputs[nhj]);
+		//	cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
+		//	cout<<"Expected: ";
+		//	printVec(validatingOutputs[nhj]);
+		//	cout<<"\n Result : ";
+		//	printVec(OutputResult);
+			NumberSucceeded += equal(OutputResult , validatingOutputs[nhj]);
+		}
+		
+		
+		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
+		
+		nn.print();
+    
+		
+		return 0;
+    }
     else {
 		nn.addOutputLayer(1);
 		nn.generateEdges();   
