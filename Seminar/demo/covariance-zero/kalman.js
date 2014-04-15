@@ -3,9 +3,8 @@
 window.Kalman = function() {
   
   //this.x = Matrix.Zero(4, 1);
-
   this.x = Matrix.create([350, 100, 10, 10 ]);
-  this.P = Matrix.Diagonal([10, 10, 1, 1]);
+  this.P = Matrix.Diagonal([10, 10, 0, 0]);
   this.u = Matrix.Zero(4, 1);
 
   this.dt = 1;
