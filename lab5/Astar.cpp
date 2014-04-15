@@ -1,9 +1,9 @@
 #include "Astar.h"
 
-void printlist(list<NodePtr> l){
-  list<NodePtr> ::iterator it ;
+void printSet(set<Node> l){
+  set<Node> ::iterator it ;
   for(it=l.begin();it!=l.end();it++){
-        (*it)->data.print();
+        ((struct Data)(*it).data).print();
         cout<<" , ";
     }
     cout<<endl;
@@ -16,142 +16,124 @@ void AStar::setHeuristicFunction(HeuristicF f){
     H =f; 
     return;
 }
-NodePtr AStar::getMinimumNode( list<NodePtr> l){
-    if(l.size() == 0){
-        return NULL;
+Node AStar::getMinimumNode( set<Node> l){
+    if(l.size()>=1){
+        set<Node>::iterator it = l.begin();
+        printf("Minimum f_score node is %lld \n", (*it).id);
+        return *it;
     }
-    NodePtr n = l.front();
-    int min = n->f_score;
-    list<NodePtr> ::iterator it ;
-    for(it=l.begin();it!=l.end();it++){
-        if( (*it)->f_score < min){
-            n = *it;
-            min = (*it)->f_score;
-        }
+    else{
+        printf("Set is empty, no nodes left to expand");
+        //exit(0);
     }
-    printf("Minimum f_score node is %lld \n", n->id);
-    return n;
 }
-bool AStar::findInList( list<NodePtr> l,NodePtr n){
-    if(n==NULL){
-        std::cout<<"Searching for a NULL element in the list\n";
-        return false;
-    }
-    list<NodePtr> ::iterator it ;
+bool AStar::findInSet( set<Node> l,Node n){
+    set<Node> ::iterator it ;
     for(it=l.begin();it!=l.end();it++){
-        if( n->data == (*it)->data)
+        if( n.data == (*it).data)
             return true;
     }
     return false;
 }
 
-NodePtr AStar::findInOpenList(NodePtr n){
-    if(n==NULL){
-        std::cout<<"Searching for a NULL element in the list\n";
-        return NULL;
+pair<Node,bool> AStar::findInOpenSet(Node n){
+   printf("Looking fo node existing is openset id is %lld",n.id);
+    
+    set<Node>::iterator it = openSet.find(n);
+    if(it == openSet.end()){
+            printf( "   Node not found\n");
+         pair<Node,bool>p = make_pair(n,false);
+         return p;
     }
-    list<NodePtr> ::iterator it ;
-    for(it=openList.begin();it!=openList.end();it++){
-        if( n->data == (*it)->data){
-           return (*it);
-        }
-    }
-    return NULL;
+            printf( "   Node  found\n");
+    pair<Node,bool>p = make_pair((*it),true);
+    return p;
 }
 
-bool AStar::addNodeToList( list<NodePtr>& l,NodePtr n){
+bool AStar::addNodeToSet( set<Node>& l,Node n){
     
-    if(n==NULL){
-        std::cout<<"Searching for a NULL element in the list\n";
+    l.insert(n);
+    return true;
+}
+bool AStar::removeNodeFromSet( set<Node>& l,Node n){
+    
+    set<Node> ::iterator it =l.find(n);
+    if(it==l.end()){
+        std::cout<<"Shouldn't come here, should be called after ensuring that the element exists in the list\n";
         return false;
     }
-    l.push_back(n);
+    else{
+        l.erase(it);
+        return true;
+    }
 
 }
-bool AStar::removeNodeFromList( list<NodePtr>& l,NodePtr n){
-    
-    if(n==NULL){
-        std::cout<<"Searching for a NULL element in the list\n";
-        return false;
-    }
-    list<NodePtr> ::iterator it ;
-    for(it=l.begin();it!=l.end();it++){
-        if( n->data == (*it)->data){
-            l.erase(it);
-            break;
-        }
-    }
-    return false;
-
-}
-int AStar::distance(NodePtr from, NodePtr to ){
+int AStar::distance(Node from, Node to ){
     return 1;    
 }
 
 bool AStar::getShortestPath(int _start, int _end){
 
-  NodePtr goal = G.allNodes[_end]; 
-  NodePtr start =G.allNodes[_start];
+  Node goal = G.allNodes[_end]; 
+  Node start =G.allNodes[_start];
   getShortestPath(start,goal);
 }
 
-bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
+bool AStar::getShortestPath(Node _start, Node _end){
 
-  NodePtr goal = _end; 
-  NodePtr start =_start;
-
-  if(goal==NULL){
-    std::cout<<" Goal Node is set to NULL, cannot find a path\n";
-    return false;
-  } 
-  if(start==NULL){
-    std::cout<<" Start Node is set to NULL, cannot find a path\n";
-    return false;
-  }
-  addNodeToList(openList,start);
-  while(!(openList.size() == 0)){
+  Node goal = _end; 
+  Node start =_start;
+  came_from_map[start.id] = -1;
+  addNodeToSet(openSet,start);
+  while(!(openSet.size() == 0)){
         
-     NodePtr current  = getMinimumNode(openList);
-     printf("Expanding node:id= %lld\n", current->id);
-     if(current->data == goal->data){
+     Node current  = getMinimumNode(openSet);
+     printf("Expanding node:id= %lld\n", current.id);
+     if(current.data == goal.data){
          std::cout<<"Path found. Reconstructing now\n";
-         reconstructPath(current);
+         reconstructPath(current.id);
          return true;
      }
-     removeNodeFromList(openList,current); 
+     removeNodeFromSet(openSet,current); 
 
-     addNodeToList(closedList,current);
-     printf("Adding node= %lld to Closed list\n", current->id);
-     vector< NodePtr> nodeNbrs = getNeighbours(current);
-    
+     addNodeToSet(closedSet,current);
+     printf("Adding node= %lld to Closed set\n", current.id);
+     vector<Node> nodeNbrs = getNeighbours(current);
+     
     for(int i=0;i<nodeNbrs.size();i++){
         //nbr is a neighbouring node
-        NodePtr nbr = nodeNbrs[i];
-        if(findInList(closedList,nbr)){
+        Node nbr = nodeNbrs[i];
+        if(findInSet(closedSet,nbr)){
             //TODO: remove the node from the closed and shift in open
-            cout<<"Node found in closed list"<<endl;
+            cout<<"Node found in closed set"<<endl;
             continue;
         }
-        int tentative_g_score = current->g_score + distance(current,nbr);
-        nbr->printData();
+        int tentative_g_score = current.g_score + distance(current,nbr);
+        printf("Here printing  ");
+        nbr.printData();
         printf("\n");
 
         //TODO update this with the follwing logic.
-        // update if it is found in open list with higher g score
-        // or else it is not in open list.
-        NodePtr check_node = findInOpenList(nbr);
-        if(check_node!=NULL && tentative_g_score < check_node->g_score){
-            check_node->came_from = current;
-            check_node->g_score = tentative_g_score;
-            check_node->f_score = tentative_g_score + H(check_node,goal);
-            printf("Updating node in open list %lld with new parent = %lld\n",check_node->id,current->id);
+        // update if it is found in open set with higher g score
+        // or else it is not in open set.
+        pair<Node,bool> check = findInOpenSet(nbr);
+        
+        if(check.second && tentative_g_score < check.first.g_score){
+            removeNodeFromSet(openSet,nbr);
+            came_from_map[check.first.id] = current.id;
+            //check.first.came_from = &current;
+            check.first.g_score = tentative_g_score;
+            check.first.f_score = tentative_g_score + H(check.first,goal);
+            addNodeToSet(openSet,check.first);
+            printf("Updating node in open set %lld with new parent = %lld\n",check.first.id,current.id);
         }
-        else if(check_node==NULL){
-            nbr->came_from = current;
-            nbr->g_score = tentative_g_score;
-            nbr->f_score = tentative_g_score + H(nbr,goal);
-            addNodeToList(openList,nbr);
-            printf("Adding node= %lld to Open list with f_score %d \n", nbr->id,nbr->f_score);
+        else if(check.second==false){
+            came_from_map[check.first.id] = current.id;
+            //nbr.came_from = &current;
+            nbr.g_score = tentative_g_score;
+            nbr.f_score = tentative_g_score + H(nbr,goal);
+            addNodeToSet(openSet,nbr);
+            printf("Adding node= %lld to Open set with f_score %d \n", nbr.id,nbr.f_score);
         }
       }
 
@@ -161,14 +143,14 @@ bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
   return false;
 }
 
-void AStar::reconstructPath(NodePtr node){
-    NodePtr came_from = node->came_from;
-    if(came_from==NULL){
-        cout<<"came from is null"<<endl;
+void AStar::reconstructPath(int long long id){
+    long long int came_from = came_from_map[id]; 
+    if(came_from == -1){
+        cout<<"reached "<<endl;
         return;
     }
     else{
-        std::cout<<came_from->id<<" \n";
+        std::cout<<came_from<<" \n";
         reconstructPath(came_from);
         return;
     }

@@ -2,33 +2,35 @@
 #define ASTAR_H
 #include <iostream>
 #include<list>
+#include<set>
 #include <stdlib.h>
 #include <stdio.h>
+#include <utility>
 #include "graph.h"
 #include "node.h"
 #include "header.h"
 #include "8puzzle.h"
-
+#include <map>
 using namespace std;
-typedef int (*HeuristicF)(NodePtr, NodePtr) ;
+typedef int (*HeuristicF)(Node, Node) ;
 class AStar{
     
     public:
         Graph G;
         AStar(Graph g);
-        list<NodePtr> closedList;
-        list<NodePtr> openList;
+        set<Node> closedSet;
+        set<Node> openSet;
         HeuristicF H ;
         bool getShortestPath(int start, int end);
-        bool getShortestPath(NodePtr start, NodePtr end);
+        bool getShortestPath(Node start, Node end);
         void setHeuristicFunction(HeuristicF f );
-        bool findInList( list<NodePtr> l,NodePtr n);
-        bool addNodeToList( list<NodePtr>& l,NodePtr n);
-        NodePtr getMinimumNode( list<NodePtr> l);
-        bool removeNodeFromList( list<NodePtr>& l,NodePtr n);
-        int  distance(NodePtr from, NodePtr to );
-        void reconstructPath(NodePtr node);
-        NodePtr findInOpenList(NodePtr n);
-
+        bool findInSet( set<Node> l,Node n);
+        bool addNodeToSet( set<Node>& l,Node n);
+        Node getMinimumNode( set<Node> l);
+        bool removeNodeFromSet( set<Node>& l,Node n);
+        int  distance(Node from, Node to );
+        void reconstructPath(long long int);
+        pair<Node,bool> findInOpenSet(Node n);
+        map<long long int, long long int> came_from_map;
 };
 #endif
