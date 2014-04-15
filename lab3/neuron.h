@@ -23,7 +23,6 @@ class Neuron{
     private:
         int id;
         bool outputNeuron;
-        Vec weights;
         vector<Edge*> inputEdges;
         vector<Edge*> outputEdges;
         int noOfInputs; 
