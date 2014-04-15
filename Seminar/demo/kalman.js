@@ -3,16 +3,13 @@
 window.Kalman = function() {
   
   //this.x = Matrix.Zero(4, 1);
-
-  this.x = Matrix.create([350, 100, 10, 10 ]);
-  this.P = Matrix.Diagonal([10, 10, 1, 1]);
+  this.x = Matrix.create([10, 10, 10, 10 ]);
+  this.P = Matrix.Diagonal([10, 10, 0, 0]);
   this.u = Matrix.Zero(4, 1);
 
   this.dt = 1;
   this.mP = 10;
 
-  this.K = Matrix.Zero(4,4);
-  
  this.F = Matrix.create([
     [1, 0, this.dt, 0],
     [0, 1, 0,  this.dt],
@@ -42,8 +39,7 @@ window.Kalman = function() {
 		var Z = Matrix.create([[measuredX], [measuredY]]); 
 		var y = Z.subtract(this.H.multiply(this.x)); // z^ = H* x^
 		var S = this.H.multiply(this.P).multiply(this.H.transpose()).add(this.R); 
-		this.K = this.P.multiply(this.H.transpose()).multiply(S.inverse());
-		var K = this.K;
+		var K = this.P.multiply(this.H.transpose()).multiply(S.inverse());
 		this.x = this.x.add(K.multiply(y)); // posterior x 
 		this.P = this.I.subtract(K.multiply(this.H)).multiply(this.P); // covariance's update
 	}

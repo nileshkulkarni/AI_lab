@@ -39,10 +39,10 @@ body,html {
 }
 
 .numbers table td {
-  width: 100px;
-  height: 60px;
+  width: 50px;
+  height: 30px;
   vertical-align: middle;
-  font-size: 2em;
+  font-size: .6em;
   border-left: solid 1px #ddd;
   border-bottom: solid 1px #ddd;
   padding: 5px;
@@ -55,6 +55,7 @@ body,html {
 
 .numbers table td.h {
   height: 20px;
+  font-weight: bold;
 }
 
 .numbers table td.x {
