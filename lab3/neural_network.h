@@ -9,8 +9,10 @@
 #include "network_layer.h"
 
 
+#define ERROR_THRESHOLD 0.5
 
-#define ERROR_THRESHOLD 0.0006
+
+
 using namespace std;
 
 
@@ -21,8 +23,12 @@ class NeuralNetwork{
         Vec inputs;
         Vec outputs;
         int nHiddenLayers;
-        
+		
     public:
+        
+        
+        
+        
         vector<NetworkLayer>layers;
         NeuralNetwork();
         NeuralNetwork(int nlayers);
