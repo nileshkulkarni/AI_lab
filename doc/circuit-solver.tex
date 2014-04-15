@@ -7,7 +7,7 @@
 %
 \mode<presentation>
 {
-  \usetheme{Darmstadt}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
   \usecolortheme{default} % or try albatross, beaver, crane, ...
   \usefonttheme{default}  % or try serif, structurebold, ...
   \setbeamertemplate{navigation symbols}{}
@@ -29,6 +29,10 @@
 
 \begin{frame}
   \titlepage
+\end{frame}
+
+\begin{frame}{Table of Contents}
+  \tableofcontents
 \end{frame}
 
 \section{Introduction}
@@ -77,7 +81,75 @@ This basic API has been implemented in \texttt{circuit.pl}. This is useful
 \textbf{Problem Statement:} A majority gate returns true if and only if more than 50\% of its inputs are true. We have improved it to the following definition:
 \newline
 \texttt{majority(m,n)} This is true if number of 1's is greater than \texttt{n} in a \texttt{m} bit number.
-
-\textbf{Use Cases}: 
+\newline \newline
+\textbf{Usage}: 
+To simplify things and to avoid manually feeding of large inputs, we wrote 2 \texttt{c++ programs}: \newline \texttt{majority} takes input as \texttt{5  3} and generates a expression of unions and intersections.
+This expression is then passed to \texttt{init}, this program generates set of \texttt{rules} which will be given to the prolog program.
+These set of rules alongwith the basic prolog program, help us solve the majority circuit.
 \end{frame}
+
+\begin{frame}{Code Structure}
+\begin{itemize}
+\item\texttt{majority.pl}
+\newline
+The code is built upon the basic API mentioned during the start.
+Apart from that, a new rule is added.
+\newline
+\texttt{valid(V1,V2,V3,V4,V5)} makes sure that all the variables take values either 0 or 1 and are not undefined in any state.
+\item \texttt{majority} \newline This binary essentially converts the input into an expression consisting of unions and intersections.
+\newline It uses a recursive relationship to generate the expression:
+\texttt{majority(m,k) = majority(m-1,k) + majority(m-1,k-1)}
+\item \texttt{init}  \newline
+This just essentially creates the entire circuit using the API by the passing the expression generated in \texttt{majority}.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Use Cases}
+Following are sample use cases which can be used to test the majority circuit.
+\newline
+\begin{itemize}
+\item \texttt{signal(1,1,1,0,0,t17,X)} This returns the value of terminal \texttt{17} in \texttt{X}
+\item \texttt{signal(X1,X2,X3,X4,X5,t17,1)}: This is keeps on giving values of inputs X1-5 when the terminal 17 has value 1.
+\end{itemize}
+\end{frame}
+
+
+\subsection{Palindrome}
+\begin{frame}{Palindrome}
+\textbf{Problem Statement} Should return \texttt{true} if the input follows the property of palindromes.
+\newline \newline
+\textbf{Usage}: 
+To simplify things and to avoid manually feeding of large inputs, we wrote a \texttt{c++ program}: \texttt{init}, this program generates set of \texttt{rules} which will be given to the prolog program according to an expression, which is of the form 
+These set of rules alongwith the basic prolog program, help us solve the palindrome circuit.
+\end{frame}
+
+\begin{frame}{Code Structure}
+\begin{itemize}
+\item\texttt{palindrome.pl}
+\newline
+The code is built upon the basic API mentioned during the start.
+Apart from that, a new rule is added.
+\newline
+\texttt{valid(V1,V2,V3,V4,V5)} makes sure that all the variables take values either 0 or 1 and are not undefined in any state.
+\item \texttt{init}  \newline
+This just essentially creates the entire circuit using the API by the passing the expression generated in \texttt{majority}.
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Use Cases}
+Following are sample use cases which can be used to test the palindrome circuit.
+\newline
+\begin{itemize}
+\item \texttt{signal(1,1,1,0,0,t3,X)} This returns the value of terminal \texttt{3} in \texttt{X}
+\item \texttt{signal(X1,X2,X3,X4,X5,t3,1)}: This is keeps on giving values of inputs X1-5 when the terminal 3 has value 1.
+\end{itemize}
+\end{frame}
+
+
+
 \end{document}

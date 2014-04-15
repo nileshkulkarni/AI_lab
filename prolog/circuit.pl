@@ -95,4 +95,10 @@ signal(T,1) :- out(T,G) , in(S1,Y,G) , signal(Y,1) , type(G,or) , !
 			;  out(T,G) , in(S1,X,G) , in(S2,Y,G) , signal(Y,1) , signal(X,0), type(G,xor) , !
 			;  out(T,G) , in(1,X,G),  signal(X,0), type(G,not).
 			
-signal(T,0) :- \+ signal(T,1).
+signal(V1, V2, V3, V4, V5, T,0) :- out(T,G) , in(1,Y1,G), in(2,Y2,G) , signal(V1, V2, V3, V4, V5, Y1,0),signal(V1, V2, V3, V4, V5, Y2,0) , type(G,or),valid(V1,V2,V3,V4,V5)
+            ;  out(T,G) , in(1,X,G), signal(V1, V2, V3, V4, V5,X,0), type(G,and),valid(V1,V2,V3,V4,V5)
+            ;  out(T,G) , in(2,X,G), signal(V1, V2, V3, V4, V5,X,0), type(G,and),valid(V1,V2,V3,V4,V5)
+            ;  out(T,G) , in(1,X,G) , in(2,Y,G) , signal(V1, V2, V3, V4, V5,Y,1) , signal(V1, V2, V3, V4, V5, X,1), type(G,xor),valid(V1,V2,V3,V4,V5)
+             ;  out(T,G) , in(1,X,G) , in(2,Y,G) , signal(V1, V2, V3, V4, V5,Y,0) , signal(V1, V2, V3, V4, V5, X,0), type(G,xor),valid(V1,V2,V3,V4,V5)
+			;  out(T,G) , in(1,X,G),  signal(V1, V2, V3, V4, V5, X,1), type(G,not),valid(V1,V2,V2,V3,V4,V5).
+			

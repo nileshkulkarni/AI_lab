@@ -4,12 +4,14 @@
 % out(serialno, terminal, gate)
 % type(gate,and)
 
+equality(0,0).
+equality(1,1).
 
-signal(V1, V2, V3, V4, V5, X, Y) :- X = a, V1 is Y 
-								  ; X = b, V2 is Y
-								  ; X = c, V3 is Y
-								  ; X = d, V4 is Y
-								  ; X = e, V5 is Y. 
+signal(V1, V2, V3, V4, V5, X, Y) :- X = a, equality(V1,Y)
+								  ; X = b, equality(V2,Y)
+								  ; X = c, equality(V3,Y)
+								  ; X = d, equality(V4,Y)
+								  ; X = e, equality(V5,Y). 
  
 
 type(g0,xor).
@@ -24,13 +26,18 @@ type(g2,or).
 in(1,t0,g2).
 in(2,t1,g2).
 out(t2,g2).
-type(g3,not).
-in(1,t2,g3).
-out(t3,g3).
 
-signal(V1, V2, V3, V4, V5, T,1) :- out(T,G) , in(S1,Y,G) , signal(V1, V2, V3, V4, V5, Y,1) , type(G,or) , !
-			;  out(T,G) , in(1,X,G) , in(2,Y,G) , signal(V1, V2, V3, V4, V5,Y,1) , signal(V1, V2, V3, V4, V5, X,1), type(G,and) , !
-			;  out(T,G) , in(S1,X,G) , in(S2,Y,G) , signal(V1, V2, V3, V4, V5,Y,1) , signal(V1, V2, V3, V4, V5, X,0), type(G,xor), !
-			;  out(T,G) , in(1,X,G),  signal(V1, V2, V3, V4, V5, X,0), type(G,not).
+valid(V1,V2,V3,V4,V5):- equality(V1,V1),equality(V2,V2),equality(V3,V3),equality(V4,V4),equality(V5,V5).
+
+signal(V1, V2, V3, V4, V5, T,1) :- out(T,G) , in(S1,Y,G) , signal(V1, V2, V3, V4, V5, Y,1) , type(G,or),valid(V1,V2,V3,V4,V5)
+			;  out(T,G) , in(1,X,G) , in(2,Y,G) , signal(V1, V2, V3, V4, V5,Y,1) , signal(V1, V2, V3, V4, V5, X,1), type(G,and),valid(V1,V2,V3,V4,V5)  
+			;  out(T,G) , in(S1,X,G) , in(S2,Y,G) , signal(V1, V2, V3, V4, V5,Y,1) , signal(V1, V2, V3, V4, V5, X,0), type(G,xor),valid(V1,V2,V3,V4,V5)
+			;  out(T,G) , in(1,X,G),  signal(V1, V2, V3, V4, V5, X,0), type(G,not),valid(V1,V2,V2,V3,V4,V5).
 			
-signal(V1, V2, V3, V4, V5, T,0) :- \+ signal(V1, V2, V3, V4, V5, T, 1).
+signal(V1, V2, V3, V4, V5, T,0) :- out(T,G) , in(1,Y1,G), in(2,Y2,G) , signal(V1, V2, V3, V4, V5, Y1,0),signal(V1, V2, V3, V4, V5, Y2,0) , type(G,or),valid(V1,V2,V3,V4,V5)
+            ;  out(T,G) , in(1,X,G), signal(V1, V2, V3, V4, V5,X,0), type(G,and),valid(V1,V2,V3,V4,V5)
+            ;  out(T,G) , in(2,X,G), signal(V1, V2, V3, V4, V5,X,0), type(G,and),valid(V1,V2,V3,V4,V5)
+            ;  out(T,G) , in(1,X,G) , in(2,Y,G) , signal(V1, V2, V3, V4, V5,Y,1) , signal(V1, V2, V3, V4, V5, X,1), type(G,xor),valid(V1,V2,V3,V4,V5)
+             ;  out(T,G) , in(1,X,G) , in(2,Y,G) , signal(V1, V2, V3, V4, V5,Y,0) , signal(V1, V2, V3, V4, V5, X,0), type(G,xor),valid(V1,V2,V3,V4,V5)
+			;  out(T,G) , in(1,X,G),  signal(V1, V2, V3, V4, V5, X,1), type(G,not),valid(V1,V2,V2,V3,V4,V5).
+			
