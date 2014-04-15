@@ -56,7 +56,7 @@ int main(){
 		else{
 			cout<<"NOT FOUND"<<endl;
 			cout<<"ENTER HUMAN INPUT:(ENTER Axiom No to Use, 0 for no- "<<endl;
-			cin>>c;
+            cin>>c;
 		}
 		if(c == '1')
 			pt->p->Axiom1closure();
