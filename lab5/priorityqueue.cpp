@@ -1,5 +1,13 @@
 #include "priorityqueue.h"
 
+PriorityQueue::PriorityQueue(vector<int>& items)
+{
+    pq_keys = items;
+    buildHeap();
+}
+
+PriorityQueue::PriorityQueue(){}
+
 void PriorityQueue::enqueue(int item)
 {
     pq_keys.push_back(item);
@@ -96,3 +104,4 @@ void PriorityQueue::buildHeap()
     }
     return;
 }
+
