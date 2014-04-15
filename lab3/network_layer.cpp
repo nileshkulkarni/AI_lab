@@ -1,9 +1,6 @@
 #include "network_layer.h"
-
-
-
+extern float NETA;
 int NetworkLayer::totalLayers = 0;
-
 
 NetworkLayer :: NetworkLayer (){
 	layerId = totalLayers;
@@ -30,6 +27,17 @@ void NetworkLayer :: init(int nNeurons){
 }
 
 	
+void NetworkLayer :: initInput(int nNeurons){
+        N = nNeurons;
+        for(int i =0;i<nNeurons;i++){
+            Neuron neuron(nNeurons);
+            neuron.setWeightsZero(); 
+          //  printf("Generating neurons  on layer %d , neuron id is  %d\n", layerId, neuron.getID());
+            Neurons.push_back(neuron); 
+        
+        }
+}
+
 
 
 void NetworkLayer :: updateLayer() {
@@ -52,6 +60,7 @@ Vec  NetworkLayer:: getOutput(){
     for(int i=0;i<Neurons.size();i++){
         output.push_back(Neurons[i].getOutput());       
     }
+
     return output;
 }
 
@@ -90,15 +99,29 @@ void NetworkLayer ::backPropagate(Vec t){
 
 
 void NetworkLayer ::updateWeights(){   //of input edges
-    for(int i=0;i<N;i++){
-			for(int j=0;j<Neurons[i].inputEdges.size();j++){
-                //cout<<"Here: "<<(Neurons[i].inputEdges[j])->getWeight();
-			    (Neurons[i].inputEdges[j])->setWeight(Neurons[i].inputEdges[j]->getWeight() +  
-			                                       (NETA *
-			                                       Neurons[i].getDel() *
-			                                       (Neurons[i].inputEdges[j]->getStart())->getOutput()));
-                //cout<<(Neurons[i].inputEdges[j])->getWeight()<<endl;                                   	
-		  }	
+    if(layerId !=0){
+        for(int i=0;i<N;i++){
+                for(int j=1;j<Neurons[i].inputEdges.size();j++){
+                    //cout<<"Here: "<<(Neurons[i].inputEdges[j])->getWeight();
+                     float p = Neurons[i].inputEdges[j]->getWeight();
+                    (Neurons[i].inputEdges[j])->setWeight(p +  
+                                                       ((1 - MOMENTUM_FACTOR) *
+                                                       (NETA *
+                                                       Neurons[i].getDel() *
+                                                       (Neurons[i].inputEdges[j]->getStart())->getOutput()))
+                                                       +
+                                                       (MOMENTUM_FACTOR * (Neurons[i].inputEdges[j])->getPrevError()));
+                    (Neurons[i].inputEdges[j])->setPrevError(Neurons[i].inputEdges[j]->getWeight() - p);                                  
+                    //cout<<(Neurons[i].inputEdges[j])->getWeight()<<endl;                                   	
+              }
+                 float p = Neurons[i].inputEdges[0]->getWeight();
+               	(Neurons[i].inputEdges[0])->setWeight(p +  
+                                                       (NETA * (1 - MOMENTUM_FACTOR) *
+                                                       Neurons[i].getDel() * -1) +
+                                                       (MOMENTUM_FACTOR * (Neurons[i].inputEdges[0])->getPrevError()));
+                (Neurons[i].inputEdges[0])->setPrevError(Neurons[i].inputEdges[0]->getWeight() - p);                                  
+                                            
+        }
     }
 }
 

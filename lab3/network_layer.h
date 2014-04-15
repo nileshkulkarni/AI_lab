@@ -5,9 +5,11 @@
 #include <vector>
 
 #include "neuron.h"
-#define NEURON_INPUTS 5
-#define NETA 0.02
+//#define NEURON_INPUTS 5
+//#define NETA 0.2
 
+//float NEURON_INPUTS= 5;
+//float NETA= 0.2;
 
 class NetworkLayer{
     private:    
@@ -24,6 +26,7 @@ class NetworkLayer{
         NetworkLayer();
         NetworkLayer(int nNeurons);
         void init(int nNeurons);
+        void initInput(int nNeurons);
         
 	    void updateLayer(Vec In);	
 		void backPropagate();

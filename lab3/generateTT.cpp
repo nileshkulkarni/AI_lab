@@ -145,7 +145,8 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 		
 		cout<<((!result)?-1:1)<<" ";
 		for(int bit=0;bit<bits;bit++){
-		  cout<<((!result)?getbit(i,bit):-getbit(i,bit))<<" "; 
+		  cout<<((!result)?getbit(i,bit):-getbit(i,bit))<<" ";
+		  vi.push_back(getbit(i,bit)); 
 	    }
 	    
 	    
