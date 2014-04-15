@@ -33,6 +33,7 @@ class Neuron{
     public:
         Neuron(int noOfInputs);
         void setInputs(Vec in);
+	vector<Edge*> getinputEdges();
         void collectInputs();  //and generate output
         void collectInputs(Vec in);
         float getOutput();  
