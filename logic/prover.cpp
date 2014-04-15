@@ -21,7 +21,8 @@ bool member(formula *f , vector<formula*>::iterator start , vector<formula*>::it
 
 
 
-
+prover::prover(){
+}
 
 
 
@@ -54,6 +55,8 @@ void prover::input(istream &in){
 		formula *tH = new formula;
 		tH->inputInfix(in);
 		Hypothesis.insert(pair<string,formula*>(tH->s,tH));
+		cout<<"comes here"<<endl;
+		originalHypothesis.insert(pair<string,formula*>(tH->s,tH));
 	}
 	
 	for(int i=0;i<nI;i++){
@@ -64,36 +67,63 @@ void prover::input(istream &in){
 
    destination = new formula;
    destination->inputInfix(in);		
-   
-   while(destination->leaf == false){
-	   assert(destination->lhs && destination->rhs);
-	   Hypothesis.insert(pair<string,formula*>(destination->lhs->s , destination->lhs));
-	   destination = destination->rhs;
-   }
-   
-   if(destination->val != 'F'){
-	   formula *t = implication(destination , F);
-	   Hypothesis.insert(pair<string,formula*>(t->s, t));
-	   destination = F;
-	}
+   originalDestination = destination;	
+   simpilifyDestination();
    
 }
 
 
+
 void prover::printH(ostream &out){
+	indentedPrintH(out , 0);
+}
+
+
+void prover::printOH(ostream &out){
+	indentedPrintOH(out , 0);
+}
+
+
+
+void prover::printI(ostream &out){
+	indentedPrintI(out , 0);
+}	
+
+
+
+void prover::indentedPrintH(ostream &out , int nspaces){
     unordered_map<string , formula*>:: iterator iH = Hypothesis.begin();
-    out<<"Printing Hypothesis vector..\n";
+    for(int i=0;i<nspaces;i++) out<<" ";
+	out<<"Printing Hypothesis vector..\n";
     for(; iH!=Hypothesis.end(); iH++) {
-        (iH->second)->print(out);
+        for(int i=0;i<nspaces;i++) out<<" ";
+		(iH->second)->print(out);
         out<<endl;
     }
 }
 
 
-void prover::printI(ostream &out){
+
+void prover::indentedPrintOH(ostream &out , int nspaces){
+    unordered_map<string , formula*>:: iterator iH = originalHypothesis.begin();
+    for(int i=0;i<nspaces;i++) out<<" ";
+	out<<"Printing Original Hypothesis vector..\n";
+    for(; iH!=originalHypothesis.end(); iH++) {
+        for(int i=0;i<nspaces;i++) out<<" ";
+		(iH->second)->print(out);
+        out<<endl;
+    }
+}
+
+
+
+
+void prover::indentedPrintI(ostream &out , int nspaces){
     unordered_map<string , formula*>:: iterator iH = Introductory_formulae.begin();
+    for(int i=0;i<nspaces;i++) out<<" ";
     out<<"Printing Introductory vector..\n";
     for(; iH!=Introductory_formulae.end(); iH++) {
+        for(int i=0;i<nspaces;i++) out<<" ";
         (iH->second)->print(out);
         out<<endl;
     }
@@ -106,6 +136,17 @@ bool prover::check(){
 	return(Hmember(destination));
 }
 
+
+bool prover::checkUseful(formula *t){
+	assert(destination->val == 'F');
+	//cout<<"t is "<<*t<<" t->leaf "<<t->leaf<<endl;
+	formula *temp = t;
+	while(t->leaf == false){ 
+		t = t->rhs;
+	}
+	if((t->val == 'F') && !(temp->leaf)) return (!temp->lhs->leaf && !Hmember(temp->lhs));
+	return false;
+}
 
 
 
@@ -123,6 +164,56 @@ int prover::computeMaxFormulalength() {
 	}
 	return maxL;	
 }
+
+
+
+
+void prover::simpilifyDestination(){
+	
+	//cout<<"Destination Is "<<*destination<<endl;
+	while(!destination->leaf){
+	   assert(destination->lhs && destination->rhs);
+	   Hypothesis.insert(pair<string,formula*>(destination->lhs->s , destination->lhs));
+	   originalHypothesis.insert(pair<string,formula*>(destination->lhs->s , destination->lhs));
+	   destination = destination->rhs;
+	}
+
+	if(destination->val != 'F'){
+	   formula *t = implication(destination , F);
+	   Hypothesis.insert(pair<string,formula*>(t->s, t));
+	   originalHypothesis.insert(pair<string,formula*>(t->s, t));
+	   destination = F;
+	}
+	
+   originalDestination = F;
+}
+
+
+
+int prover::simplify(){
+	
+		int flag,count;
+		flag = 1;
+		count = 0;
+		unordered_map<string, formula*>:: iterator it;
+		while(flag == 1){
+			flag=0;
+			for(it = Hypothesis.begin();it!=Hypothesis.end();it++){
+				formula *itf = it->second;
+				if(!(itf->leaf) && (itf->rhs->val == 'F') && (!itf->lhs->leaf)){
+					cout<<*itf<<endl;
+					Hypothesis.erase(itf->s);
+					destination = itf->lhs;
+					simpilifyDestination();
+					flag = 1;
+					count++;
+					break;
+				}
+			}	
+		}
+	 return count;	
+}
+
 
 
 int prover::MPclosure(){
@@ -334,34 +425,38 @@ void prover::cutDownAxiom3(){
 	
 	
 	
-void prover::step(){
+bool prover::step(int nSteps){
 	
-	maxAllowedLength = computeMaxFormulalength() + 1;
-	for(int i=0; i<20;i++){
-		
-		cutDownAxiom3();
-		Axiom2finish();
+	//maxAllowedLength = computeMaxFormulalength() + 1;
+	maxAllowedLength = 1;
+	for(int i=0; i<nSteps;i++){
+		int old_size = Hypothesis.size();
+		//	cutDownAxiom3();
+		//	Axiom2finish();
 		
 		if(i%2){
 			Axiom1closure();
-		}//Axiom2closure();
+		}
+		
+		//if(i%3==0)
+		//	Axiom2closure();
 		//Axiom3closure();
 		
 		if(!(i%2)){
 			MPclosure();
 		}
-		cout<<"mAL is : "<<maxAllowedLength<<endl;
-		cout<<"Size of Hypothesis: "<<Hypothesis.size()<<endl;
-		if(i%2)
+		//cout<<"mAL is : "<<maxAllowedLength<<endl;
+		//cout<<"Size of Hypothesis: "<<Hypothesis.size()<<endl;
+		if(Hypothesis.size() == old_size)	
 			maxAllowedLength = next(maxAllowedLength);
 		if(check()){
-			cout<<"Mil gya"<<endl;
-			break;
+			return true;
 		}
 	}
 	
-	cout<<*this<<endl;
-	cout<<"Size of Hypothesis : "<<Hypothesis.size()<<endl;
+//	cout<<*this<<endl;
+//	cout<<"Size of Hypothesis : "<<Hypothesis.size()<<endl;
+	return false;
 }	
 	
 	
