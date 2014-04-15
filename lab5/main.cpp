@@ -1,13 +1,12 @@
-
-
-
+#include<iostream>
+#include "Astar.h"
+#include "node.h"
+#include "graph.h"
 
 int main(){
     Graph graph;
     int start;
     int goal;
-    graph.getShortestPath(start,goal);
-
-
+    AStar a(graph);
+    return 1;
 }
-

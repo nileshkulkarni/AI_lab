@@ -1,22 +1,21 @@
 #ifndef NODE_H
 #define NODE_H
+#include<iostream>
 #include<list>
-#include "header.h"
 
 using namespace std;
+class Node;
+typedef Node* NodePtr;
 
 class Node{
     public:
     int id; 
-    vector<Node*> neighbours
+    NodePtr came_from;
+    vector<NodePtr> neighbours;
     bool visted;  
     NodePtr parent;
     int dS;
-    vector<Node*> getNeighbours();
-    int g_score 
-    bool operator =(Node n){
-       id = n.id; 
-    }
+    int g_score ;
+    int f_score ;
 };
-typedef Node* NodePtr;
 #endif
