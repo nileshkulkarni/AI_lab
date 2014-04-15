@@ -18,16 +18,17 @@ class AStar{
     public:
         Graph G;
         AStar(Graph g);
-        set<Node> closedSet;
-        set<Node> openSet;
+        multiset<Node> closedSet;
+        multiset<Node> openSet;
         HeuristicF H ;
         bool getShortestPath(int start, int end);
         bool getShortestPath(Node start, Node end);
         void setHeuristicFunction(HeuristicF f );
-        bool findInSet( set<Node> l,Node n);
-        bool addNodeToSet( set<Node>& l,Node n);
-        Node getMinimumNode( set<Node> l);
-        bool removeNodeFromSet( set<Node>& l,Node n);
+        bool findInSet( multiset<Node> l,Node n);
+        bool addNodeToSet( multiset<Node>& l,Node n);
+        Node getMinimumNode( multiset<Node> l);
+        bool removeNodeFromSet( multiset<Node>& l,Node n);
+        bool removeMinimum( multiset<Node>& l,Node n);
         int  distance(Node from, Node to );
         void reconstructPath(long long int);
         pair<Node,bool> findInOpenSet(Node n);
