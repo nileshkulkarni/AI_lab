@@ -28,6 +28,8 @@ struct formula{
 		A.input(in);
 		return in;
  }
+ 
+ string stringify();
 };
 
 extern formula *F; //global variable to store F

@@ -5,7 +5,6 @@ void destroy(formula *f){
 	
 	assert(f!=NULL);
 	if(!f->leaf){
-		 
 		delete(f->lhs);
 		delete(f->rhs);
 	}
@@ -65,8 +64,15 @@ void formula::inputInfix(istream &in){
 
 
 
-
-
+string formula::stringify(){
+	string s;
+	s.push_back(val);
+	if(leaf == false){
+		assert((lhs!=NULL) && (rhs!=NULL));
+		s = s + lhs->stringify() + rhs->stringify();
+	}
+	return s;
+}
 
 
 void formula::print(ostream &out){

@@ -1,6 +1,15 @@
 #include "prover.h"
 //#include "formula.h"
 
+inline int next(int i){
+	return i+1;
+}
+
+
+
+
+
+
 
 inline int getbit(int n , int bit){ //bit is 0 indexed
 	return (n>>bit)%2;
@@ -17,13 +26,17 @@ bool member(formula *f , vector<formula*>::iterator start , vector<formula*>::it
 
 
 
+
+
+
+
 prover::prover(int nH_ , int nI_){
 
 	nH = nH_;
 	nI = nI_;
 }
 
-prover::prover(int nH_ , int nI_ , vector<formula*> H, vector<formula*> I) {
+prover::prover(int nH_ , int nI_ , map<string, formula*> H, map<string, formula*> I) {
     nH = nH_;
     nI = nI_;
     Hypothesis = H;
@@ -37,35 +50,42 @@ prover::prover(int nH_ , int nI_ , istream &in){
 	input(in);
 }
 
+
+
+
 void prover::input(istream &in){
 	
 	for(int i=0;i<nH;i++){
 		formula *tH = new formula;
-		tH->input(in);
-		Hypothesis.push_back(tH);
+		tH->inputInfix(in);
+		cout<<*tH<<endl;
+		cout<<" : is the Input formula"<<endl;
+		Hypothesis.insert(pair<string,formula*>(tH->stringify(),tH));
 	}
+	
 	for(int i=0;i<nI;i++){
 		formula *tI = new formula;
-		tI->input(in);
-		Introductory_formulae.push_back(tI);
+		tI->inputInfix(in);
+		Introductory_formulae.insert(pair<string,formula*>(tI->stringify(),tI));
 	}
 }
 
+
 void prover::printH(ostream &out){
-    vector<formula*>:: iterator iH = Hypothesis.begin();
+    map<string , formula*>:: iterator iH = Hypothesis.begin();
     out<<"Printing Hypothesis vector..\n";
     for(; iH!=Hypothesis.end(); iH++) {
-        (*iH)->print(out);
+        (iH->second)->print(out);
         out<<endl;
     }
 }
 
 
 void prover::printI(ostream &out){
-    vector<formula*>:: iterator iH = Introductory_formulae.begin();
+    map<string , formula*>:: iterator iH = Introductory_formulae.begin();
     out<<"Printing Introductory vector..\n";
     for(; iH!=Introductory_formulae.end(); iH++) {
-        (*iH)->print(out);
+        (iH->second)->print(out);
         out<<endl;
     }
 }
@@ -74,12 +94,7 @@ void prover::printI(ostream &out){
 bool prover::Hmember(formula *f){
 	
 	assert(f!=NULL);
-    vector<formula*>:: iterator it;
-	//auto iterator it;
-	for(it = Hypothesis.begin();it!=Hypothesis.end();it++){
-		if(*(*it)==*f) return true;
-	}
-	return false;
+    return (Hypothesis.find(f->stringify()) != Hypothesis.end());
 }
 
 
@@ -88,68 +103,38 @@ int prover::MPclosure(){
 	
 	int totalCount;
 	int count;
-    vector<formula*>:: iterator it;
+    map<string, formula*>:: iterator it;
 	totalCount = 0;
     count = 1; //some non-zero number
     while(count > 0){
 		count=0;
-		vector<formula*> add;
+		map<string, formula*> add;
 		for(it = Hypothesis.begin();it!=Hypothesis.end();it++){
-			assert(*it!=NULL);
-			if(((*it)->leaf)) continue;
-			if(Hmember((*it)->lhs) && (!Hmember((*it)->rhs))){
+			formula *itf = it->second;
+			assert(itf!=NULL);
+			if(itf->leaf) continue;
+			if(Hmember(itf->lhs) && (Hmember(itf->rhs))){
 				//cout<<"here : "<<*(*it)<<endl;
-				add.push_back((*it)->rhs);
+				add.insert(pair<string,formula*>(itf->rhs->stringify() , itf->rhs));
 				count++;
 			}
 		}
 		totalCount += count;
-		Hypothesis.insert(Hypothesis.end() , add.begin() , add.end());
+		Hypothesis.insert(add.begin() , add.end());
     }		
 	return totalCount;
 }
 
 
-/*
-int prover::Axiom1closure() {
-   int count = 0;
-   
-   vector<formula*>:: iterator itrI = Introductory_formulae.begin();
-   vector<formula*>:: iterator itrH = Hypothesis.begin();
-   vector<formula*> add;
-   for(; itrH!=Hypothesis.end(); itrH++) {
-       formula* hyp = *itrH;                                    //hyp is A from Hypothesis
-       for(; itrI!=Introductory_formulae.end(); itrI++) {
-           if((*itrI)->leaf) continue;
-           
-           formula* toBeIntroduced = *itrI;                     //toBeIntroduced is B from Introductory_formulae
-           formula* checkH = Axiom1(hyp , toBeIntroduced);              //checkH is (A -> (B -> A))
-           formula* checkI = Axiom1(toBeIntroduced, hyp);    //checkI is (B -> (A -> B))
-           
-           if(!Hmember(checkH)) {
-               add.push_back(checkH);
-               count++;
-           }
-           if(!Hmember(checkI)) {
-               add.push_back(checkI);
-               count++;
-           }
-       }
-   }
-   Hypothesis.insert(Hypothesis.end() , add.begin() , add.end());
-   return count;
-}
-*/
-
 
 int prover::Axiom1closure() {
 	int count=0;   
  
-    vector<formula*>:: iterator itrH[2];
-    vector<formula*>:: iterator itrHstart[2];
-    vector<formula*>:: iterator itrHend[2];
+    map<string, formula*>:: iterator itrH[2];
+    map<string, formula*>:: iterator itrHstart[2];
+    map<string, formula*>:: iterator itrHend[2];
     
-    vector<formula*> add;
+    map<string, formula*> add;
     int iteration = 0;
     while(iteration < (1<<2)){
 		
@@ -161,9 +146,9 @@ int prover::Axiom1closure() {
 		
 		for(itrH[0] = itrHstart[0]; itrH[0]!=itrHend[0]; itrH[0]++) {
 			for(itrH[1] = itrHstart[1]; itrH[1]!=itrHend[1]; itrH[1]++) {
-					formula *f6 = Axiom1(*itrH[0] , *itrH[1]);
-					if(!Hmember(f6) && !member(f6 , add.begin() , add.end())) {
-						add.push_back(f6);
+					formula *f6 = Axiom1(itrH[0]->second , itrH[1]->second);
+					if(!Hmember(f6)) {
+						add.insert(pair<string, formula*>(f6->stringify() , f6));
 						count++;
 					} 
 				}
@@ -172,7 +157,7 @@ int prover::Axiom1closure() {
 	iteration++;
 	}
 	
-	Hypothesis.insert(Hypothesis.end() , add.begin() , add.end());
+	Hypothesis.insert(add.begin() , add.end());
 	return count;
 }
 
@@ -182,17 +167,16 @@ int prover::Axiom1closure() {
 int prover::Axiom2closure() {
     int count=0;   
  
-    vector<formula*>:: iterator itrH[3];
-    vector<formula*>:: iterator itrHstart[3];
-    vector<formula*>:: iterator itrHend[3];
+    map<string, formula*>::  iterator itrH[3];
+    map<string, formula*>::  iterator itrHstart[3];
+    map<string, formula*>::  iterator itrHend[3];
     
-    vector<formula*> add;
+    map<string, formula*> add;
     int iteration = 0;
     while(iteration < (1<<3)){
 		
 		//cout<<iteration<<endl;
 		for(int i=0;i<3;i++){
-			//cout<<" : "<<getbit(iteration , i)<<endl;
 			itrHstart[i] = getbit(iteration , i)? Hypothesis.begin() : Introductory_formulae.begin();	
 			itrHend[i] = getbit(iteration , i)? Hypothesis.end() : Introductory_formulae.end();	
 		}
@@ -202,9 +186,9 @@ int prover::Axiom2closure() {
 			for(itrH[1] = itrHstart[1]; itrH[1]!=itrHend[1]; itrH[1]++) {
 				for(itrH[2] = itrHstart[2]; itrH[2]!=itrHend[2]; itrH[2]++) {
 					cout<<"comes here: "<<iteration<<" : "<<t++<<" : "<<Introductory_formulae.size()<<endl;
-					formula *f6 = Axiom2(*itrH[0] , *itrH[1] , *itrH[2]);
-					if(!Hmember(f6) && !member(f6 , add.begin() , add.end())) {
-						add.push_back(f6);
+					formula *f6 = Axiom2(itrH[0]->second , itrH[1]->second , itrH[2]->second);
+					if(!Hmember(f6)) {
+						add.insert(pair<string, formula*>(f6->stringify() , f6));
 						count++;
 					} 
 					else destroy(f6);
@@ -215,7 +199,7 @@ int prover::Axiom2closure() {
 	iteration++;
 	}
 	
-	Hypothesis.insert(Hypothesis.begin() , add.begin() , add.end());
+	Hypothesis.insert(add.begin() , add.end());
 	return count;
 }
 
@@ -224,33 +208,43 @@ int prover::Axiom3closure() {
 
     int count=0;
 
-    vector<formula*>:: iterator itrI = Introductory_formulae.begin();
-    vector<formula*>:: iterator itrH = Hypothesis.begin();
-	vector<formula*> add; 
+    map<string, formula*>:: iterator itrI = Introductory_formulae.begin();
+    map<string, formula*>:: iterator itrH = Hypothesis.begin();
+	map<string, formula*> add; 
     for(; itrH!=Hypothesis.end(); itrH++) {
-        formula* hyp = *itrH;                                //hyp is A from Hypothesis
+        formula* hyp = itrH->second;                                //hyp is A from Hypothesis
         formula* checkH = Axiom3(hyp);               //checkH is (((A -> F) -> F) -> A)
-        if(!Hmember(checkH) && !member(checkH , add.begin() , add.end())) {
-			add.push_back(checkH);
+        if(!Hmember(checkH)) {
+			add.insert(pair<string, formula*>(checkH->stringify(), checkH));
             count++;
         }
     }
     
     for(; itrI!=Introductory_formulae.end(); itrI++) {
-        formula* Intr = *itrI;                               //hyp is B from Introductory_formulae
+        formula* Intr = itrI->second;                               //hyp is B from Introductory_formulae
         formula* checkI = Axiom3(Intr);              //checkI is (((B -> F) -> F) -> B)
-        if(!Hmember(checkI) && !member(checkI , add.begin() , add.end())) {
-            add.push_back(checkI);
+        if(!Hmember(checkI)) {
+            add.insert(pair<string, formula*>(checkI->stringify(), checkI));
             count++;
         }
     }
     
-    Hypothesis.insert(Hypothesis.end() , add.begin() , add.end());
+    Hypothesis.insert(add.begin() , add.end());
     return count;
 }
 	
 	
 	
+void prover::step(){
+	
+	for(int i=0; i<3;i++){
+		Axiom1closure();
+		Axiom2closure();
+		Axiom3closure();
+		MPclosure();
+	}
+	maxAllowedLength = next(maxAllowedLength);
+}	
 	
 	
 
