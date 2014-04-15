@@ -2,7 +2,7 @@
 
 
 
-NeuralNetwork : edge.o neuron.o network_layer.o neural_network.o
+NeuralNetwork : edge.o neuron.o network_layer.o neural_network.o main.cpp
 	g++ -g -o NeuralNetwork neuron.o edge.o network_layer.o neural_network.o main.cpp
 neural_network.o : neural_network.cpp network_layer.h neural_network.h edge.h neuron.h 
 	g++ -g -c neural_network.cpp

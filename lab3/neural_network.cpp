@@ -17,7 +17,7 @@ NeuralNetwork::NeuralNetwork(int nlayers){
     nHiddenLayers = 0;
     noOfLayers = nlayers;
     cout<<"size is layers : "<<nlayers<<endl;
-    layers.resize(nlayers);
+    //layers.resize(nlayers);
     cout<<"size is layers : "<<layers.size()<<endl;
 }
 
@@ -27,7 +27,7 @@ NeuralNetwork::NeuralNetwork(int nLayers,int noOfNeurons){
     noOfLayers = nLayers;
     nHiddenLayers = 0;
     for(int i =0;i<nLayers;i++){
-        NetworkLayer lay(noOfNeurons);        
+        NetworkLayer lay;        
         layers.push_back(lay);
     }
 } 
@@ -67,7 +67,7 @@ void NeuralNetwork::feedForward(Vec in){
 }
 
 
-
+ 
 Vec NeuralNetwork::getOutput(Vec in){
     feedForward(in); 
     int size = layers.size();  
@@ -97,11 +97,37 @@ void NeuralNetwork::addTrainData(Vec in, Vec out){
 }
 
 
-void print(){
+void NeuralNetwork::print(){
 	
-	for(int i=noOfLayers-1 ; i>=0 ; i++){
+	for(int i=noOfLayers-1 ; i>=0 ; i--){
 		layers[i].print();
-		cout<<endl<<endl<<endl<<endl<<endl;
+		cout<<endl<<endl;
 	}
 	
+}
+void NeuralNetwork::putEdges(int from , int to){
+    vector<Neuron> *fromNeuronsPtr  = layers[from].getAllNeuronsPtr();
+    vector<Neuron> *toNeuronsPtr  = layers[to].getAllNeuronsPtr();
+
+    printf("Layer from %d ID from %d ,to %d layer id to %d \n",from,layers[from].layerId,to,layers[to].layerId);
+    for (int i =0;i<fromNeuronsPtr->size();i++){
+        for (int j =0;j<toNeuronsPtr->size();j++){
+            printf("here 3\n");
+            Edge *E = new Edge; 
+            E->setStart(&(*fromNeuronsPtr)[i]);
+            (*fromNeuronsPtr)[i].addOutputEdge(E);
+            printf("Start Neuron ID %d ", E->getStart()->getID()) ;
+            E->setEnd(&(*toNeuronsPtr)[j]);
+            (*toNeuronsPtr)[j].addInputEdge(E);
+            printf("End Neuron ID %d \n", (E->getEnd())->getID()) ;
+        }
+    }
+    return;
+}
+
+void NeuralNetwork::generateEdges(){
+    printf("here 1\n");
+    for(int i = 0;i<noOfLayers-1;i++){
+        putEdges(i,i+1);
+    }
 }

@@ -40,10 +40,12 @@ class Neuron{
         void collectInputs(float in); // to be called for the outermost input layer
         float getOutput();  
         float getDel();
+        void addInputEdge(Edge *e);
+        void addOutputEdge(Edge *e);
         void updateDel();
         void updateDel(Vec t);
         void update();
-        
+        int getID(); 
 
 };
 

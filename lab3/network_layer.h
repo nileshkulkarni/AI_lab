@@ -13,12 +13,12 @@ class NetworkLayer{
     private:    
         vector<Neuron> Neurons;
         int N;  //Neurons
-        int layerId;
-        
         static int totalLayers;
         
    
     public:
+        int layerId;
+    
     
     
         NetworkLayer();
@@ -30,11 +30,10 @@ class NetworkLayer{
 	    void updateLayer();	
 	    Vec  getOutput();	
 		void backPropagate(Vec t);
-		
+	    vector<Neuron>* getAllNeuronsPtr();	
 		
 		void updateWeights();
 		void setLayerId(int id);
-		
 		
 		void print();
 };
