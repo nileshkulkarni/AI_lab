@@ -2,3 +2,5 @@
 *.out
 *.dump
 Astar
+8puzzle
+check.cpp
