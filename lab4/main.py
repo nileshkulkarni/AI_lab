@@ -2,9 +2,9 @@ from optparse import OptionParser
 from processTweet import *
 import os
 def clean():
-    filelist = [ f for f in os.listdir("TweetsCorpus") if f.startswith("processed_") ]
+    filelist = [ f for f in os.listdir("TweetsCorpus/newCorpus") if f.startswith("processed_") ]
     for f in filelist:
-        os.remove("TweetsCorpus/"+f)
+        os.remove("TweetsCorpus/newCorpus/"+f)
 
 if __name__ == '__main__':
     parser = OptionParser()

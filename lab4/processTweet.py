@@ -21,8 +21,8 @@ def processTweet(tweet):
 #process the entire tweetfile
 def processFile(filename):
     #Read the tweets one by one and process it
-    read = 'TweetsCorpus/twitter_'+filename
-    write= 'TweetsCorpus/processed_'+filename
+    read = 'TweetsCorpus/newCorpus/twitter_'+filename
+    write= 'TweetsCorpus/newCorpus/processed_'+filename
     fr = open(read, 'r')
     fw = open(write,'a')
     line = fr.readline()
@@ -83,8 +83,8 @@ def getFeatureVector(tweet,featureVector,stopWords):
 
 #start getAllFeatureWords from preprocessed tweets
 def getAllFeatureWords(filename,featureVector):
-    filename = 'TweetsCorpus/processed_'+filename
-    stopWords = getStopWordList("TweetsCorpus/stopword.txt")
+    filename = 'TweetsCorpus/newCorpus/processed_'+filename
+    stopWords = getStopWordList("TweetsCorpus/newCorpus/stopword.txt")
     fp = open(filename,'r')
     line = fp.readline()
     while line:
@@ -200,7 +200,7 @@ def extract_features(tweet,featureVector,senti):
 #start  printing feature vector
 def printFeatureVector(allWords):
     featureVector = []
-    fp=open("TweetsCorpus/processed_positive",'r')
+    fp=open("TweetsCorpus/newCorpus/processed_positive",'r')
     d=enchant.Dict()
     line = fp.readline()
     while line:
@@ -208,21 +208,21 @@ def printFeatureVector(allWords):
         line = fp.readline()
     fp.close()
     
-    fp=open("TweetsCorpus/processed_negative",'r')
+    fp=open("TweetsCorpus/newCorpus/processed_negative",'r')
     line = fp.readline()
     while line:
         featureVector.append(extract_features(line,allWords,-1))
         line = fp.readline()
     fp.close()
 
-    fp=open("TweetsCorpus/processed_objective",'r')
+    fp=open("TweetsCorpus/newCorpus/processed_objective",'r')
     line = fp.readline()
     while line:
         featureVector.append(extract_features(line,allWords,0))
         line = fp.readline()
     fp.close()
 
-    fp=open("TweetsCorpus/extracted-features.dump",'w')
+    fp=open("TweetsCorpus/newCorpus/extracted-features.dump",'w')
     for veclist in featureVector:
         for w in veclist:
             fp.write(str(w))
