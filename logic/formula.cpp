@@ -3,6 +3,7 @@
 
 
 void formula::input(istream &in) {
+
 	in>>val;
 	leaf = true;
 	length = 1;
@@ -16,7 +17,6 @@ void formula::input(istream &in) {
 	}
 	if(val == 'F')
 		False = true;
-	
 }
 
 
