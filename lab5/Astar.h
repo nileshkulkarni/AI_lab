@@ -31,7 +31,7 @@ class AStar{
         bool removeNodeFromSet( multiset<Node>& l,Node n);
         bool removeMinimum( multiset<Node>& l,Node n);
         int  distance(Node from, Node to );
-        void reconstructPath(long long int);
+        void reconstructPath(long long int,int);
         pair<Node,bool> findInOpenSet(Node n);
         map<long long int, long long int> came_from_map;
 };

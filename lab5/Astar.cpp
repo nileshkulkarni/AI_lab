@@ -121,7 +121,7 @@ bool AStar::getShortestPath(Node _start, Node _end){
 #endif
      if(current.data == goal.data){
          cout<<"\nPath found.Reconstructing the path.\n";
-         reconstructPath(current.id);
+         reconstructPath(current.id,0);
          return true;
      }
      removeMinimum(openSet,current); 
@@ -137,7 +137,9 @@ bool AStar::getShortestPath(Node _start, Node _end){
         Node nbr = nodeNbrs[i];
         if(findInSet(closedSet,nbr)){
             //TODO: remove the node from the closed and shift in open
+#if DEBUG
             cout<<"Node found in closed multiset "<< nbr.id<<endl;
+#endif
             continue;
         }
         int tentative_g_score = current.g_score + distance(current,nbr);
@@ -186,17 +188,18 @@ bool AStar::getShortestPath(Node _start, Node _end){
   return false;
 }
 
-void AStar::reconstructPath(int long long id){
+void AStar::reconstructPath(int long long id,int steps){
     long long int came_from = came_from_map[id]; 
     if(came_from == -1){
         long long int end = 123456780;
         printNode(end);
         cout<<"Reached Destination"<<endl;
+        cout<<"Took "<<steps<<" steps to complete"<<endl;
         return;
     }
     else{
         printNode(came_from);
-        reconstructPath(came_from);
+        reconstructPath(came_from,steps+1);
         return;
     }
 }
