@@ -30,7 +30,9 @@ int main(){
 	cout<<*f5<<" : "<<f5->length<<endl;
     */
 
-    
+    formula *ftemp = new formula;
+    ftemp->inputInfix(cin);
+    cout<<*ftempo;
     int a,b;
     cin>>a>>b;
     prover *p1 = new prover(a,b);
