@@ -35,6 +35,7 @@
 
 \section{Introduction}
 
+\subsection{Code Structure}
 \begin{frame}{Code Structure}
 
 Following classes were made to make the A* modular:
@@ -53,38 +54,70 @@ Apart from these, corresponding to each example a class was made:
 \end{itemize}
 \end{frame}
 
-\section{Some \LaTeX{} Examples}
+\subsection{Data Structures}
 
-\subsection{Tables and Figures}
+\begin{frame}{Data Structures}
 
-\begin{frame}{Tables and Figures}
-
+The following datastructures were implemented:
 \begin{itemize}
-\item Use \texttt{tabular} for basic tables --- see Table~\ref{tab:widgets}, for example.
-\item You can upload a figure (JPEG, PNG or PDF) using the files menu. 
-\item To include it in your document, use the \texttt{includegraphics} command (see the comment below in the source code).
+\item Used multiset to implement open set and closed set
+\item Hash Map
 \end{itemize}
 
+We've implemented parent-pointer redirection as well.
+It is essentially used when a non monotonic heuristic is used.
+The pseudo codes is present on the next couple of slides.
 % Commands to include a figure:
 %\begin{figure}
 %\includegraphics[width=\textwidth]{your-figure's-file-name}
 %\caption{\label{fig:your-figure}Caption goes here.}
 %\end{figure}
-
-\begin{table}
-\centering
-\begin{tabular}{l|r}
-Item & Quantity \\\hline
-Widgets & 42 \\
-Gadgets & 13
-\end{tabular}
-\caption{\label{tab:widgets}An example table.}
-\end{table}
-
 \end{frame}
 
-\subsection{Mathematics}
+\subsection{Psuedo Code}
+\begin{frame}[fragile]{Psuedo Code}
+\begin{verbatim}
+function A*(start,goal)
+    closedset := the empty set   
+    openset := {start}   
+    came_from := the empty map 
+ 
+    g_score[start] := 0 
+    f_score[start] := g_score[start] + 
+    heuristic_cost_estimate(start, goal)
+ 
+    while openset is not empty
+        current := the node in openset 
+            having the lowest f_score[] value
+        if current = goal
+            return reconstruct_path(came_from, goal)
+ 
+        remove current from openset
+        add current to closedset
+\end{verbatim}
+\end{frame}
 
+\begin{frame}[fragile]
+\begin{verbatim}
+        for each neighbor in neighbor_nodes(current)
+            if neighbor in closedset
+                continue
+            tentative_g_score := g_score[current] + 
+            dist_between(current,neighbor)
+ 
+            if neighbor not in openset or 
+              tentative_g_score < g_score[neighbor] 
+                came_from[neighbor] := current
+                g_score[neighbor] := tentative_g_score
+                f_score[neighbor] := g_score[neighbor] + 
+                heuristic_cost_estimate(neighbor, goal)
+                
+                if neighbor not in openset
+                    add neighbor to openset
+ 
+    return failure
+\end{verbatim}
+\end{frame}
 \begin{frame}{Readable Mathematics}
 
 Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables with $\text{E}[X_i] = \mu$ and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
@@ -95,4 +128,3 @@ denote their mean. Then as $n$ approaches infinity, the random variables $\sqrt{
 \end{frame}
 
 \end{document}
-
