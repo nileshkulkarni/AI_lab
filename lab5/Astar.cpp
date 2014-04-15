@@ -31,7 +31,7 @@ bool AStar::findInList( list<NodePtr> l,NodePtr n){
     }
     list<NodePtr> ::iterator it ;
     for(it=l.begin();it!=l.end();it++){
-        if( n->id == (*it)->id)
+        if( n->data == (*it)->data)
             return true;
     }
     return false;
@@ -54,7 +54,7 @@ bool AStar::removeNodeFromList( list<NodePtr>& l,NodePtr n){
     }
     list<NodePtr> ::iterator it ;
     for(it=l.begin();it!=l.end();it++){
-        if( n->id == (*it)->id){
+        if( n->data == (*it)->data){
             l.erase(it);
             break;
         }
@@ -85,7 +85,7 @@ bool AStar::getShortestPath(int _start, int _end){
         
      NodePtr current  = getMinimumNode(openList);
      printf("Expanding Node current %d\n", current->id);
-     if(current->id==goal->id){
+     if(current->data==goal->data){
          std::cout<<"Path found\n";
          reconstructPath(goal);
          return true;
@@ -98,7 +98,8 @@ bool AStar::getShortestPath(int _start, int _end){
 
     printf(" printing Nodes here \n");
     current->print();
-     for(int i=0;i<(current->neighbours).size();i++){
+    vector< NodePtr> nodeNbrs = getNeighbours(current);
+     for(int i=0;i<nodeNbrs.size();i++){
         NodePtr nbr = current->neighbours[i];
         if(findInList(closedList,nbr)){
             continue;
