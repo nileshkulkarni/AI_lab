@@ -28,8 +28,8 @@ def processFile(filename):
     line = fr.readline()
      
     while line:
-        split_tweet = line.split('\t')
-        processedTweet = processTweet(split_tweet[1])
+       # split_tweet = line.split('\t')
+        processedTweet = processTweet(line)
         #fw.write(split_tweet[0])
         #fw.write('\t')
         fw.write(processedTweet)
@@ -173,15 +173,15 @@ def extract_features(tweet,featureVector,senti):
     for word in words:
         word = word.strip()
         word = word.strip('\'"?,.!') 
-        if(word.endswith("es") and d.check(word[:-2])):
+        if(word.endswith("es") and (len(word) > 2) and d.check(word[:-2])):
             words_up.append(word[:-2])
-        elif(word.endswith("s") and d.check(word[:-1])):
+        elif(word.endswith("s")):
             words_up.append(word[:-1])
-        elif(word.endswith("ed") and d.check(word[:-2])):
+        elif(word.endswith("ed") and (len(word) > 2) and d.check(word[:-2])):
             words_up.append(word[:-2])
-        elif(word.endswith("ing") and d.check(word[:-3])):
+        elif(word.endswith("ing") and (len(word) > 3) and  d.check(word[:-3])):
             words_up.append(word[:-3])
-        elif(word.endswith("ied") and d.check(word[:-3])):
+        elif(word.endswith("ied") and (len(word) > 3) and d.check(word[:-3])):
             words_up.append(word[:-3])
         else:
             words_up.append(word)
