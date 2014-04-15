@@ -8,10 +8,13 @@
 #include <math.h>
 #include "neural_network.h"
 
+
+#define FILE FILE3
+
 #define FILE1 "iris.data"
-#define FILE "monks-1.test.txt"
-#define FILE2 "monks-2.test.txt"
+#define FILE2 "monks-1.test.txt"
 #define FILE3 "monks-2.test.txt"
+#define FILE4 "monks-3.test.txt"
 using namespace std;
 
 int getFilesizeMonks() {
@@ -168,11 +171,11 @@ vector<Vec> crossValOutputMonks(int nfold, int partForValidation) {
                         int a = atoi(&ch);
                         if(a==0) {
                             outp.push_back(0);
-                            outp.push_back(0);
+           //                 outp.push_back(0);
                         }
                         else if(a==1) {
                             outp.push_back(1);
-                            outp.push_back(1);
+          //                  outp.push_back(1);
                         }
 
                         output.push_back(outp);
@@ -226,11 +229,11 @@ vector<Vec> getTrainingOutputMonks(int nfold, int partForValidation) {
                         int a = atoi(&ch);
                         if(a==0) {
                             outp.push_back(0);
-                            outp.push_back(0);
+           //                 outp.push_back(0);
                         }
                         else if(a==1) {
                             outp.push_back(1);
-                            outp.push_back(1);
+          //                  outp.push_back(1);
                         }
 
                         output.push_back(outp);
@@ -246,11 +249,11 @@ vector<Vec> getTrainingOutputMonks(int nfold, int partForValidation) {
                         float a = (float)atoi(&c1);
                         if(a==0) {
                             outp.push_back(0);
-                            outp.push_back(0);
+           //                 outp.push_back(0);
                         }
                         else if(a==1) {
                             outp.push_back(1);
-                            outp.push_back(1);
+          //                  outp.push_back(1);
                         }
 
                         output.push_back(outp);
