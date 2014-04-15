@@ -62,101 +62,50 @@ int manhattan(Node n1, Node n2){
     return diff;
 }
 
+int displace(Node n1, Node n2){
+    int diff=0; 
+    for(int i=0;i<9;i++){
+        if(n1.data._state[i] !=n1.data._state[i]){
+           diff++; 
+        }
+    }
+    return diff;
+}
 int main(){
-/*
- 
-    
-    int noOfNodes = 7;
-    adjecencyMat.resize(noOfNodes);
-    for(int i =0;i<noOfNodes;i++){
-        adjecencyMat[i].resize(noOfNodes);
-    }
- */
-    /*
-    adjecencyMat[0][1] =1;  
-    adjecencyMat[0][2] = 1;
-    adjecencyMat[0][5] = 1;
-    adjecencyMat[1][3] = 1;
-    adjecencyMat[2][4] = 1;
-    adjecencyMat[3][6] = 1;
-    adjecencyMat[5][6] = 1;
-    adjecencyMat[4][6] = 1;
-    Graph graph(adjecencyMat); 
-     */
-    /*vector<int> start_state;
-    for(int i =0;i<10;i++){
-        start_state.push_back(i);
-    }
-    Data d;
-    d._state = start_state;
-    Node startNode(d);
-    Graph graph(&startNode); 
-
-    AStar a(graph);
-   // graph.print();
-    a.setHeuristicFunction( & manhattan);
-    a.getShortestPath(0,6);
-    */
-   /* 
-    NodePtr start = new Node(0); 
-    NodePtr n1 = new Node(2); 
-    NodePtr n2 = new Node(1);
-    NodePtr goal = new Node(3); 
-    start->addNeighbour(n1);
-    start->addNeighbour(n2);
-    n1->addNeighbour(start);
-    n1->addNeighbour(n2);
-    n2->addNeighbour(start);
-    n2->addNeighbour(goal);
-    goal->addNeighbour(n2);
-    
-    nodeVector l;
-    l.push_back(start);
-    l.push_back(n1);
-    l.push_back(n2);
-    l.push_back(goal);
-    Graph graph(l);
-   */
     vector< vector <int> > adjecencyMat;
     vector<int> state;
-  /*  state.push_back(0);
-    state.push_back(4);
-    state.push_back(5);
-    state.push_back(6);
-    state.push_back(2);
-    state.push_back(1);
-    state.push_back(7);
-    state.push_back(8);
-    state.push_back(3);
-*/    
-    
-     state.push_back(4);
-     state.push_back(2);
-     state.push_back(3);
-     state.push_back(8);
-     state.push_back(0);
-     state.push_back(6);
-     state.push_back(7);
-     state.push_back(5);
-     state.push_back(1);
+   
+
+    printf("Enter the Start Node in Row Major form");
+    int j;
+    for(int i =0;i<9;i++){
+        cin>>j;
+        state.push_back(j);
+    }
     Data d;
     d.vec_assign(state);
     Node start(d);
     
     vector<int> finals;
-     finals.push_back(1);
-     finals.push_back(2);
-     finals.push_back(3);
-     finals.push_back(4);
-     finals.push_back(5);
-     finals.push_back(6);
-     finals.push_back(7);
-     finals.push_back(8);
-     finals.push_back(0);
-    
-     Data d2;
+    for(int i =1;i<9;i++){
+        finals.push_back(i);
+    }
+    finals.push_back(0);
+    /*    
+    finals.push_back(1);
+    finals.push_back(2);
+    finals.push_back(3);
+    finals.push_back(4);
+    finals.push_back(5);
+    finals.push_back(6);
+    finals.push_back(7);
+    finals.push_back(8);
+    finals.push_back(0);
+    */ 
+    Data d2;
     d2.vec_assign(finals);
     Node stop(d2);
+    
     printf("Printing Start ");
     start.printData();
     printf("\nPrinting End ");
@@ -164,8 +113,23 @@ int main(){
     printf(" \n");
     Graph graph(start); 
     AStar a(graph);
-   // graph.print();
-    a.setHeuristicFunction( & manhattan);
-    a.getShortestPath(start,stop);
+    
+    string hue;
+    
+INPUT:    printf("Enter Heuristic to use \n");
+    cin>>hue;
+    if(hue == "MANHATTEN"){
+        a.setHeuristicFunction( & manhattan);
+        a.getShortestPath(start,stop);
+    }
+    else if(hue== "DISPLACED"){
+
+        a.setHeuristicFunction( & displace);
+        a.getShortestPath(start,stop);
+    }
+    else{
+        printf("Heuristic not found\n");
+        goto INPUT; 
+    } 
     return 1;
 }
