@@ -36,6 +36,7 @@ void problemTree::expand(){
 				child->p->destination = temp->lhs;
 				child->p->originalDestination = temp->lhs;
 				child->p->simpilifyDestination();
+				child->p->setDummyTrace();
 				//cout<<endl<<"Printing child:"<<endl;
 				//cout<<*(child->p)<<endl;
 				newList->push_back(child);

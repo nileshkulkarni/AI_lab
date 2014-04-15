@@ -1,6 +1,7 @@
 #include "prover.h"
 //#include "formula.h"
 
+
 inline int next(int i){
 	return i+1;
 }
@@ -60,9 +61,7 @@ void prover::input(istream &in){
 		tH->inputInfix(in);
 		Hypothesis.insert(pair<string,formula*>(tH->s,tH));
 		/**Dummy trace to terminate trace back**/ 
-	   string s="DT";
-	   setTrace(tH,NULL,NULL,s);
-		//cout<<"comes here"<<endl;
+	   //cout<<"comes here"<<endl;
 		originalHypothesis.insert(pair<string,formula*>(tH->s,tH));
 	}
 	
@@ -73,6 +72,8 @@ void prover::input(istream &in){
 		
 	}
 
+  setDummyTrace();
+
    destination = new formula;
    destination->inputInfix(in);		
    originalDestination = destination;	
@@ -80,6 +81,17 @@ void prover::input(istream &in){
    
 }
 
+
+
+void prover::setDummyTrace(){
+	
+	unordered_map<string , formula*>:: iterator iH = Hypothesis.begin();
+    for(; iH!=Hypothesis.end(); iH++) {
+    /**Dummy trace to terminate trace back**/ 
+	   string s="DT";
+	   setTrace(iH->second,NULL,NULL,s);
+	}
+}
 
 
 void prover::printH(ostream &out){
@@ -164,121 +176,96 @@ void prover:: setTrace(formula* self, formula* MP_1, formula* MP_2, string axiom
 	tr.axiom_used=axiom;
 	tr.f1=MP_1;
 	tr.f2=MP_2;
-	
 	if(self->leaf){
 		//cout<<"comes here "<<*self<<endl;
 	}
-	
 	string st = self->s;
 	pair<string, trace> p;
+	tr.done = false;
 	p.first = st;
 	p.second = tr;
 	traceMap.insert(p);
 }
-				
-void prover:: fillTraceVec(formula* f,int entry, string msg) {
-	//cout<<"Entry: "<<entry<<" Msg: "<<msg<<endl;
-	pair<int, pair<string, formula*> > p1;
-	p1.first=entry;
-	pair<string, formula*> p;
-	p.first=msg;
-	p.second=f;
-	p1.second=p;
-	traceVec.push_back(p1);
+
+
+void prover:: fillTraceVec(formula* f) {
 	
+	queue<trace> cloud;
 	unordered_map<string,trace>::const_iterator it = traceMap.find(f->s);
-	//f->print(cout);
-	if(it==traceMap.end()) {
-		return;
-	}
-	else {
-		trace tr = it->second;
-		bool terminate = (tr.axiom_used == "DT");
-		string m="";
-		//cout<<"terminate is :"<<terminate<<endl;
-		if(terminate) return;
-			if(tr.axiom_used == "A1") {
-				m = "A1";
-				formula* f1 = f->lhs;
-				formula* f2 = (f->rhs)->lhs;
-				fillTraceVec(f1,entry+1,m);
-				fillTraceVec(f2,entry+2,m);
-			}
-			
-			else if(tr.axiom_used == "A2") {
-				m = "A2";
-				formula* f1 = (f->lhs)->lhs;
-				formula* f2 = ((f->lhs)->rhs)->lhs;
-				formula* f3 = ((f->lhs)->rhs)->rhs;
-				fillTraceVec(f1,entry+1,m);
-				fillTraceVec(f2,entry+2,m);
-				fillTraceVec(f3,entry+3,m);
-			}
-			
-			else if(tr.axiom_used == "A3") {
-				m = "A3";
-				formula* f1 = ((f->lhs)->lhs)->lhs;
-				fillTraceVec(f1,entry+1,m);
-			}
-			
-			else if(tr.axiom_used == "MP") {
-				m = "MP";
-				formula* f_1 = tr.f1;
-				formula* f_2 = tr.f2;
-				fillTraceVec(f_1,entry+1,m);
-				fillTraceVec(f_2,entry+2,m);
-			}
-			
-			else {}
+	assert(it!=traceMap.end());
+	cloud.push(it->second);
 	
+	while(!cloud.empty()){
+		trace tempTr = cloud.front();
+		cloud.pop();
+		bool terminate = (tempTr.axiom_used == "DT");
+		if(tempTr.done) continue;
+		
+		tempTr.done = true;
+		traceVec1.push_back(tempTr);
+		formula *f = tempTr.self;
+		
+		if(terminate) continue;
+		if(tempTr.axiom_used == "A1") {
+			formula* f1 = f->lhs;
+			formula* f2 = (f->rhs)->lhs;
+			cloud.push(traceMap.find(f1->s)->second);
+			cloud.push(traceMap.find(f2->s)->second);
+		}
+		
+		else if(tempTr.axiom_used == "A2") {
+			formula* f1 = (f->lhs)->lhs;
+			formula* f2 = ((f->lhs)->rhs)->lhs;
+			formula* f3 = ((f->lhs)->rhs)->rhs;
+			cloud.push(traceMap.find(f1->s)->second);
+			cloud.push(traceMap.find(f2->s)->second);
+			cloud.push(traceMap.find(f3->s)->second);
+		}
+		
+		else if(tempTr.axiom_used == "A3") {
+			formula* f1 = ((f->lhs)->lhs)->lhs;
+			cloud.push(traceMap.find(f1->s)->second);
+		}
+		
+		else if(tempTr.axiom_used == "MP") {
+			formula* f_1 = tempTr.f1;
+			formula* f_2 = tempTr.f2;
+			cloud.push(traceMap.find(f_1->s)->second);
+			cloud.push(traceMap.find(f_2->s)->second);
+		}
+		else {
+			}
 	}
-					
 }
 
 
-void prover::printTraceVec(int nspace) {
-	int index=0;
-	while(index!=traceVec.size()-2) {
-		string msg = (traceVec[index].second).first;
-		if(msg.compare("Destination found!") == 0) break;
-		formula* f = (traceVec[index].second).second;
-		if(msg == "A1") {
-			formula* f2 = (traceVec[index+1].second).second;
-			for(int i=0; i<nspace; i++) cout<<" ";
-			cout<<"Applying axiom-1 on : ";
-			cout<<*f<<" and "<<*f2<<endl;
-			index+=2;
-		}
+
+void prover::printTraceVec(int nspace){
+	
+	vector<trace>::reverse_iterator it;
+	for(it = traceVec1.rbegin() ; it != traceVec1.rend() ; it++){ 
+		trace t = (*it);
+		if(t.axiom_used == "MP"){	
+					for(int i=0; i<nspace; i++) cout<<" ";
+					cout<<"Applying Modus ponens on : ";
+					cout<<*t.f2<<" and "<<*t.f1<<" --------->   "<<*t.self<<endl;
+				}
+		else if(t.axiom_used== "A3"){
+					for(int i=0; i<nspace; i++) cout<<" ";
+					cout<<"Applying axiom-3 on : ";
+					cout<<*t.self;
+				}
 		
-		else if(msg == "A2") {
-			formula* f2 = (traceVec[index+1].second).second;
-			formula* f3 = (traceVec[index+2].second).second;
-			for(int i=0; i<nspace; i++) cout<<" ";
-			cout<<"Applying axiom-2 on : ";
-			cout<<*f<<" , "<<*f2<<" and "<<*f3<<endl;
-			index+=3;
-		}
-		
-		else if(msg == "A3") {
-			for(int i=0; i<nspace; i++) cout<<" ";
-			cout<<"Applying axiom-3 on : ";
-			cout<<*f;
-			index+=1;
-		}
-		
-		else if(msg == "MP") {
-			formula* f2 = (traceVec[index+1].second).second;
-			for(int i=0; i<nspace; i++) cout<<" ";
-			cout<<"Applying Modus ponens on : ";
-			cout<<*f<<" and "<<*f2<<" --------->   "<<*(f->rhs)<<endl;
-			index+=2;
+		else if(t.axiom_used== "DT"){
+					for(int i=0; i<nspace; i++) cout<<" ";
+					cout<<"Hypothesis : ";
+					cout<<*t.self<<endl;
+				}
+		else{
+					 cout<<"should not come here"<<endl;
+					 exit(0);			
 		}
 	}
-	formula* dest = (traceVec[index].second).second;
-	for(int i=0; i<nspace; i++) cout<<" ";
-	cout<<*dest<<endl;
-	for(int i=0; i<nspace; i++) cout<<" ";
-	cout<<"Proved!"<<endl; 
 }
 
 /***************************************************************************************/
@@ -366,7 +353,7 @@ int prover::MPclosure(){
 			assert(itf!=NULL);
 			if(itf->leaf) continue;
 			if(Hmember(itf->lhs) && (!Hmember(itf->rhs))){
-				cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
+				//cout<<"here : "<<*(itf)<<" : "<<*(itf->lhs)<<endl;
 				add.insert(pair<string,formula*>(itf->rhs->s , itf->rhs));
 				/******************For tracing back*****************/
 				string s = "MP";
@@ -652,10 +639,10 @@ bool prover::step(int nSteps){
 void prover::traceBack(int nspaces){
 	
 	assert(Hmember(destination));
-	fillTraceVec(destination,1,"Destination found!");
-	sort(traceVec.begin(), traceVec.end(),comp_tr);
 	for(int i=0; i<nspaces; i++) cout<<" ";
 	cout<<"**************************Printing Trace********************"<<endl;
+	fillTraceVec(destination);
+	//sort(traceVec.begin(), traceVec.end(),comp_tr);
 	printTraceVec(nspaces);
 	for(int i=0; i<nspaces; i++) cout<<" ";
 	cout<<"##############################################################"<<endl;
