@@ -103,8 +103,8 @@ void getTruthTableLsd(int n, vector< Vec > &input, vector< Vec > &output){
 		  cout<<input[i][j]<<" ";
 	    }
 	  */ 
-	   printVect(input[i]);
-	     cout<<endl;
+	//   printVect(input[i]);
+	  ///   cout<<endl;
 	    output[i].push_back(0); 
    }
     
