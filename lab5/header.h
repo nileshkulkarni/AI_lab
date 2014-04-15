@@ -18,6 +18,20 @@ struct Data{
        }
        return true;
    }
+   void print(){
+       for(int i =0;i<9;i++){
+            printf("%d",_state[i]);
+       }
+    return; 
+
+   }
+   long int getHash(){
+        int id =0;
+        for(int i =0;i<_state.size();i++){
+            id= id*10 + _state[i];
+        }
+
+   }
 } ;
 
 vector< Node* > getNeighbours(Node* n);

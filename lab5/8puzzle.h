@@ -1,5 +1,5 @@
-#ifndef 8PUZZLE_H
-#define 8PUZZLE_H
+#ifndef PUZZLE_H
+#define PUZZLE_H
 #include <iostream>
 #include <list>
 #include <stdio.h>

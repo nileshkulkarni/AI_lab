@@ -21,7 +21,7 @@ NodePtr AStar::getMinimumNode( list<NodePtr> l){
             min = (*it)->f_score;
         }
     }
-    printf("Minimum f_score node is %d ", n->id);
+    printf("Minimum f_score node is %ld ", n->id);
     return n;
 }
 bool AStar::findInList( list<NodePtr> l,NodePtr n){
@@ -66,11 +66,10 @@ int AStar::distance(NodePtr from, NodePtr to ){
     return 1;    
 }
 
-
 bool AStar::getShortestPath(int _start, int _end){
 
-  NodePtr goal = G[_end]; 
-  NodePtr start = G[_start];
+  NodePtr goal = G.allNodes[_end]; 
+  NodePtr start =G.allNodes[_start];
 
   if(goal==NULL){
     std::cout<<" Goal Node is set to NULL, cannot find a path\n";
@@ -84,7 +83,7 @@ bool AStar::getShortestPath(int _start, int _end){
   while(!(openList.size() == 0)){
         
      NodePtr current  = getMinimumNode(openList);
-     printf("Expanding Node current  %d\n", findPos(current->data._state));
+     printf("Expanding Node current  %ld\n", current->id);
      if(current->data==goal->data){
          std::cout<<"Path found\n";
          reconstructPath(goal);
@@ -94,26 +93,81 @@ bool AStar::getShortestPath(int _start, int _end){
      removeNodeFromList(openList,current); 
 
      addNodeToList(closedList,current);
-     printf("Adding node with id %d to Closed list, no of Nbrs %d \n", current->id, current->neighbours.size());
+     printf("Adding node with id %ld to Closed list, no of Nbrs  \n", current->id);
 
     printf(" printing Nodes here \n");
     current->print();
     vector< NodePtr> nodeNbrs = getNeighbours(current);
      for(int i=0;i<nodeNbrs.size();i++){
-        NodePtr nbr = current->neighbours[i];
+        NodePtr nbr =nodeNbrs[i];
         if(findInList(closedList,nbr)){
             continue;
         }
         int tentative_g_score = current->g_score + distance(current,nbr);
-        printf("Printing nbrs doubtful about zero nbr , %d\n",nbr->id);
+        printf("Printing nbrs doubtful about zero nbr , %ld\n",nbr->id);
         if(!findInList(openList,nbr) || tentative_g_score < nbr->g_score){
             nbr->came_from = current;
             nbr->g_score = tentative_g_score;
             nbr->f_score = tentative_g_score + H(nbr,goal);
-            printf("Setting came_from for the node %d = %d\n",nbr->id,current->id);
+            printf("Setting came_from for the node %ld = %ld\n",nbr->id,current->id);
             if(!(findInList(openList,nbr))){
                 addNodeToList(openList,nbr);
-                printf("Adding node with id %d to Open list with f_score %d \n", nbr->id,nbr->f_score);
+                printf("Adding node with id %ld to Open list with f_score %d \n", nbr->id,nbr->f_score);
+            }
+        }
+    }
+  }
+  
+  return false;
+}
+
+bool AStar::getShortestPath(NodePtr _start, NodePtr _end){
+
+  NodePtr goal = _end; 
+  NodePtr start =_start;
+
+  if(goal==NULL){
+    std::cout<<" Goal Node is set to NULL, cannot find a path\n";
+    return false;
+  } 
+  if(start==NULL){
+    std::cout<<" Start Node is set to NULL, cannot find a path\n";
+    return false;
+  }
+  addNodeToList(openList,start);
+  while(!(openList.size() == 0)){
+        
+     NodePtr current  = getMinimumNode(openList);
+     printf("Expanding Node current id  %ld\n", current->id);
+     if(current->data==goal->data){
+         std::cout<<"Path found\n";
+         reconstructPath(goal);
+         return true;
+     }
+
+     removeNodeFromList(openList,current); 
+
+     addNodeToList(closedList,current);
+     printf("Adding node with id %ld to Closed list, no of Nbrs \n", current->id);
+
+    printf(" printing Nodes here \n");
+    current->print();
+    vector< NodePtr> nodeNbrs = getNeighbours(current);
+     for(int i=0;i<nodeNbrs.size();i++){
+        NodePtr nbr = nodeNbrs[i];
+        if(findInList(closedList,nbr)){
+            continue;
+        }
+        int tentative_g_score = current->g_score + distance(current,nbr);
+        printf("Printing nbrs doubtful about zero nbr , %ld\n",nbr->id);
+        if(!findInList(openList,nbr) || tentative_g_score < nbr->g_score){
+            nbr->came_from = current;
+            nbr->g_score = tentative_g_score;
+            nbr->f_score = tentative_g_score + H(nbr,goal);
+            printf("Setting came_from for the node %ld = %ld\n",nbr->id,current->id);
+            if(!(findInList(openList,nbr))){
+                addNodeToList(openList,nbr);
+                printf("Adding node with id %ld to Open list with f_score %d \n", nbr->id,nbr->f_score);
             }
         }
     }

@@ -10,6 +10,7 @@ class Graph{
     Graph(nodeVector l);
     Graph(vector< vector<int> >);
     Graph();
+    Graph(NodePtr startNode); 
     vector<NodePtr> allNodes;
     NodePtr operator[](int i);
     void print();
