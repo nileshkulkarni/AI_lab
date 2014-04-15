@@ -5,16 +5,16 @@ Edge::Edge(){
     
 }
 
-float Edge::getWeight(float w){
+float Edge::getWeight(){
    return  weight ;
 
 }
-void  Edge::getStart(Neuron* s){
+void  Edge::setStart(Neuron* s){
     start=s ;
 
 }
 
-void Edge::getEnd(Neuron* e){
+void Edge::setEnd(Neuron* e){
     end =e ;
     
 }
@@ -27,7 +27,7 @@ Neuron* Edge::getEnd(){
     return end ;
 
 }
-void Edge::setWeight(){
+void Edge::setWeight(float w){
     weight = w;
 
 }

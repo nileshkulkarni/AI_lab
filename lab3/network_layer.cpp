@@ -8,5 +8,13 @@ NetworkLayer ::  NetworkLayer(int nNeurons , int id){
 			Neurons.resize(N);
 }
 
+void NetworkLayer :: updateLayer() {
+	for(int i=0; i<Neurons.size(); i++) {
+		Neurons[i].collectInputs();
+	}
+}
 
+void NetworkLayer :: updateLayer(Vec In) {
+	collectInputs(In);
+}
 
