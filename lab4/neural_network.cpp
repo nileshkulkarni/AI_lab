@@ -117,7 +117,9 @@ void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
         }	
         if(!printRate--){
 			printf("%d mean:%f max:%f\n",steps, meanError , maxError);
-			printRate =PRINTRATE;
+			printVec(outp);
+            cout<<endl;
+         	printRate =PRINTRATE;
 		}
 		
     }

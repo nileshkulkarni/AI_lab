@@ -166,6 +166,7 @@ int main(){
 		
 		
 		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
+		nn.print();
 		return 0;
     }
     
@@ -261,7 +262,7 @@ int main(){
 		printf("Sizes are %d %d %d %d \n", validatingInputs.size() , validatingOutputs.size() , inputVec.size() , outputVec.size()); 
 		
     	
-    	printf("Sizes are %d %d \n" , inputVec[0].size() , inputVec[0].size());
+    	printf("Sizes are %d %d \n" , inputVec[0].size() , outputVec[0].size());
     	
     	
     		
@@ -278,7 +279,7 @@ int main(){
 		
 		
 		nn.addInputLayer(inputVec[0].size());
-		nn.addOutputLayer(2);
+		nn.addOutputLayer(outputVec[0].size());
     
 		cout<<"Input Layer added!"<<endl;
 		nn.generateEdges();
@@ -295,11 +296,11 @@ int main(){
 		
 		for(int nhj=0;nhj<inputVec.size();nhj++){
 			OutputResult = nn.getOutput(inputVec[nhj]);
-			cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
-			cout<<"Expected: ";
-			printVec(outputVec[nhj]);
-			cout<<"\n Result : ";
-			printVec(OutputResult);
+		//	cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
+		//	cout<<"Expected: ";
+		//	printVec(outputVec[nhj]);
+		//	cout<<"\n Result : ";
+		//	printVec(OutputResult);
 			NumberSucceeded += equal(OutputResult , outputVec[nhj]);
 		}
 		
@@ -312,16 +313,20 @@ int main(){
 		
 		for(int nhj=0;nhj<validatingInputs.size();nhj++){
 			OutputResult = nn.getOutput(validatingInputs[nhj]);
-			cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
-			cout<<"Expected: ";
-			printVec(validatingOutputs[nhj]);
-			cout<<"\n Result : ";
-			printVec(OutputResult);
+		//	cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
+		//	cout<<"Expected: ";
+		//	printVec(validatingOutputs[nhj]);
+		//	cout<<"\n Result : ";
+		//	printVec(OutputResult);
 			NumberSucceeded += equal(OutputResult , validatingOutputs[nhj]);
 		}
 		
 		
 		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
+		
+		nn.print();
+    
+		
 		return 0;
     }
     else {
