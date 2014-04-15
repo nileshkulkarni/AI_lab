@@ -133,6 +133,7 @@ int main(){
 		nn.generateEdges();
 		cout<<"Edges Generated!"<<endl;
     		nn.addAllTrainData(inputVec, outputVec);
+            printf("Training Done!\n");
 	}
 	
 	else {
