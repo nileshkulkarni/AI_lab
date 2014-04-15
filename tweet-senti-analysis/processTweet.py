@@ -30,8 +30,8 @@ def processFile(filename):
     while line:
         split_tweet = line.split('\t')
         processedTweet = processTweet(split_tweet[1])
-        fw.write(split_tweet[0])
-        fw.write('\t')
+        #fw.write(split_tweet[0])
+        #fw.write('\t')
         fw.write(processedTweet)
         fw.write('\n')
         line = fr.readline()
@@ -65,7 +65,7 @@ def getStopWordList(stopWordListFileName):
 def getFeatureVector(tweet,featureVector,stopWords):
     #split tweet into words
     words = tweet.split()
-    for w in words[1:]:
+    for w in words:
         #strip punctuation
         w = w.strip('\'"?,.!')
         #check if the word stats with an alphabet
@@ -88,6 +88,7 @@ def getAllFeatureWords(filename,featureVector):
     while line:
         getFeatureVector(line,featureVector,stopWords)
         line = fp.readline()
+    fp.close()
     return
 #end
 
@@ -97,5 +98,64 @@ def printFeature(featureVector):
     for word in featureVector:
         fp.write(word)
         fp.write('\n')
+    fp.close()
     return
 #end
+
+
+#start extract_features
+def extract_features(tweet,featureVector,senti):
+    tweet = processTweet(tweet)
+    tweet.strip('\'"?,.!')
+    words = tweet.split()
+    words_up = []
+    for w in words:
+        w = w.strip('\'"?,.!')
+        words_up.append(w)
+    extractf = []
+    extractf.append(senti) 
+    for w in featureVector:
+        if w in words_up:
+            extractf.append(1)
+        else:
+            extractf.append(0)
+    return extractf
+#end
+
+
+
+#start  printing feature vector
+def printFeatureVector(allWords):
+    featureVector = []
+    fp=open("TweetsCorpus/processed_positive",'r')
+    line = fp.readline()
+    while line:
+        featureVector.append(extract_features(line,allWords,1))
+        line = fp.readline()
+    fp.close()
+    
+    fp=open("TweetsCorpus/processed_negative",'r')
+    line = fp.readline()
+    while line:
+        featureVector.append(extract_features(line,allWords,-1))
+        line = fp.readline()
+    fp.close()
+
+    fp=open("TweetsCorpus/processed_objective",'r')
+    line = fp.readline()
+    while line:
+        featureVector.append(extract_features(line,allWords,0))
+        line = fp.readline()
+    fp.close()
+
+    fp=open("TweetsCorpus/extracted-features.dump",'w')
+    for veclist in featureVector:
+        for w in veclist:
+            fp.write(str(w))
+            fp.write(",")
+        fp.write("\n")
+    return
+#end
+
+
+
