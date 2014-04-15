@@ -35,13 +35,27 @@ int main(){
     */
     vector<formula*> Hypt;
     vector<formula*> Intr;
-    prover *p1 = new prover(2,2,Hypt,Intr);
+    prover *p1 = new prover(0,8,Hypt,Intr);
+    
     cin>>*p1;
-    cout<<*p1;
-    cout<<"here : "<<endl;
-	p1->MPclosure();
-	p1->Axiom1closure();
-	p1->Axiom3closure();
-	cout<<*p1;
+    
+    formula *dest = new formula;
+    cin>>*dest;
+    cout<<"Destination formula is "<<*dest<<endl;
+    cout<<*p1<<endl;
+    
+	for(int i=0; i<1;i++){
+		p1->Axiom1closure();
+		p1->Axiom2closure();
+		p1->Axiom3closure();
+		p1->MPclosure();
+	}
+	
+	//p1->printH(cout);
+	cout<<"came here: "<<endl;
+	cout<<"Found  = "<<p1->Hmember(dest)<<endl;
+	
+	cout<<"--------------------------------------------"<<endl;
+//	cout<<*p1<<endl;
 	return 0;
 }

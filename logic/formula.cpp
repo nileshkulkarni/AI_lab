@@ -1,6 +1,20 @@
 #include "formula.h"
 
 
+void destroy(formula *f){
+	
+	if(!f->leaf){
+		 
+		delete(f->lhs);
+		delete(f->rhs);
+	}
+	delete(f);
+}
+
+
+
+
+
 
 void formula::input(istream &in) {
 

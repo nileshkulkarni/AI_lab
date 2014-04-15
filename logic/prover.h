@@ -1,9 +1,12 @@
 #ifndef _FORMULA_H
 #define _FORMULA_H
+
 #include "formula.h"
 
 #include <vector>
 #include <cassert>
+
+
 
 class prover{
 	
@@ -17,10 +20,13 @@ public:
 	prover(int nH_ , int nI_);
 	prover(int nH_ , int nI_ , vector<formula*> H, vector<formula*> I);
 	prover(int nH_ , int nI_ , istream &in);
-    void print(ostream &out);
+    void printH(ostream &out);
+	void printI(ostream &out);
+	
 	void input(istream &in);
     friend ostream &operator<<(ostream &out, prover A){   
-		A.print(out);
+		A.printH(out);
+		A.printI(out);
 		return out;
     }
     
