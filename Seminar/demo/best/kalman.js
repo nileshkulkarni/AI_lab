@@ -3,8 +3,8 @@
 window.Kalman = function() {
   
   //this.x = Matrix.Zero(4, 1);
-  this.x = Matrix.create([350, 100, 10, 10 ]);
-  this.P = Matrix.Diagonal([10, 10, 1, 1]);
+  this.x = Matrix.create([0, 0, 1, 1 ]);
+  this.P = Matrix.Diagonal([100000, 100000, 100000, 100000]);
   this.u = Matrix.Zero(4, 1);
 
   this.dt = 1;
@@ -36,7 +36,7 @@ window.Kalman = function() {
     this.x = this.F.multiply(this.x).add(this.u); // prior x
     this.P = this.F.multiply(this.P).multiply(this.F.transpose());
     var do_posterior = 1;
-	if(do_posterior == 0){
+	if(do_posterior == 1){
     // measurement (Correction, posterior calculations)
 		var Z = Matrix.create([[measuredX], [measuredY]]); 
 		var y = Z.subtract(this.H.multiply(this.x)); // z^ = H* x^

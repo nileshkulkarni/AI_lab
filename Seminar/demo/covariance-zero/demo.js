@@ -4,7 +4,7 @@ $(function() {
   var predicted = undefined;
 
   function updateNumbers() {
-    var text='<table border=0 cellpadding=0 cellspacing=0><tr><td class="h x">x =</td><td colspan="4" class="h">P =</td></tr>';
+    var text='<table border=0 cellpadding=0 cellspacing=0><tr><td class="h x">pos =</td><td colspan="4" class="h">Covariance Matrix =</td></tr>';
     for (var i=1;i<=4;i++) {
       text+='<tr>';
       text+='<td class="x">'+Math.round(k.x.e(i,1))+'</td>';
@@ -20,7 +20,7 @@ $(function() {
 
   $('#canvas').click(function(e) {
     k.filter(e.clientX, e.clientY);
-    paper.circle(e.clientX, e.clientY, 2).attr({stroke: '#777', fill: '#777'});
+    paper.circle(e.clientX, e.clientY, 3).attr({stroke: '#777'});
     if (predicted) predicted.remove();
     var scaling_factor = 0.5;
     //predicted = paper.circle(k.nextX(), k.nextY(), 10, 10).attr({stroke: '#373', fill: '#373'});
