@@ -9,6 +9,8 @@ NeuralNetwork::NeuralNetwork(){
 
 
 void NeuralNetwork::_init(){
+      srand(time(NULL));
+ 
 }
 
 
@@ -74,16 +76,19 @@ Vec NeuralNetwork::getOutput(Vec in){
     return layers[size-1].getOutput();
 }
 
+
+
 void NeuralNetwork :: backPropagate(){
 	
 	layers[noOfLayers-1].backPropagate(outputs);
-	
-	for(int i=noOfLayers-2 ; i>0 ; i++){
+
+	for(int i=noOfLayers-2 ; i>=0 ; i--){
 		layers[i].backPropagate();
 	}
 
-	for(int i=noOfLayers-1; i>0 ; i++){
-		layers[i].updateWeights();
+   for(int i=noOfLayers-1; i>0 ; i--){
+       layers[i].updateWeights();
+       cout<<"i is : "<<i<<endl; 
 	}
 }	
 
@@ -91,9 +96,16 @@ void NeuralNetwork :: backPropagate(){
 void NeuralNetwork::addTrainData(Vec in, Vec out){
 	
 	this->feedForward(in);
-	Vec o = layers[noOfLayers-1].getOutput(); 
-    cout<< o[0] << endl;
+    outputs = out;
+    this->backPropagate();
+  
+}
+
+void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
 	
+    for(int i =0;i< ins.size();i++){
+        addTrainData(ins[i],outs[i]);
+    }
 }
 
 
@@ -105,6 +117,7 @@ void NeuralNetwork::print(){
 	}
 	
 }
+
 void NeuralNetwork::putEdges(int from , int to){
     vector<Neuron> *fromNeuronsPtr  = layers[from].getAllNeuronsPtr();
     vector<Neuron> *toNeuronsPtr  = layers[to].getAllNeuronsPtr();
@@ -124,7 +137,6 @@ void NeuralNetwork::putEdges(int from , int to){
     }
     return;
 }
-
 void NeuralNetwork::generateEdges(){
     printf("here 1\n");
     for(int i = 0;i<noOfLayers-1;i++){

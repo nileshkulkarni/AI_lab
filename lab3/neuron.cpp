@@ -21,7 +21,7 @@ void Neuron::addOutputEdge(Edge *e){
 
 }
 void Neuron ::print(){
-    printf("\t\tNeuron ID %d \n" ,id);
+    printf("\t\t(Neuron ID , del) %d %f \n" ,id , del);
     printf("\t\tOutput Weights ");
     for(int i =0;i<outputEdges.size();i++){
         printf("%d: %f ",i,outputEdges[i]->getWeight()); 
@@ -32,6 +32,7 @@ void Neuron ::print(){
         printf("%d: %f ",i,inputEdges[i]->getWeight()); 
     
     }
+    
     printf("\n\t\t Output %f ", output);
     printf("\n");
 
@@ -65,12 +66,20 @@ void Neuron :: collectInputs(float in) {
 		collectedOut+=w*In[i];
 	}
 */ 
-	output = collectedOut;	
+	output = collectedOut;
+    printf("Neuron ID ** %d , %f \n", id, output);	
 }
 
-void Neuron :: updateDel(Vec t){
-	del = (t[id] - output) * output * (1 - output);
+void Neuron :: updateDel(float t){
+	
+        
+    del = (t - output) * output * (1 - output);
+    
+   printf("computing del : %d %f %f %f\n" , id , t , output , del); 
+ 
 }
+
+
 float Neuron:: getDel(){
     return del;
 
@@ -80,6 +89,9 @@ void Neuron :: updateDel(){
 	del = 0;
 	for(int i=0;i<outputEdges.size();i++){
 		del +=	outputEdges[i]->getWeight() * (outputEdges[i]->getEnd())->getDel() * output * (1 - output);
+        
+        printf("computing del : %f %f %f %f \n" ,outputEdges[i]->getWeight()  , (outputEdges[i]->getEnd())->getDel() , output  , (1 - output)); 
+        
 	}
 }
 
