@@ -7,13 +7,19 @@
 #include <iostream>
 #include<cstdlib>
 #include "neuron.h"
+
+
+extern float MOMENTUM_FACTOR;
+
+
 class Neuron;
 class Edge{
 private: 
     Neuron* start;
     Neuron* end;
-    
+  
     float weight;
+    float prevError;
 public: 
     Edge();
     Neuron* getStart();
@@ -22,6 +28,9 @@ public:
     void setEnd(Neuron*);
     float getWeight();
     void setWeight(float w);		
+    float getPrevError();
+	void setPrevError(float x);
+
 
 };
 
