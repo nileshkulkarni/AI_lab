@@ -69,6 +69,14 @@ struct Data{
       }
       return;
    }
+   long long int getHash(vector<int> _state){
+      long long int id =0;
+        for(int i =0;i<_state.size();i++){
+            id= id*10 + _state[i];
+        }
+        return id;
+
+    }
 
 
 } ;
