@@ -8,11 +8,12 @@ void NeuralNetwork::_init(){
 
 }
 
-NeuralNetwork::NeuralNetwork(int layers,int noOfNeurons){
+NeuralNetwork::NeuralNetwork(int nLayers,int noOfNeurons){
     _init();
-    for(int i =0;i<n;i++){
-        NetworkLayer lay(noOfNeurons);        
-        layers.push(lay);
+    noOfLayers = nLayers;
+    for(int i =0;i<nLayers;i++){
+        NetworkLayer lay(noOfNeurons,i);        
+        layers.push_back(lay);
     }
 } 
 
@@ -37,7 +38,7 @@ Vec NeuralNetwork::getOutput(Vec in){
 }
 
 
-NeuralNetwork :: backPropagate(){
+void NeuralNetwork :: backPropagate(){
 	
 	layers[noOfLayers-1].backPropagate(outputs);
 	
