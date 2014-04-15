@@ -1,0 +1,15 @@
+0.1
+0.9
+Tweet
+100
+3
+4
+
+Part for validation     TestAcc.      TrainAcc.
+1                       41              81
+2                       41              82
+3                       35              85         
+4                       47              73              (4 layers, 4 neurons in 2 hidden layers)
+5                       46              81
+
+3                       52              75              (                     "    '            )  
