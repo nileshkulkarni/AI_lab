@@ -56,14 +56,14 @@ int main(){
     NodePtr start = new Node(d);
     
     vector<int> finals;
-    finals.push_bac(8);
+    finals.push_back(8);
     finals.push_back(0);
     for(int i=1;i<8;i++){
         finals.push_back(i);
     }
     Data d2;
     d2._state=finals;
-    NodePtr stop = new Node(finals);
+    NodePtr stop = new Node(d2);
 
     
     int noOfNodes = 7;
