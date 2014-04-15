@@ -99,7 +99,7 @@ int main(){
         finals.push_back(j);
     }
     Data d2;
-    d2.vec_assign(state);
+    d2.vec_assign(finals);
     NodePtr stop = new Node(d2);
     printf("Printing Start ");
     start->printData();
