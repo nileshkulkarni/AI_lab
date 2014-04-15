@@ -113,7 +113,7 @@ bool AStar::getShortestPath(Node _start, Node _end){
   while(!(openSet.size() == 0)){
 
 #if DEBUG
-     printf("Size of open list is %ld \n", openSet.size()); 
+     printf("Size of open list is %d \n", openSet.size()); 
 #endif
      Node current  = getMinimumNode(openSet);
 #if DEBUG

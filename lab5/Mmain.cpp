@@ -100,9 +100,9 @@ int main(int argc, char* argv[]){
     finals.push_back(1);
     d2.vec_assign(finals);
     Node stop(d2);
-        Graph graph(start); 
-        AStar a(graph);
-        string hue;
+    Graph graph(start); 
+    AStar a(graph);
+    string hue;
         
     INPUT:    printf("Enter Heuristic to use \n");
         cin>>hue;

@@ -1,7 +1,7 @@
 #ifndef HEADER_H
 #define HEADER_H
 #include <vector>
-#define DEBUG 0
+#define DEBUG 1
 using namespace std;
 
 class Node;
