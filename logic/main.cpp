@@ -18,12 +18,17 @@ int main(){
 	F->length = 1;
 /*Initialization Done */
 	
-	/*formula *f1 = new formula;
-	cin>>*f1;
-	formula *f2 = new formula;
-	cin>>*f2;
-	cout<<*f1<<" : "<<*f2<<endl;
+	formula *f1 = new formula;
+	f1->inputInfix(cin);
 	
+
+
+	formula *f2 = new formula;
+	f2->inputInfix(cin);
+
+
+	cout<<*f1<<endl<<*f2<<endl;
+/*	
 	cout<<(*f1==*f2)<<endl;
 	
 	formula *f3 = Axiom1(f1, f2);
@@ -33,6 +38,7 @@ int main(){
 	formula *f5 = implication(f2, f4);
 	cout<<*f5<<" : "<<f5->length<<endl;
     */
+/* 
     vector<formula*> Hypt;
     vector<formula*> Intr;
     prover *p1 = new prover(0,8,Hypt,Intr);
@@ -57,5 +63,7 @@ int main(){
 	
 	cout<<"--------------------------------------------"<<endl;
 //	cout<<*p1<<endl;
+*/
+
 	return 0;
 }
