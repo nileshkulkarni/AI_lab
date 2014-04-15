@@ -36,6 +36,8 @@ public:
 		return in;
     }
 	
+	int computeMaxFormulalength();
+	
 	bool Hmember(formula *f);
 	int MPclosure();
 	int Axiom1closure();
