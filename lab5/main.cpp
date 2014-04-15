@@ -89,7 +89,7 @@ int main(){
     for(int i = 2; i < 9 ; i++)
         state.push_back(i);
     Data d;
-    d._state=state;
+    d.vec_assign(state);
     NodePtr start = new Node(d);
     
     vector<int> finals;
@@ -99,7 +99,7 @@ int main(){
         finals.push_back(j);
     }
     Data d2;
-    d2._state=finals;
+    d2.vec_assign(finals);
     NodePtr stop = new Node(d2);
     printf("Printing Start ");
     start->printData();
