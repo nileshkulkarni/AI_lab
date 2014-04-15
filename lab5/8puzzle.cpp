@@ -38,7 +38,7 @@ vector< Node > getNeighbours(Node np){
         left[_0pos]=temp;
         left[_0pos-1]=0;
         Data d;
-        d._state = left;
+        d._state.assign(left.begin(),left.end());
         Node n(d);
         neighbors.push_back(n);
 #if DEBUG
@@ -51,7 +51,7 @@ vector< Node > getNeighbours(Node np){
         top[_0pos]=temp;
         top[_0pos-3]=0;
         Data d;
-        d._state = top;
+        d._state.assign(top.begin(),top.end());
         Node n(d);
         neighbors.push_back(n);
 #if DEBUG
@@ -65,7 +65,7 @@ vector< Node > getNeighbours(Node np){
         right[_0pos]=temp;
         right[_0pos+1]=0; 
         Data d;
-        d._state = right;
+        d._state.assign(right.begin(),right.end());
         Node n(d);
         neighbors.push_back(n);
 #if DEBUG
@@ -79,7 +79,7 @@ vector< Node > getNeighbours(Node np){
         down[_0pos]=temp;
         down[_0pos+3]=0;
         Data d;
-        d._state = down;
+        d._state.assign(down.begin(),down.end());
         Node n(d);
         neighbors.push_back(n);
 #if DEBUG
