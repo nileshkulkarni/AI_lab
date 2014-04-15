@@ -4,6 +4,8 @@
 
 
 void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto);
+void getTruthTableLsd(int n, vector< Vec > &input, vector< Vec > &output);
+void printTT(vector <Vec> , vector <Vec>);
 
 using namespace std;
 int main(){
@@ -14,53 +16,13 @@ int main(){
     nn.addOutputLayer(1);
     
     nn.generateEdges();
-   /* 
-    Vec in0;
-    in0.push_back(0);
-    in0.push_back(0);
-  
-  
-    Vec in1;
-    in1.push_back(0);
-    in1.push_back(1);
-  
-  
-    Vec in2;
-    in2.push_back(1);
-    in2.push_back(0);
-  
-  
-    Vec in3;
-    in3.push_back(1);
-    in3.push_back(1);
-    */
     vector< Vec> ins;
 	vector< Vec > outs;
-   /* ins.push_back(in0);
-    ins.push_back(in1);
-    ins.push_back(in2);
-    ins.push_back(in3);
     
-
-    Vec out0;
-    Vec out1;
-    Vec out2;
-    Vec out3;
-    out0.push_back(0);
-    out1.push_back(1);
-    out2.push_back(1);
-    out3.push_back(0);
-    
-    
-    outs.push_back(out0);
-    outs.push_back(out1);
-    outs.push_back(out2);
-    outs.push_back(out3);
-    
-    */
-    
-    genTT("XOR",ins,outs);
-    nn.addAllTrainData(ins, outs);
+   // genTT("XOR",ins,outs);
+    getTruthTableLsd(1,ins,outs);
+    printTT(ins,outs);
+  /*nn.addAllTrainData(ins, outs);
 	
 	
     Vec in2;
@@ -69,7 +31,7 @@ int main(){
     nn.getOutput(in2);
     
     nn.print();
-    
-    
+   */ 
+
     return 1;
 }
