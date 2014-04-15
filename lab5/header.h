@@ -1,7 +1,9 @@
 #ifndef HEADER_H
 #define HEADER_H
+#include <vector>
+using namespace std;
 
 typedef struct{
-   int  data;
+   vector<int> _state;
 } Data;
 #endif
