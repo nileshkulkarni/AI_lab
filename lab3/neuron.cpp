@@ -29,7 +29,6 @@ bool operator==(Vec &v1 , Vec &v2){
 
 
 
-
 void add(Vec &destV , Vec W){
     for(int i=0;i<W.size();i++)
       destV[i] += W[i];
@@ -122,7 +121,9 @@ void Neuron :: collectInputs() {
 		float out = start->getOutput();
 		collectedOut+=w*out;
 	}
+
 	output = collectedOut;
+    updateOutput();
 }
 
 float Neuron::getOutput(){
@@ -140,6 +141,7 @@ void Neuron :: collectInputs(float in) {
 	}
 */ 
 	output = collectedOut;
+    updateOutput();
    // printf("Neuron ID ** %d , %f \n", id, output);	
 }
 
@@ -157,6 +159,11 @@ float Neuron:: getDel(){
 
 }
 
+void Neuron::updateOutput(){
+    
+    output = float(1)/(float)(1 + exp(-output));
+
+}
 void Neuron :: updateDel(){
 	del = 0;
 	for(int i=0;i<outputEdges.size();i++){

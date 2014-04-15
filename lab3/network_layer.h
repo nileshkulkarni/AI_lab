@@ -6,7 +6,7 @@
 
 #include "neuron.h"
 #define NEURON_INPUTS 5
-#define NETA 0.1
+#define NETA 0.02
 
 
 class NetworkLayer{

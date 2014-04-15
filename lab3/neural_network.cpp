@@ -105,16 +105,22 @@ void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
     float Error = 10    ;
     
     Vec outp;
-  while(Error>0.5){ 
-    Error = 0;
+    int printRate =100;
+  while(Error>ERROR_THRESHOLD){ 
+		Error = 0;
+		
         for(int i =0;i< ins.size();i++){
             addTrainData(ins[i],outs[i]);
             outp = layers[noOfLayers-1].getOutput();
             sub(outp , outs[i]); 
-            Error += mod(outputs);
+            Error += mod(outp);
             //cout<<"here here here here:"<<endl;
         }
-        printf("Error Value %f\n", Error);
+        if(!printRate--){
+			printf("Error Value %f\n", Error);
+			printRate =100;
+		}
+		
     }
     
     printf("Training Done Error %f \n",Error);

@@ -13,6 +13,7 @@ void  Edge::setStart(Neuron* s){
 
 }
 
+
 void Edge::setEnd(Neuron* e){
     end =e ;
     
