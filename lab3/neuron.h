@@ -23,16 +23,17 @@ class Neuron{
     private:
         int id;
         bool outputNeuron;
-        vector<Edge*> inputEdges;
-        vector<Edge*> outputEdges;
         int noOfInputs; 
         Vec inputs;
         float output;
         float del;
         static int totalNeurons;
     public:
+        vector<Edge*> inputEdges;
+        vector<Edge*> outputEdges;
+        
         Neuron(int noOfInputs);
-	    vector<Edge*> getinputEdges();
+	    vector<Edge*> getInputEdges();
         void collectInputs();  //and generate output
         void collectInputs(Vec in); // to be called for the outermost input layer
         float getOutput();  

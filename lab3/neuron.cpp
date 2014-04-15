@@ -9,7 +9,7 @@ Neuron::Neuron(int N){
     
 }
 
-vector<Edge*> Neuron :: getinputEdges() {
+vector<Edge*> Neuron :: getInputEdges() {
 	return inputEdges;
 }
 
