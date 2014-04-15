@@ -130,12 +130,19 @@ def getFreq(featureVector):
                     worddict[temp] = worddict.get(temp)+1
                 else:
                     worddict[word[:-3]] = 1
-            else:
+        elif(word.endswith("est") and d.check(word[:-3])):
+                if(word[:-3] in worddict):
+                    temp = word[:-3]
+                    worddict[temp] = worddict.get(temp)+1
+                else:
+                    worddict[word[:-3]] = 1
+                
+	else:
                 if(word in worddict):
                     worddict[word] = worddict.get(word)+1
                 else:
-                    worddict[word] = 1
-    return worddict
+                    worddict[word] = 1  
+	return worddict
 #end
 
 #remove words occuring once
@@ -153,7 +160,7 @@ def finalVector(worddict):
 
     fp.close()
 
-    fp = open("TweetsCorpus/featurewords.dump",'w')
+    fp = open("TweetsCorpus/newCorpus/featurewords.dump",'w')
     
     for word in finallist:
         fp.write(word)
@@ -182,6 +189,8 @@ def extract_features(tweet,featureVector,senti):
         elif(word.endswith("ing") and (len(word) > 3) and  d.check(word[:-3])):
             words_up.append(word[:-3])
         elif(word.endswith("ied") and (len(word) > 3) and d.check(word[:-3])):
+            words_up.append(word[:-3])
+	elif(word.endswith("est") and (len(word) > 3) and d.check(word[:-3])):
             words_up.append(word[:-3])
         else:
             words_up.append(word)
