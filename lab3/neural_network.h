@@ -9,7 +9,7 @@
 #include "network_layer.h"
 
 
-#define ERROR_THRESHOLD 0.001
+#define ERROR_THRESHOLD 8.0
 
 
 
