@@ -45,7 +45,7 @@ int main(){
     	
     Vec in2;	
     int vsize;	
-    if(OP!="Tweet"){
+    if(OP!="Tweet" && OP != "Iris"){
     	vsize = getInputSize(OP);	
 	in2.resize(vsize);
 	}
@@ -56,7 +56,7 @@ int main(){
     cin>>nlayers;		
     NeuralNetwork nn(nlayers,1);
     
-    if(OP!="Tweet"){
+    if(OP!="Tweet" && OP != "Iris"){
     	nn.addInputLayer(vsize);
 	}
     //nn.addHiddenLayer(7);
@@ -83,13 +83,31 @@ int main(){
     }
     
     
-    else if(OP == "Tweet") {
-		cout<<"In1"<<endl;
+    else if(OP == "Tweet" || OP == "Iris") {
+		cout<<"In1----------"<<endl;
 		
 		vector<Vec> inputVec = getTrainingInput(5 , 5);
+    	
+    	
     	vector<Vec> outputVec = getTrainingOutput(5, 5); 
     	vector<Vec> validatingInputs = crossValinput(5, 5);
     	vector<Vec> validatingOutputs = crossValOutput(5, 5);
+
+		assert(validatingInputs.size() == validatingOutputs.size());
+		printf("Sizes are %d %d %d %d \n", validatingInputs.size() , validatingOutputs.size() , inputVec.size() , outputVec.size()); 
+		
+    	
+    	printf("Sizes are %d %d \n" , inputVec[0].size() , inputVec[0].size());
+    	
+    	
+    		
+		for(int nhj=0;nhj<inputVec.size();nhj++){
+			printVec(outputVec[nhj]);
+			cout<<" : ";
+			printVec(inputVec[nhj]);
+		}
+    	
+    	
     	
 		Vec OutputResult;
 
@@ -110,10 +128,8 @@ int main(){
 		
 		int NumberSucceeded = 0;
 		
-		assert(validatingInputs.size() == validatingOutputs.size());
-		printf("%d %d %d %d \n",validatingInputs.size() , validatingOutputs.size() , inputVec.size() , outputVec.size()); 
 		
-		for(int nhj=0;nhj<inputVec.size(),nhj<400;nhj++){
+		for(int nhj=0;nhj<inputVec.size();nhj++){
 			OutputResult = nn.getOutput(inputVec[nhj]);
 			cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
 			cout<<"Expected: ";
@@ -124,13 +140,13 @@ int main(){
 		}
 		
 		
-		cout<<"Accuracy  on Trained % is : "<<(NumberSucceeded * 100)/400<<endl;
+		cout<<"Accuracy  on Trained % is : "<<(NumberSucceeded * 100)/inputVec.size()<<endl;
 		
 		
 		
 		NumberSucceeded = 0;
 		
-		for(int nhj=0;nhj<validatingInputs.size(),nhj<96;nhj++){
+		for(int nhj=0;nhj<validatingInputs.size();nhj++){
 			OutputResult = nn.getOutput(validatingInputs[nhj]);
 			cout<<"\n---------------------------"<<nhj<<"    "<<OutputResult.size()<<endl;
 			cout<<"Expected: ";
@@ -141,9 +157,14 @@ int main(){
 		}
 		
 		
-		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/96<<endl;
+		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
 		return 0;
     }
+    
+    else if(OP == "IRIS") {
+		
+    
+	}
 	
     else {
 		nn.addOutputLayer(1);
