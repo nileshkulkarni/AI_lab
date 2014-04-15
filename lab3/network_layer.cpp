@@ -1,19 +1,18 @@
 #include "network_layer.h"
 
 
-
 NetworkLayer ::  NetworkLayer(int nNeurons , int id){
 			layerId = id;
 			N = nNeurons;
-			for(int i =0i<nNeurons;i++){
-                Neuron neuron();
+			for(int i =0;i<nNeurons;i++){
+                Neuron neuron(nNeurons);
                 Neurons.push_back(neuron); 
             }
 
 }
 
 void NetworkLayer :: updateLayer() {
-	for(int i=0; i<Neurons.size(); i++) {
+	for(int i=1; i<Neurons.size(); i++) {
 		Neurons[i].collectInputs();
 	}
 }
@@ -24,12 +23,12 @@ Vec  NetworkLayer:: getOutput(){
         output.push_back(Neurons[i].getOutput());       
     }
     return output;
-
+}
 void NetworkLayer :: updateLayer(Vec In) {
-	collectInputs(In);
+	Neurons[0].collectInputs(In);
 }
 
-NetworkLayer :: void backPropagate(){
+void NetworkLayer ::backPropagate(){
 	
 		for(int i=0;i<N;i++){
 			Neurons[i].collectInputs();
@@ -39,7 +38,7 @@ NetworkLayer :: void backPropagate(){
 
 
 
-NetworkLayer :: void backPropagate(Vec t){
+void NetworkLayer ::backPropagate(Vec t){
 	
 		for(int i=0;i<N;i++){
 			Neurons[i].collectInputs();
@@ -48,7 +47,7 @@ NetworkLayer :: void backPropagate(Vec t){
 }
 
 
-NetworkLayer :: void updateWeights(){   //of input edges
+void NetworkLayer ::updateWeights(){   //of input edges
 	
 	for(int i=0;i<N;i++){
 			for(int j=0;j<Neurons[i].inputEdges.size();i++)

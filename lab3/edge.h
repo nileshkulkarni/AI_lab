@@ -2,11 +2,12 @@
 #define __EDGE_H__
 
 #include <stdio.h>
-#include "neuron.h"
 #include <ctime>
 #include <stdio.h>
 #include <iostream>
 #include<cstdlib>
+#include "neuron.h"
+class Neuron;
 class Edge{
 private: 
     Neuron* start;
