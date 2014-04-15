@@ -27,12 +27,8 @@ Neuron* Edge::getEnd(){
     return end ;
 
 }
-<<<<<<< HEAD
-void Edge::setWeight(float w){
-=======
 
-void Edge::setWeight(){
->>>>>>> 492b4b39bbe400aa222723ea7b496125822f8763
+void Edge::setWeight(float w){
     weight = w;
 
 }

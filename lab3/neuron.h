@@ -1,22 +1,22 @@
+#ifndef __NEURON_H__
+#define __NEURON_H__
 #include <iostream>
 #include <stdio.h>
 #include <list>
 #include <vector>
-
-
-
-typedef vector<float> Vec
-
+#include "edge.h"
 
 using namespace std;
 
+typedef vector<float> Vec;
 
 float dotProduct(Vec v1 , Vec v2);
 bool operator==(Vec &v1 , Vec &v2);
 void print(Vec &v1);
 void add(Vec &destV , Vec W);
  
- 
+class Edge;
+
 class Neuron{
 
 
@@ -44,4 +44,4 @@ class Neuron{
 };
 
 
-
+#endif
