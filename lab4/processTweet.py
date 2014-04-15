@@ -98,45 +98,53 @@ def getAllFeatureWords(filename,featureVector):
 def getFreq(featureVector):
     worddict={}
     d=enchant.Dict()
+    fp = open("TweetsCorpus/sentiwords.txt",'r')
+    line  = fp.readline()
+    featureVector.append(line.strip("\n"))
+    while line:
+        featureVector.append(line.strip("\n"))
+        line = fp.readline()
+
+    fp.close()
     for word in featureVector:
         if(len(word)>=3):
-            if(word.endswith("es") and d.check(word[:-2])):
+            if(word.endswith("es") and (len(word) > 4) and d.check(word[:-2])):
                 if(word[:-2] in worddict):
                     temp = word[:-2]
                     worddict[temp] = worddict.get(temp)+1
                 else:
                     worddict[word[:-2]] = 1
-            elif(word.endswith("s") and d.check(word[:-1])):
+            elif(word.endswith("s") and (len(word) > 4) and d.check(word[:-1])):
                 if(word[:-1] in worddict):
                     temp = word[:-1]
                     worddict[temp] = worddict.get(temp)+1
                 else:
                     worddict[word[:-1]] = 1
-            elif(word.endswith("ed") and d.check(word[:-2])):
+            elif(word.endswith("ed") and (len(word) > 4) and d.check(word[:-2])):
                 if(word[:-2] in worddict):
                     temp = word[:-2]
                     worddict[temp] = worddict.get(temp)+1
                 else:
                     worddict[word[:-2]] = 1
-            elif(word.endswith("ing") and d.check(word[:-3])):
+            elif(word.endswith("ing") and (len(word) > 5) and d.check(word[:-3])):
                 if(word[:-3] in worddict):
                     temp = word[:-3]
                     worddict[temp] = worddict.get(temp)+1
                 else:
                     worddict[word[:-3]] = 1
-            elif(word.endswith("ied") and d.check(word[:-3])):
+            elif(word.endswith("ied") and (len(word) > 5) and d.check(word[:-3])):
                 if(word[:-3] in worddict):
                     temp = word[:-3]
                     worddict[temp] = worddict.get(temp)+1
                 else:
                     worddict[word[:-3]] = 1
-            elif(word.endswith("est") and d.check(word[:-3])):
+            elif(word.endswith("est") and (len(word) > 5) and d.check(word[:-3])):
                 if(word[:-3] in worddict):
                     temp = word[:-3]
                     worddict[temp] = worddict.get(temp)+1
                 else:
                     worddict[word[:-3]] = 1    
-	    elif(word.endswith("ful") and d.check(word[:-3])):
+	    elif(word.endswith("ful") and (len(word) > 5) and d.check(word[:-3])):
                 if(word[:-3] in worddict):
                     temp = word[:-3]
                     worddict[temp] = worddict.get(temp)+1
@@ -145,7 +153,7 @@ def getFreq(featureVector):
 	    else:
                 if(word in worddict):
                     worddict[word] = worddict.get(word)+1
-                else:
+                elif((len(word) > 2) and d.check(word)):
                     worddict[word] = 1
     return worddict
 #end
@@ -156,14 +164,6 @@ def finalVector(worddict):
     for k,v in worddict.iteritems():
         if(v>1):
             finallist.append(k)
-    fp = open("TweetsCorpus/sentiwords.txt",'r')
-    line  = fp.readline()
-
-    while line:
-        finallist.append(line.strip("\n"))
-        line = fp.readline()
-
-    fp.close()
 
     fp = open("TweetsCorpus/newCorpus/featurewords.dump",'w')
     
@@ -185,22 +185,23 @@ def extract_features(tweet,featureVector,senti):
     for word in words:
         word = word.strip()
         word = word.strip('\'"?,.!') 
-        if(word.endswith("es") and (len(word) > 2) and d.check(word[:-2])):
+        if(word.endswith("es") and (len(word) > 4) and d.check(word[:-2])):
             words_up.append(word[:-2])
         elif(word.endswith("s")):
             words_up.append(word[:-1])
-        elif(word.endswith("ed") and (len(word) > 2) and d.check(word[:-2])):
+        elif(word.endswith("ed") and (len(word) > 4) and d.check(word[:-2])):
             words_up.append(word[:-2])
-        elif(word.endswith("ing") and (len(word) > 3) and  d.check(word[:-3])):
+        elif(word.endswith("ing") and (len(word) > 5) and  d.check(word[:-3])):
             words_up.append(word[:-3])
-        elif(word.endswith("ied") and (len(word) > 3) and d.check(word[:-3])):
+        elif(word.endswith("ied") and (len(word) > 5) and d.check(word[:-3])):
             words_up.append(word[:-3])
-	elif(word.endswith("est") and (len(word) > 3) and d.check(word[:-3])):
+	elif(word.endswith("est") and (len(word) > 5) and d.check(word[:-3])):
             words_up.append(word[:-3])                
-	elif(word.endswith("ful") and (len(word) > 3) and d.check(word[:-3])):
+	elif(word.endswith("ful") and (len(word) > 5) and d.check(word[:-3])):
             words_up.append(word[:-3])                
 	else:
-            words_up.append(word)
+	    if ((len(word) > 2) and d.check(word)):
+                words_up.append(word)
     extractf = []
     extractf.append(senti) 
     for w in featureVector:
