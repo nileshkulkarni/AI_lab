@@ -49,6 +49,7 @@ Vec  NetworkLayer:: getOutput(){
     for(int i=0;i<Neurons.size();i++){
         output.push_back(Neurons[i].getOutput());       
     }
+
     return output;
 }
 
