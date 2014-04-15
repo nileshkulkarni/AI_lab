@@ -21,11 +21,17 @@ class NeuralNetwork{
     public:
         NeuralNetwork();
         NeuralNetwork(int nlayers);
+        NeuralNetwork(int layers,int noOfNeurons);
+        
+        
         void addTrainData(Vec input, Vec outputs); 
         void addHiddenLayer(); 
         void addAllTrainData(vector<Vec> input,vector<Vec> output); 
+        
         Vec getOutput(Vec in);
         void backPropagate();
+        
+        void feedForward(Vec in);     
         void feedForward(); 
-        void feedForward(Vec in);      
+         
 };

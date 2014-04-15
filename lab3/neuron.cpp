@@ -1,6 +1,9 @@
 #include "neuron.h"
 
 using namespace std;
+int Neuron::totalNeurons =0;
+
+
 
 Neuron::Neuron(int N){
     noOfInputs = N;    
@@ -40,7 +43,10 @@ void Neuron :: collectInputs(Vec In) {
 void Neuron :: updateDel(Vec t){
 	del = (t[id] - output) * output * (1 - output);
 }
+float Neuron:: getDel(){
+    return del;
 
+}
 
 void Neuron :: updateDel(){
 	del = 0;

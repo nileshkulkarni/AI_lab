@@ -10,4 +10,5 @@ neuron.o : neuron.cpp neuron.h edge.h
 
 edge.o : edge.cpp edge.h neuron.h
 	g++ -c edge.cpp
-		
+clean :
+	rm -rf *.o NeuralNetwork
