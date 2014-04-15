@@ -56,15 +56,20 @@ int difference(Node n1,Node n2, int no){
 }
 int manhattan(Node n1, Node n2){
     int diff=0; 
-    for(int i=0;i<9;i++){
+    for(int i=1;i<9;i++){
         diff += difference(n1,n2,i); 
     }
     return diff;
 }
 
-int RandomHeuristic(Node n1,Node n2){
-    
-
+int inversionPairs(Node n1,Node n2){
+   int inversion =0;
+   for(int i =0;i<n1.data._state.size();i++){
+       for(int j =i+1;j<n1.data._state.size();j++){
+           if(n1.data._state[i] < n1.data._state[j])
+               inversion++;
+       }
+   }
 }
 
 int displace(Node n1, Node n2){
@@ -127,6 +132,10 @@ int main(int argc, char* argv[]){
         }
         else if(hue=="ZERO"){
             a.setHeuristicFunction( & zero);
+            a.getShortestPath(start,stop);
+        }
+        else if(hue=="INVERSION"){
+            a.setHeuristicFunction( & inversionPairs);
             a.getShortestPath(start,stop);
         }
         else{
