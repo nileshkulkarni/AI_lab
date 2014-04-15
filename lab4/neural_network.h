@@ -11,7 +11,7 @@
 extern double ERROR_THRESHOLD;
 //#define ERROR_THRESHOLD 1
 #define PRINTRATE 5
-
+#define MAXSTEPS 200
 
 using namespace std;
 
