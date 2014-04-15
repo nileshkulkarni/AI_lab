@@ -1,11 +1,2 @@
-P
-Q
--PQ
--QQ
--QP
--PF
--QF
--PP
-
-
-- - -P -QF F  --PFQ   
+((P-P)-Q)
+((Q-P)-(P-P))
