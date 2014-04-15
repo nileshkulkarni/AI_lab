@@ -22,7 +22,9 @@ $(function() {
     k.filter(e.clientX, e.clientY);
     paper.circle(e.clientX, e.clientY, 2).attr({stroke: '#777', fill: '#777'});
     if (predicted) predicted.remove();
-    predicted = paper.circle(k.nextX(), k.nextY(), k.P.e(1,1)/100, k.P.e(2,2)/100).attr({stroke: '#373', fill: '#373'});
+    var scaling_factor = 0.5;
+    //predicted = paper.circle(k.nextX(), k.nextY(), 10, 10).attr({stroke: '#373', fill: '#373'});
+    predicted = paper.circle(k.nextX(), k.nextY(), k.P.e(1,1)/scaling_factor, k.P.e(2,2)/scaling_factor).attr({stroke: '#373', fill: '#373'});
     updateNumbers();
   });
 
