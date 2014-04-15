@@ -1,5 +1,5 @@
 import re
-
+import enchant
 #process tweets
 def processTweet(tweet):
     #start processing
@@ -95,8 +95,9 @@ def getAllFeatureWords(filename,featureVector):
 #start printFeature vector
 def printFeature(featureVector):
     fp = open("TweetsCorpus/featureVector.dump",'w')
+    d=enchant.Dict()
     for word in featureVector:
-        if(len(word)>=3):
+        if(len(word)>=3 and d.check(word)):
             fp.write(word)
             fp.write('\n')
     fp.close()
