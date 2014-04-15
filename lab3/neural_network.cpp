@@ -98,7 +98,7 @@ void NeuralNetwork::addTrainData(Vec in, Vec out){
 }
 
 void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
-    float Error = 10    ;
+    float Error = 10 ;
     
     Vec outp;
     int printRate =100;
