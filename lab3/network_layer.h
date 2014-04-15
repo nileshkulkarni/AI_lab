@@ -26,6 +26,7 @@ class NetworkLayer{
         NetworkLayer();
         NetworkLayer(int nNeurons);
         void init(int nNeurons);
+        void initInput(int nNeurons);
         
 	    void updateLayer(Vec In);	
 		void backPropagate();

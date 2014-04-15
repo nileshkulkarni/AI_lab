@@ -27,6 +27,17 @@ void NetworkLayer :: init(int nNeurons){
 }
 
 	
+void NetworkLayer :: initInput(int nNeurons){
+        N = nNeurons;
+        for(int i =0;i<nNeurons;i++){
+            Neuron neuron(nNeurons);
+            neuron.setWeightsZero(); 
+          //  printf("Generating neurons  on layer %d , neuron id is  %d\n", layerId, neuron.getID());
+            Neurons.push_back(neuron); 
+        
+        }
+}
+
 
 
 void NetworkLayer :: updateLayer() {
@@ -88,18 +99,20 @@ void NetworkLayer ::backPropagate(Vec t){
 
 
 void NetworkLayer ::updateWeights(){   //of input edges
-    for(int i=0;i<N;i++){
-			for(int j=1;j<Neurons[i].inputEdges.size();j++){
-                //cout<<"Here: "<<(Neurons[i].inputEdges[j])->getWeight();
-			    (Neurons[i].inputEdges[j])->setWeight(Neurons[i].inputEdges[j]->getWeight() +  
-			                                       (NETA *
-			                                       Neurons[i].getDel() *
-			                                       (Neurons[i].inputEdges[j]->getStart())->getOutput()));
-                //cout<<(Neurons[i].inputEdges[j])->getWeight()<<endl;                                   	
-		  }	
-			    (Neurons[i].inputEdges[0])->setWeight(Neurons[i].inputEdges[0]->getWeight() +  
-			                                       (NETA *
-			                                       Neurons[i].getDel() * -1));
+    if(layerId !=0){
+        for(int i=0;i<N;i++){
+                for(int j=1;j<Neurons[i].inputEdges.size();j++){
+                    //cout<<"Here: "<<(Neurons[i].inputEdges[j])->getWeight();
+                    (Neurons[i].inputEdges[j])->setWeight(Neurons[i].inputEdges[j]->getWeight() +  
+                                                       (NETA *
+                                                       Neurons[i].getDel() *
+                                                       (Neurons[i].inputEdges[j]->getStart())->getOutput()));
+                    //cout<<(Neurons[i].inputEdges[j])->getWeight()<<endl;                                   	
+              }	
+                    (Neurons[i].inputEdges[0])->setWeight(Neurons[i].inputEdges[0]->getWeight() +  
+                                                       (NETA *
+                                                       Neurons[i].getDel() * -1));
+        }
     }
 }
 
