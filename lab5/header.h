@@ -25,11 +25,23 @@ struct Data{
     return; 
 
    }
-   long int getHash(){
-        int id =0;
-        for(int i =0;i<_state.size();i++){
+   Data& operator=(const Data &rhs){
+
+
+    } 
+    void assign(Data d){
+        for(int i=;i<d._state.size();i++){
+            _state.push_back(d[i]);
+        }
+    return;
+   }
+   long long int getHash(){
+        long long int id =0;
+        for(int i =0;i<9;i++){
             id= id*10 + _state[i];
         }
+        printf("Calculated ID is %lld \n", id);
+        return id;
 
    }
 } ;
