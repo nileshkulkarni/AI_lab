@@ -155,9 +155,17 @@ bool AStar::getShortestPath(Node _start, Node _end){
             int temp_g_score = current.g_score + distance(current,nbr);
             
             if(temp_g_score <  nodeInClosedList.g_score){
+                printf(" Removing a Node from closed list id %lld in previous %lld  \n", nodeInClosedList.id,came_from_map[nodeInClosedList.id]);
+                printf(" New gscore is %d , old gscore is %d  new wannabe parent %lld\n",temp_g_score, nodeInClosedList.g_score,current.id );
+                printf(" hscore for %lld   wannabe parent %d \n" ,current.id , H(current,goal));
+                //printf(" hscore for %lld   previous parent \n" ,current.id , H(current,goal));
+               // reconstructPath(nodeInClosedList.id],0);
+                //exit(0);
                 removeNodeFromSet(closedSet,nodeInClosedList);
             }
-            continue;
+            else{
+                continue;
+            }
 
         }
         int tentative_g_score = current.g_score + distance(current,nbr);

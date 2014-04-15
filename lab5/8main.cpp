@@ -62,6 +62,11 @@ int manhattan(Node n1, Node n2){
     return diff;
 }
 
+int RandomHeuristic(Node n1,Node n2){
+    
+
+}
+
 int displace(Node n1, Node n2){
     int diff=0; 
     for(int i=0;i<9;i++){

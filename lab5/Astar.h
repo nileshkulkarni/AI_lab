@@ -27,6 +27,7 @@ class AStar{
         bool getShortestPath(Node start, Node end);
         void setHeuristicFunction(HeuristicF f );
         bool findInSet( multiset<Node> l,Node n);
+        Node getNodeFromSet( multiset<Node> l,Node n);
         bool addNodeToSet( multiset<Node>& l,Node n);
         Node getMinimumNode( multiset<Node> l);
         bool removeNodeFromSet( multiset<Node>& l,Node n);
