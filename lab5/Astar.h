@@ -9,7 +9,7 @@
 #include "graph.h"
 #include "node.h"
 #include "header.h"
-#include "8puzzle.h"
+#include "Missionary.h"
 #include <map>
 #include <cmath>
 
