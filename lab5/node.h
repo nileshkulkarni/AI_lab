@@ -5,12 +5,8 @@
 #include <vector>
 #include <list>
 #include "header.h"
-#ifdef 8_PUZZLE_PROB
+//#include "Missionary.h"
 #include "8puzzle.h"
-#endif
-#ifdef MISSIONARY_PROB
-#include "Missionary.h"
-#endif
 using namespace std;
 
 typedef Node* NodePtr;

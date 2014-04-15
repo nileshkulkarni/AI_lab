@@ -1,8 +1,6 @@
 8puzzle: Astar.o 8puzzle.o main.cpp  graph.o node.o header.h 
-	8_PUZZLE_PROB=1	
 	g++ -g -o 8puzzle main.cpp 8puzzle.o Astar.o  graph.o node.o
 Missionary: Astar.o Missionary.o main.cpp  graph.o node.o header.h 
-	MISSIONARY_PROB=1	
 	g++ -g -o 8puzzle main.cpp Missionaries.o Astar.o  graph.o node.o
 Missionaries.o: Missionary.cpp Missionary.h node.h header.h 
 	g++ Missionary.cpp -c -g
