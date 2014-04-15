@@ -43,6 +43,8 @@ void sub(Vec &destV , Vec W){
 
 
 
+
+
 float mod(Vec v){
     float ret=0;
     for(int i=0;i<v.size();i++)
