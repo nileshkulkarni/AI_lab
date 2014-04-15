@@ -1,0 +1,83 @@
+\documentclass{beamer}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{Darmstadt}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{tikz}
+\usepackage{graphicx}
+
+
+
+\title[Circuit Solver]{Circuit Solver}
+\author{Anand, Sushant, Nilesh , Vipul}
+\institute{IIT Bombay}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+The curcuit involves solving circuits using prolog.
+\vskip 1cm
+Prolog has its roots in first-order logic, a formal logic, and unlike many other programming languages, Prolog is declarative: the program logic is expressed in terms of relations, represented as facts and rules.
+
+\end{frame}
+
+\section{Circuit Simulation}
+
+\subsection{Basic Gates}
+
+\begin{frame}{Basic Gates}
+To implement the basic gates using prolog, we used the following strategy:
+\newline
+\begin{itemize}
+\item For a particular gate, we enumerated the cases when it goes to \texttt{true} and when it goes to {false}.
+\item We made sure to use combination of complements to enumerate all possible cases for a particular gate
+\item Finally, we did a union of all required gates to get the final answer.
+\end{itemize}
+More information of this in the coming slides.
+\end{frame}
+
+\subsection{API}
+
+\begin{frame}{API}
+Taking help from the slides on course webpage, we formulated the following API:
+\begin{itemize}
+\item \texttt{signal(t,X): t}  here is a terminal which takes the values of \texttt{true} or \texttt{false} which are stored in \texttt{X}.
+
+\item \texttt{type(G,x): x} here is the type of \texttt{gate G} and takes the values of AND, OR, NOT etc
+
+\item  \texttt{in(S,X,G): X} is the input terminal corresponding to \texttt{gate G} at \texttt{serial number S}
+\item \texttt{out(T,G) T} is the output terminal for \texttt{gate G}.
+\end{itemize}
+This basic API has been implemented in \texttt{circuit.pl}. This is useful
+\end{frame}
+
+
+\section{Applications}
+\subsection{Majority}
+\begin{frame}{Majority}
+\textbf{Problem Statement:} A majority gate returns true if and only if more than 50\% of its inputs are true. We have improved it to the following definition:
+\newline
+\texttt{majority(m,n)} This is true if number of 1's is greater than \texttt{n} in a \texttt{m} bit number.
+
+\textbf{Use Cases}: 
+\end{frame}
+\end{document}
