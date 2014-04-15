@@ -31,8 +31,8 @@ int main(){
 
     
     int a,b;
-    
-    prover *p1 = new prover(1,0);
+    cin>>a>>b;
+    prover *p1 = new prover(a,b);
     
     cin>>*p1;
     
