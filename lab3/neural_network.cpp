@@ -96,3 +96,12 @@ void NeuralNetwork::addTrainData(Vec in, Vec out){
 	
 }
 
+
+void print(){
+	
+	for(int i=noOfLayers-1 ; i>=0 ; i++){
+		layers[i].print();
+		cout<<endl<<endl<<endl<<endl<<endl;
+	}
+	
+}
