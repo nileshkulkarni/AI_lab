@@ -22,6 +22,7 @@ public:
 	void traceBack();
 	void print(ostream& out);
 	void step();
+	void destroy();
 };
 
 
