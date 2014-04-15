@@ -1,11 +1,11 @@
 Kalman Filters for Robot Localization:
  
 
- -- What is roboto Localization & why?
- -- Problems in real world, ana available info?
- -- Some existing methods Probabilistic Frameworks to solve localization issues:
+ -- What is robot Localization & why?
+ -- Problems in real world, and available info?
+ -- Some existing methods, Probabilistic Frameworks to solve localization issues:
         Terms:
-            ProsteriroBelief & PriorBelief
+            ProsterirBelief & PriorBelief
         Methods:
         -- grid based approaches
         -- Particle Filters
