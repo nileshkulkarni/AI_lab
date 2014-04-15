@@ -86,18 +86,25 @@ int main(){
     vector<int> state;
     state.push_back(0);
     state.push_back(1);
-    for(int i = 2; i < 9 ; i++)
+    state.push_back(2);
+    state.push_back(3);
+    for(int i = 4; i < 9 ; i++)
         state.push_back(i);
     Data d;
     d.vec_assign(state);
     NodePtr start = new Node(d);
     
     vector<int> finals;
-    finals.push_back(1);
-    finals.push_back(0);
-    for(int j=2;j<9;j++){
+     finals.push_back(3);
+     finals.push_back(4);
+     finals.push_back(2);
+     finals.push_back(0);
+     finals.push_back(1);
+     finals.push_back(5);
+    for(int j=6;j<9;j++){
         finals.push_back(j);
     }
+    
     Data d2;
     d2.vec_assign(finals);
     NodePtr stop = new Node(d2);

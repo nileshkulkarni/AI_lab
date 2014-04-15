@@ -28,6 +28,7 @@ class AStar{
         bool removeNodeFromList( list<NodePtr>& l,NodePtr n);
         int  distance(NodePtr from, NodePtr to );
         void reconstructPath(NodePtr node);
+        NodePtr findInOpenList(NodePtr n);
 
 };
 #endif

@@ -11,11 +11,11 @@ Node:: Node(int i){
     
 Node:: Node(Data d){
         data.assign(d);
-        string s;     
-        cout<<"Printing Node data here *** ???\n";
         printData();
         id=d.getHash();
-        cout<<"here setting id "<<id<<"\n";
+        g_score = 0 ;
+        f_score = 0 ;
+        came_from = NULL;
 }
 void Node:: addNeighbour(NodePtr n){
     for(int i =0;i<neighbours.size();i++){
@@ -34,7 +34,7 @@ void Node::setgenerator(AdjacentGenerator _gen){
 }
 
 void Node::print(){
-    printf("** Node  %lld\n", id);
+    printf("Node:print->  %lld\n", id);
     for(int i=0;i< neighbours.size();i++){
         printf("\t%lld" , neighbours[i]->id);
     }

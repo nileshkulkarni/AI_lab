@@ -26,6 +26,8 @@ struct Data{
     return; 
 
    }
+
+   //this works now
    Data& operator=(const Data &d){
       if(_state.size()==0){
         for(int i=0;i<d._state.size();i++){
