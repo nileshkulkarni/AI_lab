@@ -17,24 +17,28 @@ def processTweet(tweet):
     tweet = tweet.strip('\'"')
     return tweet
 
-#Read the tweets one by one and process it
-fr = open('TweetsCorpus/twitter_objective', 'r')
-fw = open('TweetsCorpus/processed_objective','a')
-line = fr.readline()
- 
-while line:
-    split_tweet = line.split('\t')
-    processedTweet = processTweet(split_tweet[1])
-    fw.write(split_tweet[0])
-    fw.write('\t')
-    fw.write(processedTweet)
-    fw.write('\n')
+#process the entire tweetfile
+def processFile(filename):
+    #Read the tweets one by one and process it
+    read = 'TweetsCorpus/twitter_'+filename
+    write='TweetsCorpus/processed_'+filename
+    fr = open(read, 'r')
+    fw = open(write,'a')
     line = fr.readline()
-    
-#end loop
-fr.close()
-fw.close()
-
-
-
+     
+    while line:
+        split_tweet = line.split('\t')
+        processedTweet = processTweet(split_tweet[1])
+        fw.write(split_tweet[0])
+        fw.write('\t')
+        fw.write(processedTweet)
+        fw.write('\n')
+        line = fr.readline()
         
+    #end loop
+    fr.close()
+    fw.close()
+
+
+
+            
