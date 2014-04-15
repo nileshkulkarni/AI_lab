@@ -35,17 +35,12 @@ int main(){
     prover *p1 = new prover(a,b);
     
     cin>>*p1;
-    
-    cout<<*p1;
-    formula *dest = new formula;
-    dest->inputInfix(cin);
-    cout<<"Destination formula is "<<*dest<<endl;
     cout<<*p1<<endl;
     
 	p1->step();
 	//p1->printH(cout);
 	cout<<"came here: "<<endl;
-	cout<<"Found  = "<<p1->Hmember(dest)<<endl;
+	cout<<"Found  = "<<p1->check()<<endl;
 	
 	cout<<"--------------------------------------------"<<endl;
 //	cout<<*p1<<endl;

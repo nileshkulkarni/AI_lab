@@ -34,8 +34,7 @@ void destroyAxiom3(formula *f){
 bool Axiom3Form(formula *f){
 	
 	if(f==NULL) return false;
-	if(f->lhs == NULL) return false;
-	
+	if(f->leaf) return false;
 	if((f->lhs)->leaf) return false;
 	return ((f->lhs->rhs->val == 'F') && (f->rhs->val == 'F'));
 }	
@@ -80,15 +79,17 @@ void formula::inputInfix(istream &in){
 		length = lhs->length + rhs->length;
 		in>>a;
 		assert(a==')');
-		return;
 	}
 	
-	//else
-	length = 1;
-	leaf = true;
-	val = a;
-	if(val=='F')
-		False = true;
+	else{
+		length = 1;
+		leaf = true;
+		val = a;
+		if(val=='F')
+			False = true;
+		lhs = NULL;
+		rhs = NULL;	
+	}
 }
 
 
@@ -143,6 +144,7 @@ formula *implication(formula *A , formula *B){
 	formula *ret = new formula;
 	ret->val = '-';
 	ret->leaf = false;
+	ret->False = false;
 	ret->lhs = A;
 	ret->rhs = B;
 	ret->length = A->length + B->length;
