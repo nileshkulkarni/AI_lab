@@ -13,16 +13,19 @@ int main(){
     Vec in0;
     in0.push_back(0);
     in0.push_back(0);
+  
+  
     Vec in1;
-    
     in1.push_back(0);
     in1.push_back(1);
+  
+  
     Vec in2;
-    
     in2.push_back(1);
     in2.push_back(0);
+  
+  
     Vec in3;
-    
     in3.push_back(1);
     in3.push_back(1);
     
