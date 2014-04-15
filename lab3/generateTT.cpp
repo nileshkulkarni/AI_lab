@@ -31,7 +31,7 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 	   }
 	   vo.push_back(1-result);
 	   reti.push_back(vi);
-	   reti.push_back(vo);
+	   reto.push_back(vo);
 	   
 	   cout<<endl; 
 	    i++;
@@ -59,7 +59,7 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 	   }
 	   vo.push_back(1-result);
 	   reti.push_back(vi);
-	   reti.push_back(vo);
+	   reto.push_back(vo);
 	   
 	   cout<<endl; 
 	    i++;
@@ -87,7 +87,7 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 	   
 	   vo.push_back(1-result);
 	   reti.push_back(vi);
-	   reti.push_back(vo);
+	   reto.push_back(vo);
 
 	    cout<<endl; 
 	    i++;
@@ -118,7 +118,7 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 	   
 	   vo.push_back(1-result);
 	   reti.push_back(vi);
-	   reti.push_back(vo);
+	   reto.push_back(vo);
 
 	   
 	   
@@ -151,7 +151,7 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 	    
 	   vo.push_back(1-result);
 	   reti.push_back(vi);
-	   reti.push_back(vo);
+	   reto.push_back(vo);
 
 	    
 	   cout<<endl; 
@@ -183,7 +183,7 @@ void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto){
 	   
 	   vo.push_back(1-result);
 	   reti.push_back(vi);
-	   reti.push_back(vo);
+	   reto.push_back(vo);
 
 	   
 	   cout<<endl; 
