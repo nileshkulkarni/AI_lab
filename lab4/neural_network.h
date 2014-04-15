@@ -8,8 +8,8 @@
 #include "neuron.h"
 #include "network_layer.h"
 
-
-#define ERROR_THRESHOLD 5
+extern double ERROR_THRESHOLD;
+//#define ERROR_THRESHOLD 1
 #define PRINTRATE 5
 
 

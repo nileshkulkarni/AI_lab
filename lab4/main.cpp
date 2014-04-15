@@ -5,6 +5,7 @@
 string OP;
 double NETA;
 double MOMENTUM_FACTOR;
+double ERROR_THRESHOLD;
 //char *OP = malloc(10*sizeof(char));
 void  genTT(string op	,vector<Vec> &reti , vector<Vec> &reto);
 void getTruthTableLsd(int n, vector< Vec > &input, vector< Vec > &output);
@@ -50,7 +51,9 @@ int main(){
     cout<<"Give the OPERATOR to train on:"<<endl;
     cin>>OP;
     //cout<<OP<<endl;		
-    	
+    cout<<"Give ERROR_THRESHOLD value:"<<endl;
+    cin>>ERROR_THRESHOLD;
+
     Vec in2;	
     int vsize;	
     if(OP!="Tweet" && OP != "Iris" && OP != "Monks"){
