@@ -218,7 +218,6 @@ def extract_features(tweet,featureVector,senti):
 def printFeatureVector(allWords):
     featureVector = []
     fp=open("TweetsCorpus/newCorpus/processed_positive",'r')
-    d=enchant.Dict()
     line = fp.readline()
     while line:
         featureVector.append(extract_features(line,allWords,1))
@@ -249,4 +248,43 @@ def printFeatureVector(allWords):
 #end
 
 
+def one_tweet(featureVector):
+    fp = open('TweetsCorpus/newCorpus/classify_tweet','r')
+    tweet = fp.readline()
+    fp.close()
+    tweet = processTweet(tweet)
+    tweet.strip()
+    tweet.strip('\'"?,.!')
+    words = tweet.split()
+    words_up = []
+    d=enchant.Dict()
+    for word in words:
+        word = word.strip()
+        word = word.strip('\'"?,.!') 
+        if(word.endswith("es") and (len(word) > 4) and d.check(word[:-2])):
+            words_up.append(word[:-2])
+        elif(word.endswith("s")):
+            words_up.append(word[:-1])
+        elif(word.endswith("ed") and (len(word) > 4) and d.check(word[:-2])):
+            words_up.append(word[:-2])
+        elif(word.endswith("ing") and (len(word) > 5) and  d.check(word[:-3])):
+            words_up.append(word[:-3])
+        elif(word.endswith("ied") and (len(word) > 5) and d.check(word[:-3])):
+            words_up.append(word[:-3])
+	elif(word.endswith("est") and (len(word) > 5) and d.check(word[:-3])):
+            words_up.append(word[:-3])                
+	elif(word.endswith("ful") and (len(word) > 5) and d.check(word[:-3])):
+            words_up.append(word[:-3])                
+	else:
+	    if ((len(word) > 2) and d.check(word)):
+                words_up.append(word)
+	fp = open('TweetsCorpus/newCorpus/feature_one_tweet','w')
+    for w in featureVector:
+        if w in words_up:
+            fp.write("1,")
+        else:
+            fp.write("0,")
+
+
+	
 
