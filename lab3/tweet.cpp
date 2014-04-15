@@ -19,7 +19,8 @@ int main() {
 	vector<int> outputVec;
 	string line;
 	ifstream infile;
-	infile.open("./TweetsCorpus/trainData.txt");
+	infile.open("./TweetsCorpus/extracted-features.dump");
+	cout<<"Generating input and output vectors for training.."<<endl;
 	if(infile.is_open()) {
 		while(getline(infile,line)) {
 			int count = 0;
@@ -27,7 +28,6 @@ int main() {
 			char c = (char)line[count];
 			int outp = atoi(&c);
 			outputVec.push_back(outp);
-			cout<<"out "<<outputVec[count]<<endl;
 			count+=2;
 			vector<int> inp;
 			while(count<=l) {
@@ -36,13 +36,13 @@ int main() {
 				inp.push_back(in);
 				count+=2;
 			}
-			for(int k=0; k<inp.size(); k++) {
-				cout<<k<<" : "<<inp[k]<<endl;
-			}
 			inputVec.push_back(inp);
 
 		}
 		infile.close();	
+		cout<<"Vectors Generated!"<<endl;
+		cout<<"Size of outputVec : "<<outputVec.size()<<endl;
+		cout<<"Size of inputVec : "<<inputVec.size()<<endl;
 	}
 	
 	else {
