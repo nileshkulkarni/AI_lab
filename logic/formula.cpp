@@ -38,6 +38,7 @@ void formula::print(ostream &out){
 
 
 
+
 bool equal(const formula *A , const formula *B){
 	
 	if(A==NULL && B==NULL) return true;
@@ -49,6 +50,12 @@ bool equal(const formula *A , const formula *B){
 }
 
 
+
+bool operator==(const formula A ,const formula B){
+	
+	if(A.val != B.val) return false;
+	return equal(A.lhs,B.lhs) && equal(A.rhs , B.rhs);
+}
 
 
 

@@ -8,12 +8,15 @@ struct formula{
 	formula *rhs;
 	bool leaf;
 	bool False;
-	int length;
+	int length; //Useful for search strategies
 	
  void input(istream &in);
  void print(ostream &out);
- 
- };
+ friend ostream &operator<<(ostream &out, formula A){   
+		A.print(out);
+		return out;
+ }
+};
 
 
 extern formula *F; //global variable to store F
@@ -27,6 +30,7 @@ formula *Axiom3(formula *A);
 
 
 //Gotta do something about this
-//bool operator==(const formula *A ,const formula* B);
 
 bool equal(formula *A , formula *B);
+bool operator==(const formula A ,const formula B);
+
