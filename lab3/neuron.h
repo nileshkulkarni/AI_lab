@@ -32,10 +32,9 @@ class Neuron{
         static int totalNeurons;
     public:
         Neuron(int noOfInputs);
-        void setInputs(Vec in);
-	vector<Edge*> getinputEdges();
+	    vector<Edge*> getinputEdges();
         void collectInputs();  //and generate output
-        void collectInputs(Vec in);
+        void collectInputs(Vec in); // to be called for the outermost input layer
         float getOutput();  
         float getDel();
         void updateDel();
@@ -44,18 +43,5 @@ class Neuron{
 
 };
 
-
-
-void Neuron :: updateDel(Vec t){
-	del = (t[id] - output) * output * (1 - output);
-}
-
-
-void Neuron :: updateDel(){
-	del = 0;
-	for(int i=0;i<outputEdges.size();i++){
-		del +=	outputEdges[i] * (outputEdges[i].getEnd())->getDel() * output * (1 - output);
-	}
-}
 
 

@@ -2,6 +2,13 @@
 
 using namespace std;
 
+Neuron::Neuron(){
+    
+    id = totalNeurons;
+    totalNeurons++;
+
+}
+
 vector<Edge*> Neuron :: getinputEdges() {
 	return inputEdges;
 }
@@ -17,7 +24,9 @@ void Neuron :: collectInputs() {
 	}
 	output = collectedOut;
 }
-
+float Neuron::getOutput(){
+    return output;
+}
 void Neuron :: collectInputs(Vec In) {
 	float collectedOut=0;
 	vector<Edge*> input = getinputEdges();
@@ -27,3 +36,16 @@ void Neuron :: collectInputs(Vec In) {
 	}
 	output = collectedOut;	
 }
+
+void Neuron :: updateDel(Vec t){
+	del = (t[id] - output) * output * (1 - output);
+}
+
+
+void Neuron :: updateDel(){
+	del = 0;
+	for(int i=0;i<outputEdges.size();i++){
+		del +=	outputEdges[i] * (outputEdges[i].getEnd())->getDel() * output * (1 - output);
+	}
+}
+
