@@ -55,9 +55,4 @@ void Neuron :: updateDel(){
 	}
 }
 
-
-
-float Neuron :: getDel(){
-	return del;
-}
         

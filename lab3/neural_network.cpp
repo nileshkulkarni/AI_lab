@@ -1,6 +1,5 @@
 #include "neural_network.h"
 
-int Neuron::totalNeurons = 0;
 
 NeuralNetwork::NeuralNetwork(){
 }
