@@ -9,6 +9,7 @@ class Graph{
     public:
     Graph(nodeVector l);
     Graph(vector< vector<int> >);
+    Graph();
     vector<NodePtr> allNodes;
     NodePtr operator[](int i);
     void print();
