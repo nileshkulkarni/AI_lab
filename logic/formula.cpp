@@ -49,6 +49,7 @@ void formula::input(istream &in) {
 	in>>val;
 	leaf = true;
 	length = 1;
+	s.push_back(val);
 	if(val == '-'){
 		lhs = new formula;
 		rhs = new formula;
@@ -56,6 +57,7 @@ void formula::input(istream &in) {
 		rhs->input(in);
 		leaf = false;
 		length = lhs->length + rhs->length;
+		s = s + lhs->s + rhs->s;
 	}
 	if(val == 'F')
 		False = true;
@@ -67,6 +69,7 @@ void formula::inputInfix(istream &in){
 	
 	char a;
 	in>>a;
+
 	if(a=='('){
 		lhs = new formula;
 		lhs->inputInfix(in);
@@ -78,6 +81,7 @@ void formula::inputInfix(istream &in){
 		leaf = false;
 		length = lhs->length + rhs->length;
 		in>>a;
+		s ="-" + lhs->s + rhs->s;
 		assert(a==')');
 	}
 	
@@ -87,6 +91,8 @@ void formula::inputInfix(istream &in){
 		val = a;
 		if(val=='F')
 			False = true;
+		s = "";
+		s.push_back(val);	
 		lhs = NULL;
 		rhs = NULL;	
 	}
@@ -148,6 +154,7 @@ formula *implication(formula *A , formula *B){
 	ret->lhs = A;
 	ret->rhs = B;
 	ret->length = A->length + B->length;
+	ret->s = "-" + A->s + B->s;
 	return ret;
 }
 

@@ -16,6 +16,8 @@ int main(){
 	F->val = 'F';
 	F->False = true;
 	F->length = 1;
+	F->s = "F";
+
 /*Initialization Done */
 	
 /*	

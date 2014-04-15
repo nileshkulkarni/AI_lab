@@ -14,6 +14,7 @@ struct formula{
 	formula *rhs;
 	bool leaf;
 	bool False;
+	string s;
 	int length; //Useful for search strategies
 	
  void input(istream &in);
