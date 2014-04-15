@@ -6,7 +6,6 @@
 #include "node.h"
 using namespace std;
 typedef int (*HeuristicF)(NodePtr, NodePtr) ;
-
 class AStar{
     
     public:

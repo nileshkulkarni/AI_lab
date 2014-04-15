@@ -1,8 +1,7 @@
 #include "Astar.h"
 
 
-AStar::AStar(Graph g){
-   G.allNodes =g.allNodes; 
+AStar::AStar(Graph g):G(g.allNodes){
 
 }
 void AStar::setHeuristicFunction(HeuristicF f){
@@ -69,6 +68,7 @@ bool AStar::getShortestPath(int _start, int _end){
 
   NodePtr goal = G[_end]; 
   NodePtr start = G[_start];
+
   if(goal==NULL){
     std::cout<<" Goal Node is set to NULL, cannot find a path\n";
     return false;
