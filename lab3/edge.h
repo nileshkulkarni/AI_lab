@@ -17,7 +17,7 @@ class Edge{
 private: 
     Neuron* start;
     Neuron* end;
-    
+  
     float weight;
     float prevError;
 public: 
