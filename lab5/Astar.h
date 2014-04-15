@@ -41,6 +41,7 @@ class AStar{
         void bidirectional(Node,Node);
         bool findInClosedSet(Node n);
         int openSize();
+        int closedSize();
         int reconstructPath_bi(long long int);
 
 
