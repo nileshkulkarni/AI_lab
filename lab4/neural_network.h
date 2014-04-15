@@ -9,7 +9,7 @@
 #include "network_layer.h"
 
 
-#define ERROR_THRESHOLD 2
+#define ERROR_THRESHOLD 4
 #define PRINTRATE 5
 
 

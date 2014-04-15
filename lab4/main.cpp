@@ -166,6 +166,7 @@ int main(){
 		
 		
 		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
+		//nn.print();
 		return 0;
     }
     
