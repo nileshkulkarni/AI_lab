@@ -9,9 +9,10 @@
 #include "network_layer.h"
 
 extern double ERROR_THRESHOLD;
+extern double NETA;
 //#define ERROR_THRESHOLD 1
 #define PRINTRATE 5
-
+#define MAXSTEPS 250
 
 using namespace std;
 

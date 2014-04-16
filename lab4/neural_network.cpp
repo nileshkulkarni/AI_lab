@@ -98,12 +98,13 @@ void NeuralNetwork::addTrainData(Vec in, Vec out){
 }
 
 void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
-    double maxError = 10 ;
-    double meanError = 10;
+    double maxError = 100000 ;
+    double meanError = 100000;
+    double prevError =0;
     Vec outp;
     int printRate = PRINTRATE;
 	int steps=0;
-  while(meanError>ERROR_THRESHOLD){ 
+  while(meanError>ERROR_THRESHOLD && steps!=MAXSTEPS){ 
 		meanError = 0;
 		maxError = 0;
 		steps++;
@@ -121,6 +122,12 @@ void NeuralNetwork::addAllTrainData(vector <Vec > ins, vector< Vec> outs){
             cout<<endl;
          	printRate =PRINTRATE;
 		}
+        if(meanError<prevError)
+            NETA = NETA*1.2;
+        else
+            NETA = NETA/2;
+
+        prevError = meanError;
 		
     }
     

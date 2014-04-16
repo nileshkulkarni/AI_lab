@@ -165,10 +165,11 @@ void printVec(Vec &v){
 bool equal(Vec v1 , Vec v2){
 	
 	bool ret = true;
+    double t;
     for(int i=0;i<v1.size();i++){
-      double t = v1[i] - v2[i];
+      t = v1[i] - v2[i];
       t = (t>0)?t:-t;
-      ret = ret && (t < 0.6);
+      ret = ret && (t < 0.5);
   } 
     return ret;
 }

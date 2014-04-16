@@ -1,0 +1,330 @@
+\documentclass{beamer}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{Darmstadt}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{tikz}
+\usepackage{graphicx}
+
+
+
+\title[Theorem Prover]{Theorem Prover}
+\author{Anand, Sushant, Nilesh , Vipul}
+\institute{INDIA}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Heuristic}
+
+\begin{frame}{Heuristic}
+
+We assume that the target formula(that needs to be proved) is F, after simplification using Deduction Theorem.
+
+Suppose the Hypothesis set contains a formula of the sort $(A_{1}\rightarrow(A_{2}\rightarrow(A_{3}.......(A_{n}\rightarrow F)..)$ 
+\newline
+Denote rest of the Hypothesis vector by H.
+Divide the problem into subproblems of the following kind.
+\begin{itemize}
+  \item H $\vdash$ $A_{1}$
+  \item H, $A_{1}$ $\vdash$ $A_{2}$
+  \item In general H , $A_{1}$, $A_{2}$ .... $A_{k}$ $\vdash$ $A_{k+1}$
+\end{itemize} 
+
+\end{frame}
+
+
+\begin{frame}{Heuristic}
+
+
+Before we proceed, we note the following. If there is a proof for \newline A $\vdash$ B, there is infact a proof from first principles for B starting with A as the Hypothesis. The exact proof sequence might not be explicit. All the theorem says is that there exist such a sequence.
+\newline
+
+If we are able to solve each of these problems seperately, then we have infact solved the original problem in the following way:
+
+
+\end{frame}
+
+\begin{frame}{Heuristic}
+
+
+
+
+\begin{itemize}
+  \item From Deduction theorem, since we have shown that H $\vdash$ $A_{1}$, we know that there is a proof for $A_{1}$ from H using first principles. 
+  \item We also showed that  H, $A_{1}$ $\vdash$ $A_{2}$. To the proof above, we append the proof trace for this problem.
+  \item In general, we have showed that $A_{1}$, $A_{2}$ .... $A_{k}$ $\vdash$ $A_{k+1}$Thus, we append the proof  trace for this to the earlier proofs. 
+  \item Finally, Using the above steps we would have added \newline $A_{1}$, $A_{2}$ .... $A_{n}$ to our Hypothesis set. Through a series of MP inferences, the original problem can be easily proved.
+\end{itemize} 
+
+
+\vskip 1cm
+
+
+
+\end{frame}
+
+\begin{frame}{Heuristic: Example}
+
+
+\subsection{Example}
+Consider the following problem. \newline
+
+\begin{center}
+$\vdash$(((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F)$\rightarrow$((P$\rightarrow$F)$\rightarrow$Q)), 
+\end{center}
+
+
+which is the expanded form of  
+\begin{center}
+ $\vdash$ ((P $\wedge $Q)$\rightarrow$(P$\vee$Q)) 
+\end{center}
+
+
+
+Simplifying the problem using deduction theorem we obtain,
+\begin{center}
+((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F), 
+(P$\rightarrow$F), 
+(Q$\rightarrow$F) $\vdash$ F. \newline
+\end{center}
+
+
+The first formula in the Hypothesis set is ((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F), which is of the form $(A_{1}\rightarrow(A_{2}\rightarrow(A_{3}.......(A_{n}\rightarrow F)..)$ 
+
+
+\end{frame}
+\begin{frame}{Heuristic}
+
+
+Applying our Heuristics we obtain, the following subproblems(s):
+  \begin{itemize}
+    \item (P$\rightarrow$F),  (Q$\rightarrow$F) $\vdash$ (P$\rightarrow$(Q$\rightarrow$F))
+  \end{itemize}
+
+
+In this case the formula is of type  ($A_{1}$ $\rightarrow$ F), so we have only one subproblem.
+Let's focus on this subproblem for the moment. Simplifying the subproblem using deduction theorem we obtain,
+
+\begin{center}
+(P$\rightarrow$F),  (Q$\rightarrow$F), P , Q $\vdash$ F \newline
+\end{center}
+
+This can be easily proved by a Modus ponus inference, thereby proving our original problem.
+\end{frame}
+
+
+
+
+\begin{frame}{Heuristic: Another Example}
+
+
+\subsection{Example}
+Consider another problem. \newline
+
+\begin{center}
+$\vdash$(((P$\rightarrow$(((Q$\rightarrow$F)$\rightarrow$R)$\rightarrow$F))$\rightarrow$F)
+$\rightarrow$
+\newline
+((((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F)$\rightarrow$F)$\rightarrow$((P$\rightarrow$(R$\rightarrow$F))$\rightarrow$F)))
+, 
+\end{center}
+
+
+which is the expanded form of  
+\begin{center}
+ $\vdash$ ((P$\wedge$(Q$\vee$R))$\rightarrow$((P$\wedge$Q)$\vee$(P$\wedge$R)))
+\end{center}
+
+
+
+Simplifying the problem using deduction theorem we obtain,
+\begin{center}
+(P$\rightarrow$(R$\rightarrow$F)), \newline
+((P$\rightarrow$(((Q$\rightarrow$F)$\rightarrow$R)$\rightarrow$F))$\rightarrow$F), \newline
+(((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F)$\rightarrow$F) $\vdash$ F. \newline
+\end{center}
+
+
+The third formula in the Hypothesis set is (((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F)$\rightarrow$F), which is of the form $(A_{1}\rightarrow(A_{2}\rightarrow(A_{3}.......(A_{n}\rightarrow F)..)$ 
+
+
+\end{frame}
+\begin{frame}{Heuristic: Another Example}
+
+
+Applying our Heuristics we obtain, the following subproblems(s):
+  \begin{itemize}
+
+\item 
+\begin{center}
+
+(((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F)$\rightarrow$F),
+(P$\rightarrow$(R$\rightarrow$F)) $\vdash$ (P$\rightarrow$(((Q$\rightarrow$F)$\rightarrow$R)$\rightarrow$F))
+
+\end{center}
+
+\item 
+\begin{center}
+(P$\rightarrow$(R$\rightarrow$F)) ,
+((P$\rightarrow$(((Q$\rightarrow$F)$\rightarrow$R)$\rightarrow$F))$\rightarrow$F)
+$\vdash$
+(((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F)$\rightarrow$F)
+\end{center}
+
+  \end{itemize}
+
+In this case, the formulas are of type  ($A_{1}$ $\rightarrow$ F), so we have only one subproblem for each formula.
+
+
+\end{frame}
+
+
+
+
+
+
+
+
+\begin{frame}{Heuristic: Another Example}
+  Simplifying the problems using deduction theorem, we obtain
+ 
+\begin{itemize}
+
+\item 
+((Q$\rightarrow$F)$\rightarrow$R),
+(P$\rightarrow$(R$\rightarrow$F)),
+P,
+(((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F)$\rightarrow$F)
+ $\vdash$ 
+ F
+
+\item 
+(P$\rightarrow$(Q$\rightarrow$F)),
+(P$\rightarrow$(R$\rightarrow$F)),\newline
+\hspace{10 mm}
+((P$\rightarrow$(((Q$\rightarrow$F)$\rightarrow$R)$\rightarrow$F))$\rightarrow$F)
+$\vdash$
+F
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Heuristic: Another Example}
+
+Let's focus on the first subproblem for the moment. 
+The third formula in it's Hypothesis set  (((P$\rightarrow$(Q$\rightarrow$F))$\rightarrow$F)$\rightarrow$F) is of the form
+($A_{1}$ $\wedge$ F).
+
+This can be easily proved by a Modus ponus inference, thereby proving our original problem.
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+\section{And-Or Trees}
+\begin{frame}{And-Or Trees}
+ And-or trees are helpful for problem-reductions. Each node in the tree is a seperate problem.
+ We define an "AND"($\wedge$) node and a "OR"($\vee$) node. \newline
+   \subsection*{$\wedge$ nodes}
+   A node is an \textbf{$\wedge$ node} if solving all of it's children nodes solves the problem specified by the node.
+   \newline
+   \subsection*{$\vee$ nodes}
+  A node is a \textbf{$\vee$ node} if solving any of it's children nodes solves the problem specified by the node. 
+  \newline
+  \subsection*{Elementary nodes}
+  A node is an \textbf{Elementary node} if it can be solved without any further problem reductions.
+\end{frame}
+
+  
+
+
+\begin{frame}{And-Or Trees: Example}
+\begin{tikzpicture}
+        
+        \node[circle,draw] (p) at (11,6) {$\wedge$};
+        
+        
+        \node[circle,draw] (p1) at (8,4) {$\wedge$};
+        \node[circle,draw] (p2) at (6,2) {$n_{1}$};
+        \node[circle,draw] (p3) at (10,2) {$n_{2}$};
+        
+        
+        \node[circle,draw] (p4) at (14,4) {$\vee$};
+        \node[circle,draw] (p5) at (12,2) {$n_{3}$};
+        \node[circle,draw] (p6) at (16,2) {$n_{4}$};
+        
+		\path 
+        (p) edge              node {} (p1)            
+        (p) edge              node {} (p4)
+        
+        (p1) edge              node {} (p2)            
+        (p1) edge              node {} (p3)
+        
+        (p4) edge              node {} (p5)             
+        (p4) edge              node {} (p6);
+ \end{tikzpicture}
+	\vskip 1cm
+   
+ The nodes in the tree correspond to different problems. The root is our original problem. $n_{1}$ , $n_{2}$, $n_{3}$ and $n_{4}$ in the tree correspond to elementary nodes.\newline
+  
+\end{frame}
+
+  
+
+
+\section{Building And-Or Trees}
+
+\begin{frame}{Building And-Or Trees}
+
+\begin{itemize}
+\item
+ The first step of our algorithm is to build an And-or tree. To achieve this, we create a root which is our original problem. The root is initially an OR node. 
+\item 
+ For every formula of the form $(A_{1}\rightarrow(A_{2}\rightarrow(A_{3}.......(A_{n}\rightarrow F)..)$ in the Hypothesis set of the root, we create a new child for the root. This child is an AND node. 
+\item 
+ For each subproblems for this child, we create an OR node for each suproblem pertaining to this formula.
+\item
+ For every unexpanded OR node in the tree, recursively do the above steps.
+ 
+\end{itemize}	
+
+\end{frame}
+
+
+
+\begin{frame}{Evaluating the Tree}
+  To evaluate the tree, the elementary problems are run for a few steps, and then the result is propagated upwards. If the root is unsolved till now, we prompt the user for human help. 
+
+\end{frame}
+
+\end{document}

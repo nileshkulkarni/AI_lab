@@ -2,6 +2,7 @@ awful
 bastard
 beautiful
 boo
+best
 bored
 broken
 care

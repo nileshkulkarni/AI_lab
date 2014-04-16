@@ -7,6 +7,7 @@
 #include "neural_network.h"
 
 #define FILE "extracted-features.dump"
+#define FILE1 "TweetsCorpus/newCorpus/feature_one_tweet"
 using namespace std;
 
 int getFilesize() {
@@ -89,6 +90,29 @@ vector<Vec> getTrainingInput(int nfold, int partForValidation) {
         else cout<<"Unable to open file while creating input!"<<endl;
     }
     return input;        
+}
+
+
+Vec inputForOneTweet() {
+    Vec inp;
+    string line;
+    ifstream infile(FILE1, ios::in);
+    if(infile.is_open()) {
+        getline(infile,line);
+        int l = line.size();
+        //Vec inp;
+        int index = 2;
+        while(index<=l) {
+           char c1 = (char)line[index];
+           float in = (float)atoi(&c1);
+           inp.push_back(in);
+           index+=2;
+        }
+        //input.push_back(inp);
+    }
+    else cout<<"Unable to open file while creating input!"<<endl;
+    
+    return inp;        
 }
 
 

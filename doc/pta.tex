@@ -1,0 +1,59 @@
+\documentclass{beamer}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+\title[PTA]{Perceptron Training Algorithm}
+\author{Sushant | Nilesh | Vipul | Anand}
+\institute{Indian Institute of Technology, Bombay}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+\begin{frame}{PTA Convergence}
+\section{PTA Convergence}
+	PTA converges for these linearly seperable Operators 
+    \begin{itemize}
+    	\item Nand : Weights are [-2, -3, -4]
+        \item Nor : Weights are [-2, -2, -1]
+        \item 5 bit Majority : Weights are [3, 3, 4, 4, 4, 9]
+     \end{itemize}     
+
+\end{frame}
+
+\begin{frame}{Cycle Detection and Non-convergence}
+\section{Cycle Detction}
+From theory we know that power of Peceptron is limited by the linear seprability of the data set. If the data set is linearly seprable by a hyperplane in the dimesion of the data, then we can find a trained perceptron for it. And the PTA will converge.
+
+So we have some examples in which Perceptrons cannot be used are:
+
+\begin{itemize}
+	\item 5 bit Palindrome : Initial Iterations: 20 repitition rate 4 
+    \item 5 bit Parity : Initial Iterations: 23 repitition rate 4 
+    \item XOR : Initial Iterations: 9 repitition rate 4 
+\end{itemize}
+\end{frame}
+\end{document}

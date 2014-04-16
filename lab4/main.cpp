@@ -26,6 +26,8 @@ vector<Vec> crossValinputMonks(int nfold, int partForValidation);
 vector<Vec> crossValOutputMonks(int nfold, int partForValidation);
 vector<Vec> getTrainingOutputMonks(int nfold, int partForValidation);
 
+Vec inputForOneTweet();
+
 using namespace std;
 
 int getInputSize(string op) {
@@ -96,13 +98,15 @@ int main(){
     
     else if(OP == "Tweet") {
 		cout<<"In1----------"<<endl;
-		
-		vector<Vec> inputVec = getTrainingInput(5 , 5);
+	    cout<<"Part for validation? : ";
+        int i;
+        cin>>i;
+		vector<Vec> inputVec = getTrainingInput(5 , i);
     	
     	
-    	vector<Vec> outputVec = getTrainingOutput(5, 5); 
-    	vector<Vec> validatingInputs = crossValinput(5, 5);
-    	vector<Vec> validatingOutputs = crossValOutput(5, 5);
+    	vector<Vec> outputVec = getTrainingOutput(5, i); 
+    	vector<Vec> validatingInputs = crossValinput(5, i);
+    	vector<Vec> validatingOutputs = crossValOutput(5, i);
 
 		assert(validatingInputs.size() == validatingOutputs.size());
 		printf("Sizes are %d %d %d %d \n", validatingInputs.size() , validatingOutputs.size() , inputVec.size() , outputVec.size()); 
@@ -112,12 +116,12 @@ int main(){
     	
     	
     		
-		for(int nhj=0;nhj<inputVec.size();nhj++){
+/*		for(int nhj=0;nhj<inputVec.size();nhj++){
 			printVec(outputVec[nhj]);
 			cout<<" : ";
 			printVec(inputVec[nhj]);
 		}
-    	
+  */  	
     	
     	
 		Vec OutputResult;
@@ -170,17 +174,58 @@ int main(){
 		
 		cout<<"Accuracy  % is : "<<(NumberSucceeded * 100)/validatingInputs.size()<<endl;
 	//	nn.print();
+		while(1) {
+			int y;
+			cout<<"Do you want to analyze more tweets? | Press 1 to say Yes:"<<endl;
+			cin>>y;
+			if(y==1) {
+				string tw;
+				
+				string file = "main.py -o";
+				string ex = "python ";
+				ex+=file;
+				system(ex.c_str());
+				
+				Vec v_in = inputForOneTweet();
+				
+				OutputResult = nn.getOutput(v_in);
+				Vec postv,negtv,objtv;
+				postv.push_back(1);
+				postv.push_back(1);
 
-        cout << "Enter a new tweet : "<<endl;
-        string tw;
-        cin >> tw;
+				negtv.push_back(0);
+				negtv.push_back(0);
+
+				objtv.push_back(0);
+				objtv.push_back(1);
+				
+				int c=-1;
+				if(equal(postv,OutputResult)) c=1;
+				else if(equal(negtv,OutputResult)) c=2;
+				else if(equal(objtv,OutputResult)) c=0;
+				else c=-1;
+				
+				
+				cout<<"\n Result : ";
+				printVec(OutputResult);
+				cout<<endl;
+				cout<<"The tweet seems to be : ";
+				if(c==1) cout<<"Positive!"<<endl;
+				else if(c==0) cout<<"Neutral!"<<endl;
+				else if(c==2) cout<<"Negative!"<<endl;
+				else cout<<c<<endl;
+			}
+			else break;
+		}
+			
+        
+
 		return 0;
     }
     
-    else if(OP == "NewTweet") {
+    /*else if(OP == "NewTweet") {
 		vector<Vec> inputVec = getTrainingInput(5 , 0);
     	vector<Vec> outputVec = getTrainingOutput(5, 0); 
-		Vec OutputResult;
 		
 		nn.addInputLayer(inputVec[0].size());
 		nn.addOutputLayer(2);
@@ -196,7 +241,7 @@ int main(){
 		cout<<"\n Result : ";
 		printVec(OutputResult);
         
-    }
+    }*/
 
     else if(OP == "Iris") {
 		cout<<"In Iris----------"<<endl;
