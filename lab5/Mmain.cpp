@@ -65,7 +65,7 @@ int manhattan(Node n1, Node n2){
 
 int displace(Node n1, Node n2){
     int diff=0; 
-    for(int i=0;i<9;i++){
+    for(int i=0;i<1;i++){
         if(n1.data._state[i] !=n1.data._state[i]){
            diff++; 
         }
