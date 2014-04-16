@@ -1,0 +1,174 @@
+\documentclass{beamer}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+\title[AI Lab Report]{A* Search Algorithm: An Analysis}
+\author{Sushant | Nilesh | Vipul | Anand}
+\institute{Indian Institute of Technology, Bombay}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Introduction}
+
+\subsection{Code Structure}
+\begin{frame}{Code Structure}
+
+Following classes were made to make the A* modular:
+\begin{itemize}
+  \item Node
+  \item Graph
+  \item AStar
+  \item Graph
+\end{itemize}
+Apart from these, corresponding to each example a class was made:
+\begin{itemize}
+  \item 8puzzle
+  \item Missionary
+  \item bidirectional
+
+\end{itemize}
+\end{frame}
+
+\subsection{Data Structures}
+
+\begin{frame}{Data Structures}
+
+The following datastructures were implemented:
+\begin{itemize}
+\item Used multiset to implement open set and closed set
+\item Hash Map
+\end{itemize}
+
+We've implemented parent-pointer redirection as well.
+It is essentially used when a non monotonic heuristic is used.
+The pseudo codes is present on the next couple of slides.
+% Commands to include a figure:
+%\begin{figure}
+%\includegraphics[width=\textwidth]{your-figure's-file-name}
+%\caption{\label{fig:your-figure}Caption goes here.}
+%\end{figure}
+\end{frame}
+
+\subsection{Psuedo Code}
+\begin{frame}[fragile]{Psuedo Code}
+\begin{verbatim}
+function A*(start,goal)
+    closedset := the empty set   
+    openset := {start}   
+    came_from := the empty map 
+ 
+    g_score[start] := 0 
+    f_score[start] := g_score[start] + 
+    heuristic_cost_estimate(start, goal)
+ 
+    while openset is not empty
+        current := the node in openset 
+            having the lowest f_score[] value
+        if current = goal
+            return reconstruct_path(came_from, goal)
+ 
+        remove current from openset
+        add current to closedset
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{verbatim}
+        for each neighbor in neighbor_nodes(current)
+            if neighbor in closedset
+                continue
+            tentative_g_score := g_score[current] + 
+            dist_between(current,neighbor)
+ 
+            if neighbor not in openset or 
+              tentative_g_score < g_score[neighbor] 
+                came_from[neighbor] := current
+                g_score[neighbor] := tentative_g_score
+                f_score[neighbor] := g_score[neighbor] + 
+                heuristic_cost_estimate(neighbor, goal)
+                
+                if neighbor not in openset
+                    add neighbor to openset
+ 
+    return failure
+\end{verbatim}
+\end{frame}
+\section{Analysis}
+\subsection{Better Heuristics perform Better}
+\begin{frame}{Better Heuristics perform Better}
+
+The following heuristics were implemented for 8 puzzle problem:
+\begin{itemize}
+\item Heuristic : Number of Nodes , Number of Steps
+\item EUCLIDEAN : 4933 , 24 steps
+\item MANHATTEN : 1259 , 24 steps
+\item LINEAR CONFLICT : 900 , 24 steps 
+\end{itemize}
+
+The linear conflict adds at least two moves to the Manhattan Distance of the two conflicting tiles, by forcing them to surround one another. Therefore the heuristic function will add a cost of 2 moves for each pair of conflicting tiles.
+\newline \newline
+As can be easily inferred Manhatten is better than Euclidean. And by the definition of linear conflict, it is better than Manhatten.
+\newline 
+The same is inferred via experiments.
+\end{frame}
+
+\subsection{Sub-Optimal Path}
+\begin{frame}{Sub-Optimal Path}
+To demonstrate h(n)  \textgreater  h*(n) we used the hueristic h(n) to be the Euclidean squared! The following data shows why it gives a suboptimal path.
+\newline
+The given input node: 1 8 5 6 3 4 2 7 0 
+\newline
+Observed Results:
+\begin{itemize}
+\item Optimal = 24 steps
+\item Euclidean Squared = 26 steps
+\end{itemize}
+
+\end{frame}
+
+\subsection{Bidirectional Search}
+\begin{frame}{Bidirectional Search}
+Implemented a bidirectional search, wherein search is implemented from the start node and the goal node. The search is stopped when the new chosen node to be expanded is already present in the closed list of the other search. 
+\newline
+The given input node: 0 6 2 1 4 7 3 8 5 
+\newline
+Observed Results:
+\begin{itemize}
+\item Normal Manhatten = 22 steps, Expanded 803 nodes in graph
+\item Bidirectional Manhatten = 24 steps, Expanded 536 nodes in graph
+\end{itemize}
+Conclusion:
+\begin{itemize}
+\item Bidirectional Search may lead to a suboptimal path.
+\item A significant advantage is that number of nodes expanded is less as compared to that of normal A* Search. So a better performance is achieved.
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}
