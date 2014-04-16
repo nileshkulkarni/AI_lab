@@ -32,7 +32,7 @@ int main(){
 
     formula *ftemp = new formula;
     ftemp->inputInfix(cin);
-    cout<<*ftempo;
+    cout<<*ftemp;
     int a,b;
     cin>>a>>b;
     prover *p1 = new prover(a,b);
